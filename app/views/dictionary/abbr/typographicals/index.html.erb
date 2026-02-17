@@ -1,0 +1,36 @@
+<%# app/views/dictionary/abbr/typographicals/index.html.erb %>
+<div class="dictionary-container">
+  <h1>Typographical Symbols</h1>
+
+  <%= form_with url: abbr_typographicals_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, value: params[:q], placeholder: "Search symbols...", class: "search-input" %>
+    <%= f.submit "Search", class: "btn-primary" %>
+  <% end %>
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>Symbol/Abbr</th>
+      <th>Estonian Equivalent</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= link_to record.abbr_name, abbr_typographical_path(record) %></td>
+        <td><%= record.abbr_id_est %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination-simple">
+    <% if @page > 1 %>
+      <%= link_to "← Prev", abbr_typographicals_path(page: @page - 1, q: params[:q]), class: "btn" %>
+    <% end %>
+    <span class="page-info">Page <%= @page %></span>
+    <% if @records.count == @per_page %>
+      <%= link_to "Next →", abbr_typographicals_path(page: @page + 1, q: params[:q]), class: "btn" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= I18n.locale %>" data-font="system" data-theme="dark">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+  <body class="admin-layout">
+
+    <% if show_header? %> <%= render "shared/header_a/site-header-a" %> <% end %>
+    <% if show_header? %> <%= render "shared/header_b/site-header-b" %> <% end %>
+    <% if show_header? %> <%= render "shared/header_c/site-header-c" %> <% end %>
+
+
+
+
+      <main class="screen"
+            data-controller="workspace-resizable"
+            data-action="mousemove->workspace-resizable#onMouseMove mouseup->workspace-resizable#onMouseUp">
+
+        <div class="screen-top">
+          <div class="loading-bar"></div>
+        </div>
+
+        <header class="screen-header">
+          <%= render "admin/shared/header_large" %>
+        </header>
+
+        <div class="workspace" data-workspace-resizable-target="container">
+
+          <aside class="activity-bar">
+            <%= render "admin/shared/activity_bar" %>
+          </aside>
+
+          <div class="expl-left"
+               data-workspace-resizable-target="sideA"
+               style="width: 300px;">
+            <div class="expl-area">
+              <%= yield :explorer %> </div>
+          </div>
+
+          <div class="sepv"
+               data-action="mousedown->workspace-resizable#onMouseDown dblclick->workspace-resizable#resetWidth">
+            <div class="sepv-line"></div>
+          </div>
+
+          <section class="edit">
+            <%= yield %> </section>
+
+        </div>
+
+        <footer class="screen-footer">
+          <%= render "admin/shared/footer" %>
+        </footer>
+      </main>
+
+
+
+
+  
+
+
+
+
+
+    <div class="admin-shell">
+
+      <aside class="admin-nav">
+        <nav class="admin-links">
+
+          <%= link_to "Console", root_path,
+                      class: ["admin-link", ("is-active" if controller_name == "Console")].compact.join(" ") %>
+
+          <%= link_to "Users", admin_users_path,
+                      class: ["admin-link", ("is-active" if controller_name == "users")].compact.join(" ") %>
+
+          <%= link_to "OAuth Apps", admin_oauth_applications_path,
+                      class: ["admin-link", ("is-active" if controller_name == "users")].compact.join(" ") %>
+
+          <!-- app/helpers/admin/navigation_helper.rb -->
+          <%= admin_nav_link( "OAuth Apps", admin_oauth_applications_path, allowed: current_user&.has_role?(:admin) ) %>
+
+          <!-- add more -->
+        </nav>
+      </aside>
+
+      <main class="admin-main">
+        <% if notice %><p class="flash notice"><%= notice %></p><% end %>
+        <% if alert  %><p class="flash alert"><%= alert %></p><% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+
+
+
+
+  </body>
+</html>

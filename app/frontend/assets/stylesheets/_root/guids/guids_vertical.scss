@@ -1,0 +1,24 @@
+
+// |  |  |
+%guid-v {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: #1a32cc;
+  z-index: 2147483630;
+  pointer-events: none;
+  opacity: 0.5;
+}
+%guid-color-red {
+  width: 1px;
+  background: #d71218;
+  opacity: 0.5;
+}
+
+// Registration form guids - vertical
+.reg-v1 { @extend %guid-v; left: 46px; }
+.reg-v2 { @extend %guid-v; left: 405px; }
+.reg-v3 { @extend %guid-v; @extend %guid-color-red; left: 50%; }
+
+

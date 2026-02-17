@@ -1,0 +1,29 @@
+<%# app/views/dictionary/abbr/general_terms/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav><%= link_to "← Back to list", abbr_general_terms_path %></nav>
+    <h1><%= @record.abbr_name %></h1>
+    <span class="badge">General Term</span>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>ID Estonian:</strong>
+      <p><%= @record.abbr_id_est %></p>
+    </div>
+    <div class="detail-row">
+      <strong>Latvian Name:</strong>
+      <p><%= @record.abbr_lv %></p>
+    </div>
+    <div class="detail-row">
+      <strong>Notes:</strong>
+      <p><%= @record.abbr_note %></p>
+    </div>
+    <% if @record.abbr_source.present? %>
+      <div class="detail-row">
+        <strong>Source:</strong>
+        <p><%= @record.abbr_source %></p>
+      </div>
+    <% end %>
+  </section>
+</article>

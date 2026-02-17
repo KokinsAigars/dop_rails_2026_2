@@ -1,0 +1,17 @@
+.vivente-icon{
+  height: 120px;
+  width: 120px;
+}
+.vivente-icon{
+  margin-top: -2px;
+  padding: 0;
+  background-color: transparent;
+}
+.svg_h_icon_st2_lines {
+  fill: var(--color-vivente-icon-lines);}
+.svg_h_icon_st1_circe {
+  fill: var(--color-vivente-icon-circe);}
+.svg_h_icon_grp {
+  background-color: var(--color-vivente-icon-grp);}
+.svg_h_icon_grp:hover>.svg_h_icon_st2_lines {
+  fill: var(--color-vivente-icon-grp-hover);}

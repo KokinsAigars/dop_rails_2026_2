@@ -1,0 +1,22 @@
+<div class="explorer-tree">
+  <div class="explorer-section-title">MinIO Storage</div>
+
+  <% @contents[:folders].each do |folder| %>
+    <div class="tree-item folder"
+         data-action="click->user-workspace#fn_loadSection"
+         data-url="<%= admin_storage_explorer_path(path: folder) %>">
+      <%= render "shared/icons/folder" %>
+      <span><%= folder.split('/').last %></span>
+    </div>
+  <% end %>
+
+  <% @contents[:files].each do |file| %>
+    <div class="tree-item file"
+         data-action="click->user-workspace#fn_loadSection"
+         data-url="<%= admin_storage_file_path(key: file.key) %>">
+      <%= render "shared/icons/file" %>
+      <span><%= file.key.split('/').last %></span>
+    </div>
+  <% end %>
+</div>
+

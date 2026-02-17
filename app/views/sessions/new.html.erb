@@ -1,0 +1,140 @@
+
+<div class="workspace">
+
+  <div data-controller="sessions"
+       data-sessions-id-value="019a4330-3ce0-77a4-88a5-1228665919d2"
+       data-sessions-state-value="0"
+       class="sessions">
+
+    <div class="sessions__side"></div>
+
+    <div class="sessions__frame">
+
+      <div data-sessions-target="guides" class="GUIDS"></div>
+
+      <div class="sessions__card">
+
+        <div class="sessions__body">
+
+          <div class="sessions__logo">
+            <%= render "shared/svg/icon" %>
+          </div>
+
+          <div class="sessions__title">
+            <div class="t-sessions__title only-s0">VIVENTE DOC</div>
+<!--            <div class="t-sessions__title only-s0"><%#= t("sessions.title_msg_default") %></div>-->
+            <div class="t-sessions__email only-s1" data-sessions-target="titleEmail"></div>
+            <div class="t-sessions__email only-s2"><%= t("sessions.title_msg_Reset_password") %></div>
+          </div>
+
+          <div class="sessions__floating-label-wrap">
+            <div data-sessions-target="inputBeauty" class="sessions__floating-label hidden">
+              <div class="t-sessions__superscript only-s0 only-s2"><%= t("sessions.superscript_email") %></div>
+              <div class="t-sessions__superscript only-s1"><%= t("sessions.superscript_password") %></div>
+            </div>
+          </div>
+
+          <div class="sessions__input-wrap" id="login_step">
+            <form data-sessions-target="inputForm"
+                  data-action="submit->sessions#fn_onProceedBtnClick"
+                  class="sessions__form">
+
+              <label for="siFIN"></label>
+              <input data-sessions-target="input"
+                class="sessions__input t-sessions__input"
+                id="siFIN"
+                spellcheck="false"
+                autocomplete="siFIN"
+                required
+                data-action="input->sessions#fn_onInput">
+
+              <div class="only-s1">
+                <button data-sessions-target="eyeBtn"
+                        data-action="mouseenter->sessions#fn_onEyeEnter
+                             mouseleave->sessions#fn_onEyeLeave
+                             click->sessions#fn_toggleShowPassword"
+                        type="button"
+                        class="sessions__toggle-password">
+
+                  <svg class="sessions__toggle-password-icon" width="48" height="48" viewBox="0 0 48 48">
+                    <g data-sessions-target="eyeBtn_open">
+                      <path class="sessions__toggle-password-icon-path"
+                            d="M32.2,26.6l-2.9-2.9c0.3-1.6-0.2-3-1.4-4.4c-1.2-1.4-2.8-1.9-4.6-1.6l-2.9-2.9c0.6-0.3,1.1-0.5,1.7-0.6
+                        c0.6-0.1,1.2-0.2,1.9-0.2c2.5,0,4.6,0.9,6.4,2.6S33,20.5,33,23c0,0.7-0.1,1.3-0.2,1.9C32.7,25.5,32.5,26,32.2,26.6z M38.6,32.9
+                        l-2.9-2.8c1.3-1,2.4-2,3.4-3.2s1.8-2.5,2.5-3.9c-1.7-3.4-4.1-6-7.2-8c-3.1-2-6.6-3-10.4-3c-1,0-1.9,0.1-2.9,0.2
+                        c-0.9,0.1-1.8,0.3-2.8,0.6l-3.1-3.1c1.4-0.6,2.8-1,4.2-1.3C20.9,8.1,22.4,8,24,8c5,0,9.5,1.4,13.5,4.2S44.2,18.6,46,23
+                        c-0.8,2-1.8,3.8-3,5.5C41.7,30.2,40.3,31.6,38.6,32.9z M39.6,45.2l-8.4-8.3c-1.2,0.4-2.3,0.6-3.5,0.8C26.5,37.9,25.3,38,24,38
+                        c-5,0-9.5-1.4-13.4-4.2S3.8,27.4,2,23c0.7-1.8,1.6-3.4,2.7-4.9c1.1-1.5,2.3-2.9,3.7-4.1L2.8,8.4l2.8-2.8l36.8,36.8L39.6,45.2z
+                        M11.1,16.8c-1,0.9-1.9,1.8-2.7,2.9S7,21.8,6.4,23c1.7,3.4,4.1,6,7.2,8s6.6,3,10.4,3c0.7,0,1.3,0,2-0.1s1.3-0.2,1.9-0.3l-1.8-1.9
+                        c-0.4,0.1-0.7,0.2-1,0.2C24.7,32,24.4,32,24,32c-2.5,0-4.6-0.9-6.4-2.6S15,25.5,15,23c0-0.4,0-0.7,0.1-1.1c0.1-0.3,0.1-0.7,0.2-1
+                        L11.1,16.8z"/>
+                    </g>
+                    <g data-sessions-target="eyeBtn_close" class="hidden">
+                      <path class="sessions__toggle-password-icon-path"
+                            d="M24,32c2.5,0,4.6-0.9,6.4-2.6S33,25.5,33,23s-0.9-4.6-2.6-6.4S26.5,14,24,14s-4.6,0.9-6.4,2.6S15,20.5,15,23
+                        s0.9,4.6,2.6,6.4S21.5,32,24,32z M24,28.4c-1.5,0-2.8-0.5-3.8-1.6c-1.1-1-1.6-2.3-1.6-3.8s0.5-2.8,1.6-3.8c1-1,2.3-1.6,3.8-1.6
+                        s2.8,0.5,3.8,1.6c1,1.1,1.6,2.3,1.6,3.8s-0.5,2.8-1.6,3.8C26.8,27.9,25.5,28.4,24,28.4z M24,38c-4.9,0-9.3-1.4-13.3-4.1
+                        S3.8,27.6,2,23c1.8-4.6,4.7-8.2,8.7-10.9S19.1,8,24,8s9.3,1.4,13.3,4.1S44.2,18.4,46,23c-1.8,4.6-4.7,8.2-8.7,10.9S28.9,38,24,38z
+                        M24,34c3.8,0,7.2-1,10.4-3s5.6-4.7,7.2-8c-1.7-3.4-4.1-6-7.2-8s-6.6-3-10.4-3s-7.2,1-10.4,3s-5.6,4.7-7.2,8c1.7,3.4,4.1,6,7.2,8
+                        S20.2,34,24,34z"/>
+                    </g>
+                  </svg>
+
+                  <span class="sessions__password-tooltip">
+                    <span data-sessions-target="tooltip_show_pwd" class="t-sessions__superscript hidden"><%= t("sessions.password_show") %></span>
+                    <span data-sessions-target="tooltip_hide_pwd" class="t-sessions__superscript hidden"><%= t("sessions.password_hide") %></span>
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="reg__office-only" aria-hidden="true">
+            <label for="userName"></label>
+            <input type="text"
+                   id="userName"
+                   name="userName"
+                   data-sessions-target="userName"
+                   tabindex="-1"
+                   autocomplete="off">
+          </div>
+
+          <div class="sessions__forgot">
+            <div class="sessions__spacer"></div>
+            <button data-sessions-target="forgotBtn"
+                    class="sessions__forgot-btn t-sessions__forgot hidden"
+                    data-action="click->sessions#fn_onForgotBtnClick">
+              <%= t("sessions.forgot_msg") %>
+            </button>
+          </div>
+
+          <div class="sessions__actions">
+            <div class="sessions__create-wrap">
+              <%= link_to t("sessions.create_account"), signup_path, class: "sessions__create-btn t-sessions__create" %>
+            </div>
+
+            <div class="sessions__proceed">
+              <button data-sessions-target="primaryBtn"
+                      data-action="click->sessions#fn_onProceedBtnClick"
+                      class="sessions__proceed-btn t-sessions__proceed"
+                      type="button">
+                <%= t("sessions.proceed_btn") %>
+              </button>
+            </div>
+          </div>
+
+          <div class="sessions__spacer"></div>
+
+        </div>
+
+      </div>
+
+      <%= render "shared/sessions/sessions_footer" %>
+
+    </div>
+
+    <div class="sessions__side"></div>
+
+  </div>
+</div>
+

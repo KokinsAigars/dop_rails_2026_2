@@ -1,0 +1,47 @@
+<%# app/views/dictionary/ref/texts/index.html.erb %>
+<div class="dictionary-container">
+  <h1>Reference Texts</h1>
+
+  <%= form_with url: ref_texts_path, method: :get, local: true, class: "search-form-grid" do |f| %>
+    <div class="search-main">
+      <%= f.text_field :q, value: params[:q], placeholder: "Search titles or abbreviations...", class: "search-input" %>
+    </div>
+
+    <div class="search-filters">
+      <%= f.select :lang, @languages, { include_blank: "All Languages", selected: params[:lang] }, { onchange: "this.form.submit()" } %>
+      <%= f.submit "Search", class: "btn-primary" %>
+    </div>
+  <% end %>
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Language</th>
+      <th>Reference Abbr</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><span class="text-no"><%= record.ref_texts_no %></span></td>
+        <td class="title-cell">
+          <strong><%= link_to record.ref_texts_title.truncate(80), ref_text_path(record) %></strong>
+          <div class="sub-ref"><%= record.ref_title.to_s.truncate(50) %></div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination-simple">
+    <% if @page > 1 %>
+      <%= link_to "← Prev", ref_texts_path(page: @page - 1, q: params[:q], lang: params[:lang]), class: "btn" %>
+    <% end %>
+    <span class="page-info">Page <%= @page %></span>
+    <% if @records.count == @per_page %>
+      <%= link_to "Next →", ref_texts_path(page: @page + 1, q: params[:q], lang: params[:lang]), class: "btn" %>
+    <% end %>
+  </div>
+</div>

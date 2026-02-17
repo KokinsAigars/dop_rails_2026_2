@@ -1,0 +1,183 @@
+
+// ROOT FONT - default to all that has no class to define otherwise
+:root {
+
+  /* DEFAULT FAMILIES (overridden by html[data-font]) */
+  --ff-h1: var(--ff-h1);
+  --ff-h2: var(--ff-h1);
+  --ff-h3: var(--ff-h1);
+  --ff-h4: var(--ff-h1);
+  --ff-h5: var(--ff-h1);
+  --ff-h6: var(--ff-h1);
+  --ff-body: var(--ff-body);
+  --ff-body-light: var(--ff-body-light);
+  --ff-code: var(--ff-code);
+
+  /* SIZES (rem) */
+  --font-size-h1: 2.6875rem;         /* 43px */
+  --font-size-h2: 2.1875rem;         /* 35px */
+  --font-size-h3: 1.8125rem;         /* 29px */
+  --font-size-h4: 1.25rem;           /* 20px */
+  --font-size-h5: 1rem;              /* 16px */
+  --font-size-h6: 0.8125rem;         /* 13px */
+  --font-size-body: 1rem;            /* maps to html root size */
+  --font-size-body-light: 0.9375rem; /* 15px */
+  --font-size-code: 0.875rem;        /* 14px */
+  --font-size-tab: 0.7rem;         /* 9px  */
+
+  /* LINE-HEIGHTS (unitless) */
+  /* https://nekocalc.com/px-to-rem-converter */
+  --font-lineheight-h1: 1.2;
+  --font-lineheight-h2: 1.2;
+  --font-lineheight-h3: 1.2;
+  --font-lineheight-h4: 1.2;
+  --font-lineheight-h5: 1.5;   /* body range */
+  --font-lineheight-h6: 1.5;   /* body range */
+  --font-lineheight-body: 1.5;
+  --font-lineheight-body-light: 1.5;
+  --font-lineheight-code: 1.5;
+
+  /* WEIGHTS */
+  --font-weight-h1: 600;
+  --font-weight-h2: 600;
+  --font-weight-h3: 300;
+  --font-weight-h4: 600;
+  --font-weight-h5: 300;
+  --font-weight-h6: 300;
+  --font-weight-body: 400;
+  --font-weight-body-light: 400;
+  --font-weight-code: 300;
+
+  /* COLORS pass-through from theme */
+  --font-color-h1: var(--color-fonts-h1);
+  --font-color-h2: var(--color-fonts-h2);
+  --font-color-h3: var(--color-fonts-h3);
+  --font-color-h4: var(--color-fonts-h4);
+  --font-color-h5: var(--color-fonts-h5);
+  --font-color-h6: var(--color-fonts-h6);
+  --font-color-body: var(--color-fonts-body);
+  --font-color-body-light: var(--color-fonts-body-light);
+  --font-color-code: var(--color-fonts-code);
+
+  direction: ltr;
+  white-space: normal;
+
+  letter-spacing: normal;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0;
+  text-overflow: ellipsis;
+  text-shadow: none;
+  vertical-align: baseline;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* Fallback when no data-font is set on <html> */
+html:not([data-font]) {
+  --ff-h1: system-ui, -apple-system, Roboto, "Segoe UI", Arial, sans-serif;
+  --ff-h2: var(--ff-h1);
+  --ff-h3: var(--ff-h1);
+  --ff-h4: var(--ff-h1);
+  --ff-h5: var(--ff-h1);
+  --ff-h6: var(--ff-h1);
+  --ff-body: var(--ff-h1);
+  --ff-body-light: var(--ff-h1);
+  --ff-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+h1, .t-h1 {
+  font-family: var(--ff-h1, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h1);
+  line-height: var(--font-lineheight-h1);
+  font-weight: var(--font-weight-h1);
+  color: var(--font-color-h1);
+}
+h2, .t-h2 {
+  font-family: var(--ff-h2, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h2);
+  line-height: var(--font-lineheight-h2);
+  font-weight: var(--font-weight-h2);
+  color: var(--font-color-h2);
+}
+h3, .t-h3 {
+  font-family: var(--ff-h3, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h3);
+  line-height: var(--font-lineheight-h3);
+  font-weight: var(--font-weight-h3);
+  color: var(--font-color-h3);
+}
+h4, .t-h4 {
+  font-family: var(--ff-h4, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h4);
+  line-height: var(--font-lineheight-h4);
+  font-weight: var(--font-weight-h4);
+  color: var(--font-color-h4);
+}
+
+//the same as body only - font-weight: 300 at 16px [h5]
+h5, .t-h5 {
+  font-family: var(--ff-h5, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h5);
+  line-height: var(--font-lineheight-h5);
+  font-weight: var(--font-weight-h5);
+  color: var(--font-color-h5);
+}
+
+//sub-title, font-weight: 300
+h6, .t-h6 {
+  font-family: var(--ff-h6, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-h6);
+  line-height: var(--font-lineheight-h6);
+  font-weight: var(--font-weight-h6);
+  color: var(--font-color-h6);
+}
+
+//body style - regular font-weight: 400
+html, body, div, span, p, a {
+  font-family: var(--ff-body, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-body);
+  line-height: var(--font-lineheight-body);
+  font-weight: var(--font-weight-body);
+  color: var(--font-color-body);
+}
+
+//the same as body only lighter in color and bit smaller
+.body-light, .T-hbf__search{
+  font-family: var(--ff-body-light, "Open Sans", system-ui, -apple-system, sans-serif), serif;
+  font-size: var(--font-size-body-light);
+  line-height: var(--font-lineheight-body-light);
+  font-weight: var(--font-weight-body-light);
+  color: var(--font-color-body-light);
+}
+
+code {
+  font-family: var(--ff-code, "Roboto Mono", monospace, system-ui, -apple-system), sans-serif;
+  font-size: var(--font-size-code);
+  line-height: var(--font-lineheight-code);
+  font-weight: var(--font-weight-code);
+  color: var(--font-color-code);
+}
+
+.T-hbf__search{
+  color: var(--color-fonts-header);
+}
+
+.T-tab-bar{
+  font-family: var(--ff-code, "Roboto Mono", monospace, system-ui, -apple-system), sans-serif;
+  font-size: var(--font-size-tab);
+  color: #9ca098
+}
+
+
+//cite,
+//applet, object, iframe, blockquote, pre,
+//del, dfn, em, font, img, ins, kbd, q, s, samp,
+//small, strike, strong, sub, sup, tt, var,
+//dl, dt, dd, ol, ul, li, abbr, acronym, address, big,
+//fieldset, form, label, legend,
+//table, caption, tbody, tfoot, thead, tr, th, td
+
+
+
+

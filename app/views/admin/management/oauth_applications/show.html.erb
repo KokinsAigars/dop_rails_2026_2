@@ -1,0 +1,29 @@
+<turbo-frame id="main_content">
+  <div class="inspector-panel">
+    <header class="inspector-header">
+      <h1><%= @app.name %></h1>
+      <span class="badge">OAUTH APP</span>
+    </header>
+
+    <div class="beauty-form">
+      <div class="field">
+        <label>Client ID</label>
+        <code class="code-block"><%= @app.uid %></code>
+      </div>
+
+      <div class="field">
+        <label>Client Secret</label>
+        <% if @app.secret.present? %>
+          <code class="code-block secret"><%= @app.secret %></code>
+        <% else %>
+          <em class="dimmed">Secret hashed/unavailable</em>
+        <% end %>
+      </div>
+
+      <div class="inspector-actions">
+        <%= button_to "Rotate Secret", rotate_secret_admin_oauth_application_path(@app), class: "btn-warning" %>
+        <%= button_to "Delete App", admin_oauth_application_path(@app), method: :delete, class: "btn-danger" %>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

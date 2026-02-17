@@ -1,0 +1,46 @@
+
+//@use "@styles/_root/breakpoints";
+
+/* local utilities to reduce repetition */
+@mixin size-lock-w($w) { width: $w; min-width: $w; max-width: $w; }
+@mixin size-lock-h($h) { height: $h; min-height: $h; max-height: $h; }
+@mixin size-lock($w, $h) { @include size-lock-w($w); @include size-lock-h($h); }
+
+.header-b{
+  z-index: 1000;
+  @include size-lock(100%, var(--v-header-b-h));
+  background: var(--color-bg-prime);
+  border-left: 1px solid var(--color-border-prime);
+  border-right: 1px solid var(--color-border-prime);
+}
+
+//https://cssgradient.io/
+.header-b-gradient{
+  //background: #26282B;
+  //background: linear-gradient(90deg, rgba(38, 40, 43, 1) 0%, rgba(45, 48, 51, 1) 10%, rgba(45, 48, 51, 1) 20%, rgba(38, 40, 43, 1) 40%, rgba(38, 40, 43, 1) 100%);
+}
+
+.header-b__frame{
+  display: flex;
+  opacity: 1;
+  background-color: transparent;
+  overflow: hidden;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  will-change: transform, opacity;
+}
+.header-b__frame__left {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0 24px;
+  float: left;
+  margin-right: auto;
+}
+.header-b__frame__right {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  float: right;
+}
+
+

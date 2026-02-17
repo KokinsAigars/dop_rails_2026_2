@@ -1,0 +1,30 @@
+<!--index.html.erb-->
+<h1>OAuth Applications</h1>
+
+<p><%= link_to "New OAuth Application", new_admin_oauth_application_path %></p>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Client ID</th>
+    <th>Scopes</th>
+    <th>Created</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @apps.each do |a| %>
+    <tr>
+      <td><%= link_to a.name, admin_oauth_application_path(a) %></td>
+      <td><code><%= a.uid %></code></td>
+      <td><%= a.scopes %></td>
+      <td><%= l(a.created_at, format: :short) %></td>
+      <td>
+        <%= button_to "Delete", admin_oauth_application_path(a), method: :delete,
+                      data: { turbo_confirm: "Delete this OAuth app? This will break clients using it." } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

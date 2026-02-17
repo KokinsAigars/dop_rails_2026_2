@@ -1,0 +1,21 @@
+<%# app/views/settings/show.html.erb %>
+<%= form_with model: current_user, url: user_settings_path, method: :patch do |f| %>
+
+  <h3>Notification Preferences</h3>
+
+  <div class="field">
+    <%= f.label "settings[notifications][success]", "Show Success Messages" %>
+    <%= f.check_box "settings[notifications][success]",
+                    { checked: current_user.notification_enabled?(:success) }, "true", "false" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "settings[notifications][alert]", "Show Security Alerts" %>
+    <%= f.check_box "settings[notifications][alert]",
+                    { checked: current_user.notification_enabled?(:alert) }, "true", "false" %>
+  </div>
+
+  <%= f.submit "Update Preferences", class: "btn-primary" %>
+<% end %>
+
+

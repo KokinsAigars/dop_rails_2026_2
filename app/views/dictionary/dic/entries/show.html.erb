@@ -1,0 +1,56 @@
+<%# app/views/dictionary/dic/entries/show.html.erb %>
+<div class="dictionary-master-entry">
+  <header class="entry-header">
+    <div class="word-main">
+      <h1><%= @entry.name %> <small class="homograph-no"><%= @index.homograph_no %></small></h1>
+      <span class="grammar-tag"><%= @entry.grammar %></span>
+      <span class="gender-tag"><%= @entry.gender %></span>
+    </div>
+
+    <div class="etymology-section">
+      <strong>Etymology:</strong> <%= @entry.etymology %>
+    </div>
+  </header>
+
+  <div class="entry-grid">
+    <main class="entry-body">
+
+      <% if @refs.any? %>
+        <section class="dic-section">
+          <h3>References</h3>
+          <% @refs.each do |ref| %>
+            <div class="ref-item">
+              <strong><%= ref.citation_abbrev %></strong>: <%= ref.ref_name %>
+            </div>
+          <% end %>
+        </section>
+      <% end %>
+
+      <% if @egs.any? %>
+        <section class="dic-section">
+          <h3>Examples</h3>
+          <% @egs.each do |eg| %>
+            <div class="eg-item">"<%= eg.eg_name %>"</div>
+          <% end %>
+        </section>
+      <% end %>
+
+    </main>
+
+    <aside class="entry-sidebar">
+      <% if @scans.any? %>
+        <div class="scan-preview">
+          <h4>Manuscript Scans</h4>
+          <% @scans.each do |scan| %>
+            <%= link_to scan.scan_filename, "#", class: "scan-thumb" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="entry-metadata">
+        <p>Source: <%= @index.source_file %></p>
+        <p>Order: <%= @index.source_order %></p>
+      </div>
+    </aside>
+  </div>
+</div>

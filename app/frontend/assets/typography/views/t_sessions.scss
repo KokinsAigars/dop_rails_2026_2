@@ -1,0 +1,102 @@
+
+%t-sessions__default { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: auto; }
+
+.t-sessions__title {
+  font-family: 'Gilroy', "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 1.65rem;
+  line-height: 1.2;
+  letter-spacing: 0.1rem;
+  font-weight: 500;
+  color: var(--font-color-signin__title);
+  @extend %t-sessions__default ;
+}
+.t-sessions__email{
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--font-color-signin__email);
+  @extend %t-sessions__default ;
+}
+.t-sessions__superscript {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.83rem;
+  line-height: 1.2rem;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--font-color-signin__input-helper);
+  opacity: 0.6;
+}
+.t-sessions__input  {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  letter-spacing: normal;
+  font-weight: 500;
+  color: var(--font-color-signin__input);
+  @extend %t-sessions__default ;
+}
+.t-sessions__forgot {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--font-color-signin__forgot);
+  opacity: 0.5;
+  @extend %t-sessions__default ;
+}
+.t-sessions__forgot:hover,
+.t-sessions__forgot:active {
+  opacity: 1;
+}
+.t-sessions__create {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--font-color-signin__create);
+  opacity: 0.9;
+  @extend %t-sessions__default ;
+}
+.t-sessions__proceed {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--font-color-signin__proceed);
+  @extend %t-sessions__default ;
+}
+.t-sessions__proceed_2 {
+   font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+   font-size: 0.95rem;
+   line-height: 1.5;
+   letter-spacing: normal;
+   font-weight: 400;
+   color: var(--font-color-signin__proceed);
+   @extend %t-sessions__default ;
+  margin-left: 1rem;
+ }
+.t-sessions__footer  {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-weight: 300;
+  color: var(--font-color-signin__footer);
+  @extend %t-sessions__default ;
+}
+
+.T-forgot-msg {
+    font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1rem;
+    letter-spacing: normal; 
+    font-weight: 200;
+    color: var(--color-signin-T-msg);
+    opacity: 0.5;
+}
+

@@ -1,0 +1,22 @@
+<div id="privacy_banner">
+  <div class="conainer">
+    <div class="row"></div>
+    <div class="row">
+      <div class="col m12 s11 center">
+        <%= t("misc.privacy_banner") %>
+        &nbsp;&nbsp;
+        <%= link_to "#", class: "btn button", onClick: "setCookie('privacy_banner', '1'); $('#privacy_banner').hide(); return false;" do %>
+          <i class="material-icons medium">close</i>
+        <% end %>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                if (getCookie('privacy_banner') != "1") {
+                    $("#privacy_banner").show();
+                };
+            });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>

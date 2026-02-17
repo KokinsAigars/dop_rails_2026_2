@@ -1,0 +1,54 @@
+<%= form_with model: row,
+              url: row.persisted? ? ui_abbr_abbr_grammatical_term_path(row, locale: I18n.locale) : ui_abbr_abbr_grammatical_terms_path(locale: I18n.locale),
+              method: row.persisted? ? :patch : :post do |f| %>
+
+  <% if row.errors.any? %>
+    <div style="border: 1px solid #c00; padding: 0.75rem; margin-bottom: 1rem;">
+      <p><strong><%= pluralize(row.errors.count, "error") %> prevented saving:</strong></p>
+      <ul>
+        <% row.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_letter %><br>
+    <%= f.text_field :abbr_letter, maxlength: 1 %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_name %><br>
+    <%= f.text_field :abbr_name, maxlength: 20, required: true %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_id_est %><br>
+    <%= f.text_area :abbr_id_est, rows: 2 %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_lv %><br>
+    <%= f.text_area :abbr_lv, rows: 2 %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_ref_id %><br>
+    <%= f.text_field :abbr_ref_id, maxlength: 36 %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :abbr_source_text %><br>
+    <%= f.text_area :abbr_source_text, rows: 4 %>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <%= f.label :revision %>
+    <%= f.check_box :revision %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

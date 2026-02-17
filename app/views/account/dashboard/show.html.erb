@@ -1,0 +1,28 @@
+<h1>User Dashboard</h1>
+<%= link_to "Home", root_path %>
+
+<h5>Welcome, <%= Current.user.email_address %></h5>
+
+<%# content_for :explorer_content do %>
+  <%#= render "account/shared/recent_activity" %>
+<%# end %>
+
+
+
+<!--<pre><%#= params.inspect %></pre>-->
+
+
+
+
+<%#= render "dashboard/stats" %>
+
+<%#= render "dashboard/activity" %>
+
+<!--<h2>Welcome, <%#= Current.user.first_name || Current.user.email_address %></h2>-->
+<!--<h4><%#= Current.user.email_address %></h4>-->
+<!--<p>This is your personal dashboard.</p>-->
+
+<!--<nav>-->
+  <%#= link_to "Edit Profile", edit_account_profile_path if defined?(edit_account_profile_path) %>
+  <%#= button_to "Logout", logout_path, method: :delete %>
+<!--</nav>-->

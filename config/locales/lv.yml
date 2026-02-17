@@ -1,0 +1,345 @@
+lv:
+  sessions:
+    title_msg_default: "Dictionary of Pāļi"
+    title_msg_Reset_password: "Nomainiet paroli"
+    placeholder_EmailUser: "Ievadiet E-pasta adresi"
+    placeholder_Password: "Ievadiet paroli"
+    superscript_email: "e-pasta adrese"
+    superscript_password: "Ievadiet paroli"
+    forgot_msg: "Vai aizmirsāt paroli?"
+    create_account: "Izveidot kontu"
+    proceed_btn: "Tālāk"
+    placeholder_incorrect: "pierakstīšanās neizdevās"
+    password_show: "Parādīt paroli"
+    password_hide: "Slēpt paroli"
+    f_Terms: "Pakalpojuma noteikumi"
+    f_Cookies: "Sīkdatņu piekrišana"
+    Cookies_alert: "Šajā tīmekļa vietnē ir uzstādīts sīkdatnes"
+    placeholder_OnForgot: "Ievadiet E-pasta adresi"
+    title_OnForgot: "Paroles maiņa"
+    Alert_Email_sent: "Email sent to "
+    login: "Login"
+
+  registrations:
+    title_default: "Reģistrācijas forma"
+    first_name: "Vārds"
+    last_name: "Uzvārds"
+    email_address: "E-pasta adrese"
+    enter_email_address: "Ievadiet savu e-pastu"
+    create_password: "Izveido paroli"
+    reset_password: "Nomainīt paroli ?"
+    button_back: "Atpakaļ"
+    button_next: "Tālāk"
+    button_updating: "Atjaunināšana..."
+    button_success: "Veiksmīgi!"
+    button_processing: "Apstrāde..."
+    button_continue: "Turpināt"
+    button_submit: "Iesniegt"
+    superscript_firstName: "vārds"
+    superscript_lastName: "Uzvārds"
+    superscript_emailAddress: "e-pasta adrese"
+    superscript_password: "parole"
+
+  passwords:
+    title_default: "Mainiet paroli"
+    title_default_edit: "Izveidojiet paroli"
+    rate_limit_error: "Pārāk daudz paroles atiestatīšanas pieprasījumu. Lūdzu, mēģiniet vēlreiz pēc dažām minūtēm."
+    reset_sent_notice: "E-pasts nosūtīts ar paroles atiestatīšanas instrukcijām"
+    reset_success: "Jūsu parole ir atiestatīta."
+    invalid_token: "Paroles atiestatīšanas saite nav derīga vai ir beigusies."
+    database_failed: "Datu bāzes atjaunināšana neizdevās. Lūdzu, mēģiniet vēlreiz."
+    check_inbox_title: "Pārbaudiet savu e-pastu"
+    mailer_subject: "Nomainiet savu paroli"
+    mailer:
+      hello: "Sveiki,"
+      instruction: "Jūs varat atiestatīt savu paroli, noklikšķinot uz tālāk norādītās saites:"
+      reset_link: "Atiestatīt paroli"
+      fallback: "Ja jūs to nepieprasījāt, lūdzu, ignorējiet šo e-pastu."
+
+
+  activerecord:
+    attributes:
+      user:
+        email: E-pasts
+        first_name: Vārds
+        last_name: Uzvārds
+        full_name: Vārds, Uzvārds
+        password: Parole
+        new_password: Jauna parole
+        new_password_confirmation: Jauna parole atkārtoti
+        default_language: Valoda
+        send_add_user_notification: Nosūtīt pievienošanas paziņojumu uz e-pastu
+        role: Loma
+      company_user:
+        role: Loma
+
+    errors:
+      template:
+        header:
+          one: "Nav iespējams saglabāt {{model}} 1 kļūdas dēļ"
+          few: "Nav iespējams saglabāt {{model}} %{count} kļūdu dēļ"
+          many: "Nav iespējams saglabāt {{model}} %{count} kļūdu dēļ"
+          other: "Nav iespējams saglabāt {{model}} %{count} kļūdu dēļ"
+        body: "Konstatētas kļūdas sekojošiem laukiem:"
+      messages:
+        inclusion: "neatļauta vērtība"
+        exclusion: "rezervēta vērtība"
+        invalid: "nekorekta vētība"
+        confirmation: "nesakrīt"
+        accepted: "nepieciešams apstiprināt"
+        empty: "jābūt aizpildītam"
+        blank: "ir obligāti jānorāda"
+        required: "ir obligāti jānorāda"
+        too_long:
+          one: "pārāk garš (nedrīkst būt vairāk par %{count} simboliem)"
+          other: "pārāk garš (nedrīkst būt vairāk par %{count} simboliem)"
+        too_short:
+          one: "nepietiekams garums (nedrīkst būt mazāk par %{count} simboliem)"
+          other: "nepietiekams garums (nedrīkst būt mazāk par %{count} simboliem)"
+        wrong_length:
+          one: "nekorekts garums (garumam jābūt tieši %{count} simboli)"
+          other: "nekorekts garums (garumam jābūt tieši %{count} simboli)"
+        taken: "- šāda vērtība jau ir izmantota"
+        not_a_number: "nav skaitlis"
+        greater_than: "- jābūt lielākam par %{count}"
+        greater_than_or_equal_to: "- jābūt lielākam vai vienādam ar %{count}"
+        equal_to: "- jābūt vienādam ar %{count}"
+        less_than: "- jābūt mazākam par %{count}"
+        less_than_or_equal_to: "- jābūt mazākam vai vienādam ar %{count}"
+        odd: "jābūt pāra vērtībai"
+        even: "jābūt nepāra vērtībai"
+        record_invalid: navalīds ieraksts
+
+      models:
+        user:
+          attributes:
+            email:
+              existing_user: jau ir pievienots kompānijai
+
+  app_types:
+    files: Dokumenti
+    projects: Projekti
+
+
+    flashes:
+    success_create: "Veiksmīgi izveidots."
+    success_create_with_name: "Veiksmīgi izveidots '%{name}'."
+    success_save: "Veiksmīgi saglabāts."
+    success_save_with_name: "Veiksmīgi saglabāts '%{name}'."
+    success_destroy: "Veiksmīgi izdzēsts."
+    success_remove: "Veiksmīgi noņemts."
+    error_on_save: "Kļūda saglabājot."
+
+  audit:
+    action: Darbība
+    settings: Uzstādījumi
+    object_attrs: Objekta atribūti
+    changed_attrs: Mainītie atribūti
+    timestamp: Laiks
+    user: Lietotājs
+    table: Tabula
+    table_object_id: Tabulas objekta id
+    no_data: Šeit nav neviena ieraksta
+    system: sistēma
+    actions:
+      i: Izveidots (insert)
+      u: Atjaunots (update)
+      d: Dzēsts (delete)
+
+  companies:
+    title: Kompānijas
+    info: Izvēlies kompāniju ar kuru vēlies strādāt.
+
+  flashes:
+    success_create: "Veiksmīgi izveidots."
+    success_create_with_name: "eiksmīgi izveidots '%{name}'."
+    success_save: "Veiksmīgi saglabāts."
+    success_save_with_name: "Veiksmīgi saglabāts '%{name}'."
+    success_destroy: "Veiksmīgi izdzēsts."
+    success_remove: "Veiksmīgi noņemts."
+    error_on_save: "Kļūda saglabāšanas laikā."
+
+  languages:
+    en: English
+    lv: Latviešu
+
+  mailer:
+    hello: Labdien!
+    reset_password:
+      subject: Paroles atjaunošana
+      button: Atjaunot paroli
+      info_text: Jūsu paroles atjaunošanas saite ir šī
+      click_here: Spiediet šeit
+      link_limit: Atjaunošans saite strādā 15 minūtes
+    send_add_user_notification:
+      subject: Uzaicinājums pievienoties uzņēmumam '%{company_title}'
+      info_text: Jūs esat/iet pievienots pie uzņēmuma '%{company_title}' lietotājiem
+      info_text_2: Lai ielogotos un piekļūtu uzņemuma datiem, spiediet šeit
+      open: Atvērt
+      info_text_3: Ja neesat reģistrējies, lūdzu uzstādiet paroli izmantojot šo saiti
+      forget_password_link: aizmirsu paroli
+
+  misc:
+    privacy_banner: Turpinot pārlūkot mājaslapu, Tu piekrīti sīkdatņu izmantošanai.
+    change: Mainīt
+    logout: Izlogoties
+    home: Sākums
+    no: "Nr"
+    save: Saglabāt
+    back: Atpakaļ
+    settings: Uzstādījumi
+    audit: Audits
+    login_button: Ielogoties
+    continue: Turpināt
+    reset_password: Atjaunot paroli
+    terms_of_service: Lietošanas noteikumi
+    cookie_consent: Sīkdatņu noteikumi
+    login_title: Ielogoties Ramus Stock
+    company: Kompānija
+    edit: Labot
+    delete: Dzēst
+    no_data: "Nav"
+    language: Valoda
+
+  models:
+    user: "lietotājs"
+
+  layouts:
+    Search:
+      placeholder: Meklēšana
+      button: Meklēt
+      results: Meklēšanas rezultāti
+      no_results: Nav atrasts neviens rezultāts
+    Theme:
+      Theme_Light: Gaišais režīms
+      Theme_Dark: Tumšais režīms
+      Theme_Custom: Pielāgots
+    Settings:
+      Change_Layout: Mainīt izkārtojumu
+      Settings: Iestatījumi
+      Header: Header
+      Footer: Footer
+      Sign_Out: Izrakstīties
+      Appearance: Izskats
+      ThemePref: Motīvu preferences
+      LanguagePref: Valoda
+      LayoutPref: Izkārtojums
+      ProfilePref: Profils
+      User: Lietotājs
+      eMail: e-pasts
+      LoginPassword: Pieteikšanās vārds un parole
+      ActivityBar: Darbības josla
+      SaveClose: Saglabāt un Aizvērt
+      Reset: Pārstartēt
+
+
+
+  users:
+    title: Lietotāji
+    new: Jauns lietotājs
+    can_not_remove_yourself: Pats sevi nevar noņemt
+    confirmation: Vai tiešām noņemt no kompānijas?
+    remove: Noņemt no kompānijas
+    forgot_password: Aizmirsu paroli
+    reset_password_info: Paroles atjaunošanas instrukcijas tiks nosūtītas uz e-pastu
+    roles:
+      admin: Administrators
+      user: Lietotājs
+      external: Ārējs lietotājs
+    notifications:
+      created: Lietotājs %{name} reģistrēts
+      updated: Lietotāja %{name} profils izmainīts
+      self_delete_error: Nevar izdzēst savu profilu
+      last_admin_delete_error: Nevar izdzēst pēdējo no sistēmas administratoriem
+      deleted: Lietotājs %{name} izdzēsts
+      delete_failed: Lietotāja %{name} dzēšanas kļūda
+
+      not_correct_input: E-pasts un/vai parole - nav pareizi
+      set_new_password: Lūdzu ievadi jaunu paroli
+      password_and_confirmation_is_not_maching: Parole un paroles apstiprinājums nesakrīt
+      thanks_please_login: Paldies, lūdzu tagad ielogojies
+      no_companies_for_user: Tavs lietotājs nav piesaistīts nevienai kompānijai, sazinies ar administratoru, lai Tevi pievienotu kompānijai
+      please_login: Lūdzu ielogojies
+      password_reset_email_no_found: Lietotājs ar šādu e-pastu nav reģistrējies
+      password_reset_sent_to_email: Paroles atjonošanas instrukcija aizsūtīta uz e-pastu
+      emails_already_sent: Paroles atjaunošanas e-pasts jau ir nosūtīts, lūdzu pārbaudi savu e-pastu (ieskaitot spam mapi)
+      token_is_expired: Paroles atjaunošanas saite ir nepareiza vai laiks beidzies
+
+
+
+
+  will_paginate:
+    previous_label: "&#8592; Iepriekšējā"
+    next_label: "Nākošā &#8594;"
+    page_gap: "&hellip;"
+
+  support:
+    array:
+      two_words_connector: " un "
+      words_connector: ", "
+
+
+
+  yes: Jā
+  no: Nē
+  ok: Jā
+  "true": "Jā"
+  "false": "-"
+  cancel: Nē
+  two_words_connector: un
+  date:
+    formats:
+      default: "%d.%m.%Y."
+      short: "%e %b"
+      long: "%B %e, %Y"
+      only_day: "%e"
+    day_names: [Svētdiena, Pirmdiena, Otrdiena, Trešdiena, Ceturtdiena, Piektdiena, Sestdiena]
+    abbr_day_names: [Svēt, Pirm, Otr, Tre, Cet, Piek, Sest]
+    abbr_day_names_short: [Sv, P, O, T, C, P, S]
+    month_names: [~, Janvāris, Februāris, Marts, Aprīlis, Maijs, Jūnijs, Jūlijs, Augusts, Septembris, Oktobris, Novembris, Decembris]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    # order: [:year, :month, :day]
+  time:
+    formats:
+    default: "%d.%m.%Y."
+    time: "%H:%M"
+    short: "%d %b %H:%M"
+    long: "%B %d, %Y %H:%M"
+    only_second: "%S"
+    datetime:
+      formats:
+        default: "%Y-%m-%dT"
+    am: "am"
+    pm: "pm"
+
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: ! '%n %u'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: €
+    format:
+      delimiter: .
+      precision: 2
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+
+    human:
+      decimal_units:
+        format: ! '%n %u'
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+
+  # routes:
+#     events: pieteikumi
+#     new: jauns
+#     privacy: privatums
+#     thank_you: paldies

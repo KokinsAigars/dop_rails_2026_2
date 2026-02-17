@@ -1,0 +1,20 @@
+<%# admin/management/users/_form.html.erb %>
+<div class="user-edit-container">
+  <h2>Edit User: <%= user.first_name %></h2>
+
+  <%= form_with(model: [:admin, :management, user], local: false) do |f| %>
+    <div class="field">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email_address %>
+      <%= f.email_field :email_address %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update User", class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

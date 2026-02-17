@@ -1,0 +1,39 @@
+<%# app/views/dictionary/abbr/publication_sources/index.html.erb %>
+<div class="dictionary-container">
+  <h1>Publication Sources</h1>
+
+  <%= form_with url: abbr_publication_sources_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, value: params[:q], placeholder: "Search sources, citations or notes...", class: "search-input" %>
+    <%= f.submit "Search", class: "btn-primary" %>
+  <% end %>
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>Abbreviation</th>
+      <th>Estonian ID</th>
+      <th>Source Text</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= link_to record.abbr_name, abbr_publication_source_path(record) %></td>
+        <td><%= record.abbr_id_est %></td>
+        <td><%= record.abbr_source_text.to_s.truncate(50) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%# Pagination %>
+  <div class="pagination-simple">
+    <% if @page > 1 %>
+      <%= link_to "← Prev", abbr_publication_sources_path(page: @page - 1, q: params[:q]), class: "btn" %>
+    <% end %>
+    <span class="page-info">Page <%= @page %></span>
+    <% if @records.count == @per_page %>
+      <%= link_to "Next →", abbr_publication_sources_path(page: @page + 1, q: params[:q]), class: "btn" %>
+    <% end %>
+  </div>
+</div>

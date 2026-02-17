@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "target": "ES2022",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler", // or "node"
+    "esModuleInterop": true,
+    "strict": true,
+    "noEmit": true,               // Vite/esbuild handles output
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+
+    "paths": {
+      "@frontend/*": ["app/frontend/*"],
+      "@assets/*": ["app/frontend/assets/*"],
+      "@fonts/*": ["app/frontend/assets/fonts/*"],
+      "@images/*": ["app/frontend/assets/images/*"],
+      "@styles/*": ["app/frontend/assets/stylesheets/*"],
+      "@typography/*": ["app/frontend/assets/typography/*"],
+      "@typescript/*": ["app/frontend/typescript/*"],
+      "@controllers/*": ["app/frontend/controllers/*"],
+      "@workers/*": ["app/frontend/typescript/workers/*"],
+    },
+
+    "types": ["node",],
+    //    "types": ["node", "vitest/globals", "@vitest/browser/providers/playwright"],
+  },
+  "include": [
+    "app/frontend/**/*.ts",
+    "app/frontend/**/*.tsx",
+    "app/frontend/**/*.js",
+    "app/frontend/**/*.jsx",
+    "app/frontend/**/*.d.ts",
+    "types",
+    "test/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ]
+}
+
+

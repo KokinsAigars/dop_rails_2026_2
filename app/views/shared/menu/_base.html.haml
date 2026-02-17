@@ -1,0 +1,38 @@
+// before doing changes here, please check other apps which also share this file, currently shared with:
+// - Files app
+// - Projects app
+
+/ set default value
+- cookies['menu_opened'] = "1" if cookies['menu_opened'].blank?
+
+.fixedColumn{class: cookies['menu_opened'] == "1" ? "opened" : "closed"}
+  .collapseIcon.close{onClick: "$('.page_menu_wrapper .fixedColumn').addClass('closed'); $('.page_menu_wrapper .fixedColumn').removeClass('opened'); setCookie('menu_opened', '0');"}
+    %i.material-icons.small chevron_left
+
+  .collapseIcon.open{onClick: "$('.page_menu_wrapper .fixedColumn').addClass('opened'); $('.page_menu_wrapper .fixedColumn').removeClass('closed'); setCookie('menu_opened', '1');"}
+    %i.material-icons.small chevron_right
+
+  .row.menu_row
+    .col.s12
+      -# = render "shared/menu/logo"
+      .hide_on_colapse
+        -# = render "shared/menu/company_info"
+
+  .row.menu_row.divider.divider-light
+
+  = render "app_shared/menu/home_link"
+
+  .row.menu_row
+    .col.s12
+      = link_to projects_path, class: "menu_link" do
+        -# %i.material-icons.small{style: "vertical-align: -8px"} subtitles
+        .hide_on_colapse= t("misc.projects")
+
+  - if ::Abilities::AdminAbility.admin?(current_user)
+    .row.menu_row
+      .col.s12
+        = link_to settings_path, class: "menu_link" do
+          -# %i.material-icons.small{style: "vertical-align: -8px"} settings
+          .hide_on_colapse= t("misc.settings")
+
+  .row.menu_row.divider.divider-light

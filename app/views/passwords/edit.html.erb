@@ -1,0 +1,174 @@
+
+<% content_for :head do %>
+  <meta name="turbo-cache_control" content="no-cache">
+<% end %>
+
+<div class="workspace">
+
+  <div data-controller="passwords"
+       data-passwords-id-value="b51986d3-d01f-4924-8b0d-76e5a4c1587c"
+       data-passwords-state-value="1"
+       data-passwords-token-value="<%= params[:token] %>"
+       class="sessions registration">
+
+    <div class="sessions__side"></div>
+
+    <div class="sessions__frame">
+
+      <div data-passwords-target="guides" class="GUIDS"></div>
+
+      <div class="sessions__card">
+
+        <div class="sessions__body">
+
+          <div class="sessions__logo">
+            <%= render "shared/svg/icon" %>
+          </div>
+
+          <div class="sessions__title">
+            <div data-passwords-target="title"
+                 class="t-sessions__title">
+              <%= t("passwords.title_default_edit") %>
+            </div>
+          </div>
+
+          <div class="sessions__floating-label-wrap">
+            <div data-passwords-target="inputBeautyRegA" class="sessions__floating-label hidden">
+              <div class="t-sessions__superscript"><%= t("registrations.superscript_password") %></div>
+            </div>
+          </div>
+
+          <!-- /passwords/TOKEN -->
+          <%= form_with model: @user,
+                        url: password_path(token: params[:token]),
+                        method: :patch,
+                        class: "cls_passw-form",
+                        data: {
+                          passwords_target: "inputForm",
+                          action: "keydown.enter->passwords#fn_handleEnter"
+                        } do |f| %>
+
+            <div class="sessions__input-wrap passw_form_margin_top" id="regist_step_1">
+              <div class="sessions__form">
+
+                <%= f.password_field :password,
+                                     id: "passwPassw",
+                                     class: "sessions__input t-sessions__input",
+                                     placeholder: t("registrations.create_password"),
+                                     spellcheck: "false",
+                                     autocomplete: "new-password",
+                                     required: true,
+                                     data: {
+                                       passwords_target: "password",
+                                       action: "input->passwords#render"
+                                     }
+                %>
+
+                <%= f.hidden_field :password_confirmation, data: { passwords_target: "confirmation" } %>
+
+                <%= f.text_field :user_name, class: "reg__office-only", tabindex: "-1", autocomplete: "off", data: { passwords_target: "userName" } %>
+
+                <% if @errors %>
+                  <div class="error-banner">
+                    <%= @errors.first %>
+                  </div>
+                <% end %>
+
+                <div>
+                  <button data-passwords-target="eyeBtn"
+                          data-action="mouseenter->passwords#fn_onEyeEnter
+                               mouseleave->passwords#fn_onEyeLeave
+                               click->passwords#fn_toggleShowPassword"
+                          type="button"
+                          class="sessions__toggle-password">
+
+                    <svg class="sessions__toggle-password-icon" width="48" height="48" viewBox="0 0 48 48">
+                      <g data-passwords-target="eyeBtn_open">
+                        <path class="sessions__toggle-password-icon-path"
+                              d="M32.2,26.6l-2.9-2.9c0.3-1.6-0.2-3-1.4-4.4c-1.2-1.4-2.8-1.9-4.6-1.6l-2.9-2.9c0.6-0.3,1.1-0.5,1.7-0.6
+                          c0.6-0.1,1.2-0.2,1.9-0.2c2.5,0,4.6,0.9,6.4,2.6S33,20.5,33,23c0,0.7-0.1,1.3-0.2,1.9C32.7,25.5,32.5,26,32.2,26.6z M38.6,32.9
+                          l-2.9-2.8c1.3-1,2.4-2,3.4-3.2s1.8-2.5,2.5-3.9c-1.7-3.4-4.1-6-7.2-8c-3.1-2-6.6-3-10.4-3c-1,0-1.9,0.1-2.9,0.2
+                          c-0.9,0.1-1.8,0.3-2.8,0.6l-3.1-3.1c1.4-0.6,2.8-1,4.2-1.3C20.9,8.1,22.4,8,24,8c5,0,9.5,1.4,13.5,4.2S44.2,18.6,46,23
+                          c-0.8,2-1.8,3.8-3,5.5C41.7,30.2,40.3,31.6,38.6,32.9z M39.6,45.2l-8.4-8.3c-1.2,0.4-2.3,0.6-3.5,0.8C26.5,37.9,25.3,38,24,38
+                          c-5,0-9.5-1.4-13.4-4.2S3.8,27.4,2,23c0.7-1.8,1.6-3.4,2.7-4.9c1.1-1.5,2.3-2.9,3.7-4.1L2.8,8.4l2.8-2.8l36.8,36.8L39.6,45.2z
+                          M11.1,16.8c-1,0.9-1.9,1.8-2.7,2.9S7,21.8,6.4,23c1.7,3.4,4.1,6,7.2,8s6.6,3,10.4,3c0.7,0,1.3,0,2-0.1s1.3-0.2,1.9-0.3l-1.8-1.9
+                          c-0.4,0.1-0.7,0.2-1,0.2C24.7,32,24.4,32,24,32c-2.5,0-4.6-0.9-6.4-2.6S15,25.5,15,23c0-0.4,0-0.7,0.1-1.1c0.1-0.3,0.1-0.7,0.2-1
+                          L11.1,16.8z"/>
+                      </g>
+                      <g data-passwords-target="eyeBtn_close" class="hidden">
+                        <path class="sessions__toggle-password-icon-path"
+                              d="M24,32c2.5,0,4.6-0.9,6.4-2.6S33,25.5,33,23s-0.9-4.6-2.6-6.4S26.5,14,24,14s-4.6,0.9-6.4,2.6S15,20.5,15,23
+                          s0.9,4.6,2.6,6.4S21.5,32,24,32z M24,28.4c-1.5,0-2.8-0.5-3.8-1.6c-1.1-1-1.6-2.3-1.6-3.8s0.5-2.8,1.6-3.8c1-1,2.3-1.6,3.8-1.6
+                          s2.8,0.5,3.8,1.6c1,1.1,1.6,2.3,1.6,3.8s-0.5,2.8-1.6,3.8C26.8,27.9,25.5,28.4,24,28.4z M24,38c-4.9,0-9.3-1.4-13.3-4.1
+                          S3.8,27.6,2,23c1.8-4.6,4.7-8.2,8.7-10.9S19.1,8,24,8s9.3,1.4,13.3,4.1S44.2,18.4,46,23c-1.8,4.6-4.7,8.2-8.7,10.9S28.9,38,24,38z
+                          M24,34c3.8,0,7.2-1,10.4-3s5.6-4.7,7.2-8c-1.7-3.4-4.1-6-7.2-8s-6.6-3-10.4-3s-7.2,1-10.4,3s-5.6,4.7-7.2,8c1.7,3.4,4.1,6,7.2,8
+                          S20.2,34,24,34z"/>
+
+                      </g>
+                    </svg>
+
+                    <span class="sessions__password-tooltip">
+                      <span data-passwords-target="tooltip_show_pwd" class="t-sessions__superscript hidden"><%= t("sessions.password_show") %></span>
+                      <span data-passwords-target="tooltip_hide_pwd" class="t-sessions__superscript hidden"><%= t("sessions.password_hide") %></span>
+                    </span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- userName -- see documentation -->
+            <div class="reg__office-only" aria-hidden="true">
+              <label for="userName"></label>
+              <input type="text"
+                     id="userName"
+                     name="userName"
+                     data-passwords-target="userName"
+                     data-action="input->registration#trackActivity"
+                     tabindex="-1"
+                     autocomplete="off">
+            </div>
+
+            <div class="reg__input-wrap-empty" id="passw_step_0-1"></div>
+
+            <div class="sessions__actions">
+
+              <div class="sessions__create-wrap">
+                <%= link_to t("sessions.login"), new_session_path, class: "sessions__create-btn t-sessions__proceed_2" %>
+              </div>
+
+              <div class="reg__proceed-space only-s1 only-s2"></div>
+
+              <div class="sessions__proceed">
+                <%= button_tag type: "button",
+                               class: "sessions__proceed-btn t-sessions__proceed",
+                               data: { action: "click->passwords#fn_next" } do %>
+                        <span data-passwords-target="btnLabel">
+                          <%= t("registrations.button_continue") %>
+                        </span>
+                <% end %>
+              </div>
+
+            </div>
+
+          <% end %>
+
+          <div class="hidden" aria-hidden="true">
+            <label for="email"></label>
+            <input id="email" data-passwords-target="email">
+          </div>
+
+        </div>
+
+      </div>
+
+      <%= render "shared/sessions/sessions_footer" %>
+
+    </div>
+
+    <div class="sessions__side"></div>
+
+  </div>
+
+</div>
+

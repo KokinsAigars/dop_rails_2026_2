@@ -1,0 +1,60 @@
+
+service: dop_rails_app
+image: kokinsdockaigars/dop_rails
+
+registry:
+  server: docker.io
+  username: kokinsdockaigars
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+servers:
+  web:
+    hosts:
+      - 16.171.205.47
+
+volumes:
+  - "app_storage:/rails/storage"
+
+ssh:
+  user: ubuntu
+  keys:
+    - /home/ak/.ssh/rix-dop-rails-key.pem
+
+env:
+  secret:
+    - DATABASE_HOST
+    - DATABASE_PORT
+    - DATABASE_USER
+    - DATABASE_PASSWORD
+    - SECRET_KEY_BASE
+    - DATABASE_NAME
+    - DATABASE_URL
+    - SECRET_KEY_BASE
+  clear:
+    APP_VERSION: "2"
+    RAILS_ENV: production
+    RUN_MIGRATIONS: "1"
+    WEB_CONCURRENCY: 2
+    RAILS_SERVE_STATIC_FILES: "1"
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"
+
+builder:
+  arch: "amd64"
+  dockerfile: "Dockerfile.prod.aws"
+
+proxy:
+  host: dop-cloud.com
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 1
+    timeout: 5
+  ssl:
+    enabled: true
+

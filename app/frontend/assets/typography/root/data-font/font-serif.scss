@@ -1,0 +1,43 @@
+
+html[data-font="serif"] {
+
+  /* font-family  */
+  --ff-h1: "Noto Serif", serif, system-ui, -apple-system;
+  --ff-body: "Noto Serif", serif, system-ui, -apple-system;
+  --ff-body-light: "Noto Serif", serif, system-ui, -apple-system;
+  --ff-code: "Roboto Mono", monospace, system-ui, -apple-system, sans-serif;
+
+  /* SIZES (rem) */
+  --font-size-h1: 2.6875rem;
+  --font-size-h2: 2.1875rem;
+  --font-size-h3: 1.8125rem;
+  --font-size-h4: 1.25rem;
+  --font-size-h5: 1rem;
+  --font-size-h6: 0.8125rem;
+  --font-size-body: 1rem;
+  --font-size-body-light: 0.9375rem;
+  --font-size-code: 0.875rem;
+
+  /* LINE-HEIGHTS (unitless) */
+  --font-lineheight-h1: 1.2;
+  --font-lineheight-h2: 1.2;
+  --font-lineheight-h3: 1.2;
+  --font-lineheight-h4: 1.2;
+  --font-lineheight-h5: 1.5;
+  --font-lineheight-h6: 1.5;
+  --font-lineheight-body: 1.5;
+  --font-lineheight-body-light: 1.5;
+  --font-lineheight-code: 1.5;
+
+  /* WEIGHTS */
+  --font-weight-h1: 600;
+  --font-weight-h2: 600;
+  --font-weight-h3: 300;
+  --font-weight-h4: 600;
+  --font-weight-h5: 300;
+  --font-weight-h6: 300;
+  --font-weight-body: 400;
+  --font-weight-body-light: 400;
+  --font-weight-code: 300;
+}
+

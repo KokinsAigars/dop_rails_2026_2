@@ -1,0 +1,46 @@
+<%# app/views/dictionary/ref/bibliographies/index.html.erb %>
+<div class="dictionary-container">
+  <h1>Bibliographies</h1>
+
+  <%= form_with url: ref_bibliographies_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, value: params[:q], placeholder: "Search by title, author, or abbreviation...", class: "search-input" %>
+    <%= f.submit "Search", class: "btn-primary" %>
+  <% end %>
+
+  <div class="alpha-nav">
+    <% ('A'..'Z').each do |l| %>
+      <%= link_to l, ref_bibliographies_path(letter: l), class: ("active" if params[:letter] == l) %>
+    <% end %>
+  </div>
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>Abbrev</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Year/Place</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= link_to record.ref_abbrev, ref_bibliography_path(record), class: "code-link" %></td>
+        <td><%= record.ref_title.truncate(60) %></td>
+        <td><%= record.ref_author %></td>
+        <td><%= [record.ref_place, record.ref_publisher].compact.join(", ") %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination-simple">
+    <% if @page > 1 %>
+      <%= link_to "← Prev", ref_bibliographies_path(page: @page - 1, q: params[:q], letter: params[:letter]), class: "btn" %>
+    <% end %>
+    <span class="page-info">Page <%= @page %></span>
+    <% if @records.count == @per_page %>
+      <%= link_to "Next →", ref_bibliographies_path(page: @page + 1, q: params[:q], letter: params[:letter]), class: "btn" %>
+    <% end %>
+  </div>
+</div>

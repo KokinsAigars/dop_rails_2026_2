@@ -1,0 +1,14 @@
+<%# app/views/admin/bot_attempts/index.html.erb %>
+<%= turbo_frame_tag "explorer_content" do %>
+  <div class="side-list">
+    <div class="tw T-tab">BOT LOGS</div>
+    <div class="rr">
+      <% @bot_attempts.each do |bot| %>
+        <div class="side-item">
+          <strong><%= bot.ip %></strong>
+          <small><%= time_ago_in_words(bot.event_at) %> ago</small>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

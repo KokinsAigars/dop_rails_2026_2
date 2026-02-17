@@ -1,0 +1,13 @@
+
+<!-- The Email Body -->
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Thanks for signing up! To finish your registration, please click the link below:</p>
+
+<p>
+  <%= link_to "Verify My Email", registration_verify_url(token: @token) %>
+</p>
+
+<p>This link will expire in 24 hours.</p>
+

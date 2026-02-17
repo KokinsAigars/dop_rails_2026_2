@@ -1,0 +1,20 @@
+<%# app/views/dictionary/ref/internet_sources/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav><%= link_to "← Back to Internet Sources", ref_internet_sources_path %></nav>
+    <h1><%= @record.ref_title %></h1>
+    <span class="badge">Internet Source</span>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>Direct URL:</strong>
+      <p><%= link_to @record.ref_url, @record.ref_url, target: "_blank", class: "url-display" %></p>
+    </div>
+
+    <%# Even though we skipped history routes, the data is still there %>
+    <div class="detail-row meta-info">
+      <small class="text-muted">Database Version: <%= @record.version %></small>
+    </div>
+  </section>
+</article>

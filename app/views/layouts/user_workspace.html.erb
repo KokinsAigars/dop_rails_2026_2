@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= I18n.locale %>" data-font="system" data-theme="dark">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+
+  <body class="user-workspace-body">
+
+    <%# Vertical stack Layer - 1 %>
+    <%= render "shared/user_workspace/header/header-a" %>
+
+    <%# Vertical stack Layer - 2 %>
+    <%= render "shared/user_workspace/header/header-b" %>
+
+    <%# Vertical stack Layer - 3 %>
+    <div data-controller="user-workspace"
+         data-user-workspace-id-value="3098b300-d561-42b5-96a3-0d864d4ff0f4"
+         data-user-workspace-state-value="0"
+         data-user-workspace-layout-value="<%= Current.user.ui_settings['layout'] || 'right' %>"
+         data-user-workspace-width-value="<%= Current.user.ui_settings['explorer_width'] || 300 %>"
+         class="user-workspace">
+
+      <aside data-user-workspace-target="activityBar"
+             class="user-workspace-activity-bar">
+        <%= render "shared/user_workspace/activity_bar" %>
+      </aside>
+
+
+      <aside data-user-workspace-target="explorer"
+             style="width: <%= Current.user.ui_settings['explorer_width'] || 300 %>px;"
+             class="user-workspace-expl is-hidden">
+
+        <header class="explorer-title">
+          <%= render "shared/user_workspace/explorer/explorer_title" %>
+        </header>
+
+        <div data-user-workspace-target="explorerBody" class="explorer-body">
+            <%= yield(:explorer) %>
+        </div>
+
+      </aside>
+
+      <div data-user-workspace-target="separator"
+           data-action="
+            pointerdown->user-workspace#fn_onMouseDown
+            pointermove->user-workspace#fn_onMouseMove
+            pointerup->user-workspace#fn_onMouseUp
+            dblclick->user-workspace#fn_resetWidth
+            pointercancel->user-workspace#fn_onMouseUp"
+           class="user-workspace-sep">
+      </div>
+
+      <main class="user-workspace-edit">
+
+        <header class="edit-title">
+          <div data-user-workspace-target="tabBar" class="tab-bar">
+            <%= render "shared/user_workspace/tab_template" %>
+          </div>
+        </header>
+
+        <div data-user-workspace-target="workspaceMain" class="edit-body">
+          <%= yield %>
+        </div>
+      </main>
+
+      <aside class="user-workspace-side-bar"></aside>
+
+    </div>
+
+    <%# Vertical stack Layer - 4 %>
+    <%= render "shared/user_workspace/footer/footer" %>
+
+    <div id="flash-registry"> <%= render "shared/flash/flash" %> </div>
+    <div id="modals"><%= yield :modals if content_for?(:modals) %></div>
+    <div id="layers"><%= yield :layers if content_for?(:layers) %></div>
+
+    <%= vite_typescript_tag 'user-workspace_body' %>
+
+    <%= yield :scripts if content_for?(:scripts) %>
+
+  </body>
+
+</html>
+
+
+

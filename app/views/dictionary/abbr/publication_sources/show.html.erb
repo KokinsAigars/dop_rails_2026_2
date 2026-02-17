@@ -1,0 +1,33 @@
+<%# app/views/dictionary/abbr/publication_sources/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav>
+      <%= link_to "← Back to Sources", abbr_publication_sources_path %> |
+      <%= link_to "View History", history_abbr_publication_source_path(@record) %>
+    </nav>
+    <h1><%= @record.abbr_name %></h1>
+  </header>
+
+  <section class="details beauty-form">
+    <div class="detail-row">
+      <strong>Citation:</strong>
+      <blockquote class="citation-box"><%= @record.abbr_citation.presence || "No citation provided." %></blockquote>
+    </div>
+
+    <div class="grid-2">
+      <div class="detail-row">
+        <strong>Estonian ID:</strong>
+        <p><%= @record.abbr_id_est %></p>
+      </div>
+      <div class="detail-row">
+        <strong>Source Text:</strong>
+        <p><%= @record.abbr_source_text %></p>
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <strong>Notes:</strong>
+      <p><%= @record.abbr_note %></p>
+    </div>
+  </section>
+</article>

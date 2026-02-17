@@ -1,0 +1,13 @@
+// before doing changes here, please check other apps which also share this file, currently shared with:
+// - Files app
+// - Projects app
+
+- if current_user.door_user["company_users_count"] > 1
+  .company_title.dropdown-trigger{style: "vertical-align: -16px", "data-target": "dropdown-company"}
+    = current_company.title
+    %i.material-icons{style: "vertical-align: -7px"} keyboard_arrow_down
+
+  %ul.dropdown-content{id: "dropdown-company"}
+    %li= link_to t("misc.change_company"), "#{Rails.application.config.api_keys.site}/#{I18n.locale}/current_company"
+- else
+  = current_company.title

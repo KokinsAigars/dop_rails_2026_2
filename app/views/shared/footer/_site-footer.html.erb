@@ -1,0 +1,23 @@
+
+<div class="site-footer">
+
+  <div class="t-h6" style="margin-top: 30px; margin-left: 20px">
+
+    <% if (rel = current_db_release) %>
+    <div class="t-h6"> DB&nbsp;<%= rel.number %>
+      <% if rel.git_sha.present? %>
+        · <code><%= rel.git_sha %></code>
+      <% end %>
+    </div>
+    <% end %>
+
+    <div class="t-h6">Licensed under MIT</div>
+  </div>
+
+
+
+  <div class="t-h6" style="margin-left: 20px">
+  <%#= link_to t("signin.signin_f_Terms", default: "Terms of Service"), terms_path, class: 't-h6' %>
+  <%#= link_to t("signin.signin_f_Cookies", default: "Cookies"), cookie_consent_path, class: 't-h6' %>
+  </div>
+</div>

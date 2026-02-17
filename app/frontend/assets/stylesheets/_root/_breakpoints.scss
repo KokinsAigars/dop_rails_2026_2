@@ -1,0 +1,80 @@
+
+$bp-desktop: 1200px;
+$bp-tablet: 960px;
+$bp-phone: 600px;
+
+@mixin for-size($bp) {
+  @media (max-width: $bp) { @content; }
+}
+@mixin for-size($bp-desktop) {
+  @media (max-width: $bp-desktop) { @content; }
+}
+@mixin for-size($bp-tablet) {
+  @media (max-width: $bp-tablet) { @content; }
+}
+@mixin for-size($bp-phone) {
+  @media (max-width: $bp-phone) { @content; }
+}
+
+
+
+
+
+
+
+
+//
+//$breakpoints: (
+//        xs:  360px,  // small phones
+//        sm:  480px,
+//        md:  768px,  // tablets / small laptops
+//        lg: 1024px,
+//        xl: 1280px,
+//        xxl: 1536px
+//);
+//
+//@function bp($key) {
+//  @return map-get($breakpoints, $key);
+//}
+//
+//// Min-width (mobile-first)
+//@mixin up($key) {
+//  @media (width >= bp($key)) {
+//    @content;
+//  }
+//}
+//
+//// Max-width (only below)
+//@mixin down($key) {
+//  @media (width < bp($key)) {
+//    @content;
+//  }
+//}
+//
+//// Between two named breakpoints (inclusive lower, exclusive upper)
+//@mixin between($min, $max) {
+//  @media (width >= bp($min)) and (width < bp($max)) {
+//    @content;
+//  }
+//}
+//
+//// Sugar: respond(sm) { ... }  → min-width: sm
+//@mixin respond($key) {
+//  @include up($key) { @content; }
+//}
+
+
+//  sample in scss
+//  .card {
+//    padding: var(--space-4);
+//
+//    @include breakpoints.up(md) {
+//      padding: var(--space-6);
+//    }
+//
+//    @include breakpoints.between(md, xl) {
+//      max-width: 70ch;
+//    }
+//  }
+
+

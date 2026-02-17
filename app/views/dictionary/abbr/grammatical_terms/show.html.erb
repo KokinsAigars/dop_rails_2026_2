@@ -1,0 +1,26 @@
+<%# app/views/dictionary/abbr/grammatical_terms/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav><%= link_to "← Back to Grammatical Terms", abbr_grammatical_terms_path %></nav>
+    <h1><%= @record.abbr_name %></h1>
+    <span class="badge">Grammar</span>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>Meaning (Latvian):</strong>
+      <p><%= @record.abbr_lv.presence || "—" %></p>
+    </div>
+    <div class="detail-row">
+      <strong>Estonian Equivalent:</strong>
+      <p><%= @record.abbr_id_est.presence || "—" %></p>
+    </div>
+    <% if @record.abbr_source_text.present? %>
+      <div class="detail-row">
+        <strong>Source Text Reference:</strong>
+        <p><%= @record.abbr_source_text %></p>
+      </div>
+    <% end %>
+
+  </section>
+</article>

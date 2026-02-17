@@ -1,0 +1,80 @@
+/* Dark */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-site-bg: rgb(21, 27, 35);
+  --color-site-secondary-bg: rgb(33, 40, 48);
+  --color-site-secondary-line: rgb(53, 60, 68);
+  --color-site-footer-bg: rgb(21, 27, 35);
+  --color-site-footer-line: rgb(78, 87, 97);
+  --color-site-error-bg: rgb(232, 21, 55);
+  --color-site-info-bg: rgb(33, 40, 48);
+
+  /* user-workspace */
+  --color-header-a-loading-bg: rgb(38, 44, 50);
+
+  --color-bg-prime: rgb(38,40,43);//background
+  --color-bg-second: rgb(30,31,34);//edit
+  --color-bg-third: rgb(25,26,28);//explorer
+
+  --color-border-prime: rgb(90,93,99);//background
+  --color-border-second: rgb(38,40,43);//edit && explorer
+  --color-border-third: rgb(78,81,87);
+
+  --color-active-bg-prime: rgb(37,50,77);
+  --color-active-border-prime: rgb(53,83,143);
+
+  --color-icon-fill-default: rgb(206,208,214);
+  --color-icon-fill-hover: rgb(206,208,214);
+  --color-icon-fill-active: rgb(255,255,255);
+  --color-icon-bg-hover: rgb(75,76,79);
+  --color-icon-bg-active: rgb(53,116,240);
+  --color-icon-bg-alert: rgb(153,116,240);
+
+
+  /* font colors */
+  --color-fonts-h1: rgb(209, 215, 224);
+  --color-fonts-h2: rgb(209, 215, 224);
+  --color-fonts-h3: rgb(209, 215, 224);
+  --color-fonts-h4: rgb(209, 215, 224);
+  --color-fonts-h5: rgb(209, 215, 224);
+  --color-fonts-h6: rgb(209, 215, 224);
+  --color-fonts-body: rgb(209, 215, 224);
+  --color-fonts-body-light: rgb(145, 152, 161);
+  --color-fonts-body-link: rgb(71, 139, 230);
+  --color-fonts-code: rgb(209, 215, 224);
+  --color-fonts-header: rgb(209, 215, 224);
+  --color-fonts-body-sidebar: rgb(145, 152, 161);
+  --color-fonts-body-sidebar-hover: rgb(209, 215, 224);
+  --color-fonts-header-b: rgb(164, 164, 191);
+
+  /* selection */
+  --color-selection-workspace: rgb(44, 89, 156);
+  --color-selection-sidebar: rgb(44, 89, 156);
+  --color-selection-color: rgb(199, 209, 211);
+  --color-grid-border: rgb(61, 68, 77);
+  --color-grid-border-hover: rgb(61, 68, 77);
+  --color-errors-bg: rgb(251, 214, 208);
+  --color-errors-color: rgb(214, 110, 93);
+
+
+  /* extra */
+  --fg: rgb(232, 230, 230);
+  --surface: rgb(232, 230, 230);
+  --border: rgb(232, 230, 230);
+  --accent: rgb(232, 230, 230);
+  --muted: rgb(232, 230, 230);
+  --success: rgb(232, 230, 230);
+  --warning: rgb(232, 230, 230);
+  --error: rgb(232, 230, 230);
+  --c-nav-bg: rgb(232, 230, 230);
+  --c-nav-line: rgb(232, 230, 230);
+  --ct-nav-title: rgb(232, 230, 230);
+  --modal-bg: rgb(232, 230, 230);
+  --modal-bg-shadow: rgb(58, 58, 58);
+
+  --C-flash-bg: rgb(232, 230, 230);
+  --C-flash-border: rgb(132, 130, 130);
+  --C-flash-color: rgb(25, 25, 28);
+  --C-flash-box-shadow: rgba(0, 0, 0, 0.5);
+}

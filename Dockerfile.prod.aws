@@ -1,0 +1,244 @@
+# Use the official Ruby image as the base for this stage.
+# "AS builder" names this stage so you can later do: COPY --from=builder ...
+# builder stage: has all heavy tools (compilers, node, npm, dev headers). Used to produce artifacts (gems installed, JS build output).
+FROM ruby:3.4.7 AS builder
+
+# Metadata label (doesn’t affect runtime by itself, but can help with ops, filtering, etc.)
+LABEL service="dop-rails"
+
+# Build arguments (available at build time only).
+# Often used to create a non-root user with matching UID/GID to avoid permission issues on mounted volumes.
+ARG UID=1000
+ARG GID=1000
+
+# Environment variables baked into the image.
+# APP_HOME: where your Rails app will live inside the container.
+ENV APP_HOME /rails
+
+# Environment variables baked into the image.
+# Where bundler installs gems. Official ruby images often default to /usr/local/bundle anyway.
+ENV BUNDLE_PATH /usr/local/bundle
+
+# Explicitly set the user to root (official ruby images default to root, but being explicit is fine).
+# Root is needed here because you’re installing OS packages.
+USER root
+
+# Install OS dependencies required to build gems and run your app.
+# set -eux:
+#   -e: fail immediately if any command fails
+#   -u: fail if a variable is undefined
+#   -x: print commands as they run (useful for debugging builds)
+RUN set -eux; \
+    # Update apt package lists (the -qq makes output quieter)
+    apt-get update -qq && apt-get install -y --no-install-recommends \
+      # compilers + toolchain needed for native gems (pg, nokogiri, etc.)
+      build-essential pkg-config libpq-dev \
+      # libvips is used for fast image processing (often via ruby-vips or image_processing gem)
+      libvips libvips-dev \
+      # basic tooling for fetching keys, downloading stuff
+      curl ca-certificates gnupg \
+      # Node + npm (used for JS bundling / assets)
+      nodejs npm \
+      # used by file type detection and MIME database
+      shared-mime-info file \
+      # ImageMagick (Paperclip / MiniMagick / ActiveStorage variants need it depending on setup)
+      imagemagick \
+    ; \
+    # Some distros name node binary "nodejs"; this creates /usr/bin/node symlink if needed
+    if [ ! -x /usr/bin/node ] && [ -x /usr/bin/nodejs ]; then ln -s /usr/bin/nodejs /usr/bin/node; fi; \
+    # Clean apt cache to shrink image
+    rm -rf /var/lib/apt/lists/*
+
+
+# Create a Linux group "app" with the given GID,
+# then create a user "app" with the given UID, in that group.
+# -m creates a home dir (/home/app)
+# -s sets the shell (mostly irrelevant for containers unless you exec into it)
+RUN set -eux; \
+    if ! getent group ${GID} >/dev/null; then groupadd -g ${GID} app; fi; \
+    if ! id -u ${UID} >/dev/null 2>&1; then useradd -m -u ${UID} -g ${GID} -s /bin/bash app; fi
+
+# Set working directory for subsequent RUN/COPY/etc
+WORKDIR $APP_HOME
+
+# Ensure /rails is owned by the app user/group (so you can run without root later)
+# NOTE: Right now /rails may be empty, but this is still fine.
+RUN chown -R ${UID}:${GID} $APP_HOME
+
+# Set the bundler version
+RUN gem install bundler -v '4.0.4'
+
+# Remove any existing lock file (if it exists)
+RUN rm -f Gemfile.lock
+
+# Copy Gemfile + Gemfile.lock first, so Docker layer caching works:
+# When app code changes but Gemfile doesn’t, bundle install layer can be reused.
+# --chown ensures files are owned by app user rather than root.
+COPY --chown=${UID}:${GID} Gemfile Gemfile.lock ./
+
+# Debug output: show Ruby + Bundler versions that are currently inside the image.
+# This helps when builds fail with vague nonzero exits.
+RUN ruby -v && bundle -v && \
+    echo "---- BUNDLED WITH ----" && \
+    ruby -e 'l=File.read("Gemfile.lock"); puts l.split("BUNDLED WITH").last.to_s.strip'
+
+# Bundler settings:
+# - BUNDLE_WITHOUT: don’t install dev/test groups
+# - BUNDLE_DEPLOYMENT=true: enforces lockfile + “deployment mode” rules
+# - BUNDLE_PATH=/usr/local/bundle: install gems into /usr/local/bundle instead of default
+# - BUNDLE_JOBS=2: parallelism for gem installs (fine for small machines)
+# - BUNDLE_RETRY=3: retry downloads
+ENV BUNDLE_WITHOUT="development:test" \
+    BUNDLE_DEPLOYMENT="true" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_JOBS="2" \
+    BUNDLE_RETRY="3"
+
+# Install exact bundler version from lockfile (deterministic builds)
+RUN set -eux; \
+    BUNDLER_VERSION="$(ruby -e 'l=File.read("Gemfile.lock"); puts l.split("BUNDLED WITH").last.to_s.strip')"; \
+    gem install bundler -v "$BUNDLER_VERSION"; \
+    bundle -v
+
+# Switch user to app
+USER app
+
+# Install gems (this currently runs as whichever USER is set above)
+RUN bundle install --verbose --jobs 4 --retry 3
+
+# Copy JS dependency manifests only (for Docker cache efficiency)
+# This makes "npm ci" re-run only when package.json / lock changes.
+COPY --chown=${UID}:${GID} package.json package-lock.json ./
+
+# Install JS dependencies exactly as locked (good for repeatable builds)
+# writes node_modules/ in the working directory (/rails/node_modules)
+RUN npm ci
+
+# Copy the entire app into the image.
+# This invalidates Docker cache for everything after it whenever any file changes.
+COPY --chown=${UID}:${GID} . .
+
+# Set production env for both Rails and Node builds.
+ENV RAILS_ENV=production \
+    NODE_ENV=production
+
+# Some Rails tasks require SECRET_KEY_BASE to be set (especially in production mode),
+# even when you're only precompiling assets.
+# Setting a dummy value is a common workaround during build.
+ENV SECRET_KEY_BASE_DUMMY=1
+
+# Debug: show current user and directory permissions.
+# Also checks for Vite temp dir; "|| true" avoids failing if it doesn't exist.
+RUN id && ls -ld /rails /rails/node_modules /rails/node_modules/.vite-temp || true
+
+# Clean vite temp/cache (optional, but ok)
+RUN rm -rf /rails/public/vite-assets/.vite \
+ && mkdir -p /rails/public/vite-assets \
+ && npm run build
+
+# BUILD_TIME.txt for checking later after deploy
+RUN date -u +"%Y-%m-%dT%H:%M:%SZ" > /rails/public/vite-assets/BUILD_TIME.txt
+
+# Sanity check: prove output exists (optional)
+RUN ls -la /rails/public/vite-assets && ls -la /rails/public/vite-assets/assets
+
+
+
+# Runtime stage (smaller base than the full ruby image)
+# final stage: a clean runtime environment that only contains what you need to run the app.
+# You’re deploying the final stage image, which can copy files from the builder stage.
+FROM ruby:3.4.7-slim AS final
+
+# Metadata label (doesn’t affect runtime by itself, but can help with ops, filtering, etc.)
+LABEL service="dop-rails"
+
+# Same UID/GID idea as builder, so runtime files/dirs can be owned consistently
+ARG UID=1000
+ARG GID=1000
+
+# Where the app lives
+ENV APP_HOME /rails
+
+# Root for installing runtime OS packages and creating the app user
+USER root
+
+# Install OS runtime dependencies again in this image, system dependencys can't be copied from builder stage
+# set -eux:
+#   -e: fail immediately if any command fails
+#   -u: fail if a variable is undefined
+#   -x: print commands as they run (useful for debugging builds)
+RUN set -eux; \
+    apt-get update -qq && apt-get install -y --no-install-recommends \
+      # Postgres runtime client library (needed by pg gem at runtime)
+      libpq5 \
+      # Only needed if you want psql inside the container (migrations, debug)
+      postgresql-client \
+      # runtime libvips
+      libvips \
+      # general tooling
+      curl \
+      dos2unix \
+      # file type detection stack
+      file shared-mime-info libmagic1 \
+      # ImageMagick runtime (paperclip/mini_magick/etc.)
+      imagemagick \
+    ; \
+    # Clean apt cache to shrink image
+    rm -rf /var/lib/apt/lists/*
+
+# Create a Linux group "app" with the given GID
+# Recreate the same app user/group in the final stage (stages don't share users)
+RUN groupadd -g ${GID} app && useradd -m -u ${UID} -g ${GID} -s /bin/bash app
+
+# Set working dir
+WORKDIR $APP_HOME
+
+# Copy gems installed in builder (default bundler path in official ruby images)
+COPY --from=builder /usr/local/bundle /usr/local/bundle
+
+# Copy the entire app directory from builder into final
+COPY --from=builder $APP_HOME $APP_HOME
+
+# Fix ownership so the non-root user can read/write app + gems
+RUN chown -R ${UID}:${GID} $APP_HOME /usr/local/bundle
+
+# Copy entrypoint script into the image
+COPY entrypoint.prod.aws.sh /usr/bin/entrypoint.prod.aws.sh
+# Convert Windows CRLF -> Unix LF (useful if you edited on Windows)
+RUN dos2unix /usr/bin/entrypoint.prod.aws.sh
+# Make it executable
+RUN chmod +x /usr/bin/entrypoint.prod.aws.sh
+
+# Ownership to non-root for the rest of the image/runtime
+USER app
+
+# Create dirs Rails needs to write at runtime:
+# - log: production.log
+# - tmp: cache, pids, sockets
+# - storage: ActiveStorage local disk (if used)
+RUN mkdir -p /rails/log /rails/tmp /rails/storage \
+ && touch /rails/log/production.log \
+ && chown -R ${UID}:${GID} /rails/log /rails/tmp /rails/storage \
+ && chmod -R 775 /rails/log /rails/tmp /rails/storage \
+ && chmod 664 /rails/log/production.log
+
+
+# Set production env vars
+ENV RAILS_ENV="production" \
+    NODE_ENV="production" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_DEPLOYMENT="true" \
+    RAILS_SERVE_STATIC_FILES="true"
+
+# Document that the container listens on 3000 (Rails default)
+EXPOSE 3000
+
+HEALTHCHECK --interval=1s --timeout=5s --retries=30 --start-period=10s \
+  CMD curl -fsS http://127.0.0.1:3000/up >/dev/null || exit 1
+
+ENTRYPOINT ["/usr/bin/entrypoint.prod.aws.sh"]
+
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+
+

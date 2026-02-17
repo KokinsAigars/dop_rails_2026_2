@@ -1,0 +1,60 @@
+
+  <nav>
+
+    <% if Current.user %>
+
+      <% if admin? %>
+        <%= link_to "Admin Dashboard", admin_root_path %> /
+      <% else %>
+        <%= link_to "My Dashboard", account_root_path %> /
+      <% end %>
+
+<!--      <%#= link_to "Home", root_path %> /-->
+
+
+      <%= button_to "Logout", logout_path, method: :delete %>
+    <% else %>
+      <%= link_to "Login", new_session_path, style: "size: 1,5em" %>
+      <%= link_to t("signin.signin_create_account"), signup_path, style: "size: 1,5em" %>
+    <% end %>
+  </nav>
+
+
+  <div class="spacer"></div>
+
+  <%= link_to abbr_books_periodicals_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Books & Periodicals
+  <% end %>
+
+  <%= link_to abbr_general_terms_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> General Terms
+  <% end %>
+
+  <%= link_to abbr_grammatical_terms_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Grammatical Terms
+  <% end %>
+
+  <%= link_to abbr_publication_sources_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Publication Sources
+  <% end %>
+
+  <%= link_to abbr_typographicals_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Typographicals
+  <% end %>
+
+  <div class="spacer"></div>
+
+  <%= link_to ref_bibliographies_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Bibliographies
+  <% end %>
+
+  <%= link_to ref_internet_sources_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Internet Sources
+  <% end %>
+
+  <%= link_to ref_texts_path, class: "nav-btn-dictionary" do %>
+    <i class="icon-book"></i> Texts
+  <% end %>
+
+
+<%= render "shared/temp/site-temp-article-a" %>

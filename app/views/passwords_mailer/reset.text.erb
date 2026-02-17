@@ -1,0 +1,11 @@
+<p>Hello,</p>
+
+<p>You requested a password reset. Click the link below to set a new password.
+  This link will expire in 20 minutes.</p>
+
+<p>
+<p>To reset your password, click the link below:</p>
+<%= link_to "Reset Password", edit_password_url(token: @token) %>
+</p>
+
+<p>If you didn't request this, you can safely ignore this email.</p>

@@ -1,0 +1,61 @@
+<%# app/views/dictionary/ref/bibliographies/show.html.erb %>
+<article class="dictionary-entry bibliography-detail">
+  <header>
+    <nav>
+      <%= link_to "← Back to Bibliography", ref_bibliographies_path %> |
+      <%= link_to "History", history_ref_bibliography_path(@record) %>
+    </nav>
+    <div class="entry-meta">
+      <span class="badge">REF: <%= @record.ref_letter %></span>
+      <span class="badge secondary"><%= @record.ref_type %></span>
+    </div>
+    <h1><%= @record.ref_abbrev %>: <%= @record.ref_title %></h1>
+    <% if @record.ref_title_lv.present? %>
+      <h2 class="sub-title"><%= @record.ref_title_lv %></h2>
+    <% end %>
+  </header>
+
+  <div class="detail-grid">
+    <section class="main-info">
+      <div class="detail-row">
+        <strong>Author:</strong>
+        <p><%= @record.ref_author.presence || "Unknown" %></p>
+      </div>
+
+      <div class="detail-row">
+        <strong>Publication Info:</strong>
+        <p>
+          <%= [@record.ref_publisher, @record.ref_place].compact.join(", ") %>
+          <%= "(Vol. #{@record.ref_volume})" if @record.ref_volume.present? %>
+        </p>
+      </div>
+
+      <% if @record.ref_url.present? %>
+        <div class="detail-row">
+          <strong>Digital Link:</strong>
+          <p><%= link_to @record.ref_url, @record.ref_url, target: "_blank", rel: "noopener" %></p>
+        </div>
+      <% end %>
+    </section>
+
+    <aside class="citation-sidebar">
+      <div class="detail-row">
+        <strong>Citation Format:</strong>
+        <code class="citation-block"><%= @record.ref_citation %></code>
+      </div>
+      <% if @record.ref_footnote.present? %>
+        <div class="detail-row">
+          <strong>Footnote Note:</strong>
+          <small><%= @record.ref_footnote %></small>
+        </div>
+      <% end %>
+    </aside>
+  </div>
+
+  <% if @record.ref_note.present? %>
+    <footer class="entry-footer">
+      <strong>Notes:</strong>
+      <p><%= @record.ref_note %></p>
+    </footer>
+  <% end %>
+</article>

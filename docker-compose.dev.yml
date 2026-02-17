@@ -1,0 +1,55 @@
+name: rails_dop_dev_container
+services:
+  db_dop_dev:
+    image: postgres:17.6
+    container_name: db_dop_dev
+    volumes:
+      - postgres_data_dop:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_DB}
+    env_file: .env
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U $DATABASE_USER -d $DATABASE_DB'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dop_network
+
+  rails_dop_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: rails_dop_dev
+    command: ./entrypoint.dev.sh
+    ports:
+      - "3000:3000" # Rails server
+      - "3040:3040" # Vite server
+      - "8808:8808" # YARD documentation server
+    volumes:
+      - .:/rails # Mounts the current host directory to /rails inside the container
+    depends_on:
+      db_dop_dev:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db_dop_dev
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      VITE_RUBY_DEV_SERVER_URL: http://127.0.0.1:3040
+    env_file: .env
+    networks:
+      - dop_network
+
+networks:
+  dop_network:
+    driver: bridge
+
+volumes:
+  postgres_data_dop:
+

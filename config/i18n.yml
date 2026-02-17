@@ -1,0 +1,4 @@
+translations:
+  - file: app/frontend/locales/:locale.json
+    patterns:
+      - "{en,lv}.*"

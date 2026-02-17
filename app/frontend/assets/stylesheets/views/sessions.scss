@@ -1,0 +1,371 @@
+
+@use "@styles/_root/mixins";
+
+/* local utilities to reduce repetition */
+@mixin size-lock-w($w) { width: $w; min-width: $w; max-width: $w; }
+@mixin size-lock-h($h) { height: $h; min-height: $h; max-height: $h; }
+@mixin size-lock($w, $h) { @include size-lock-w($w); @include size-lock-h($h); }
+%flex-col { display: flex; flex-direction: column; }
+%flex-row { display: flex; flex-direction: row; }
+%flex-center-row { display: flex; flex-direction: row; justify-content: center; align-items: center; }
+%temp-border { border: 1px solid red; }
+
+/* default: hide all stage-scoped blocks */
+.only-s0, .only-s1, .only-s2 { display: none !important; }
+
+.only-s0, .only-s1, .only-s2 {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    &[style*="display: none"] {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* show blocks that match current state on the root */
+[data-controller="sessions"][data-sessions-state-value="0"] .only-s0 { display: flex !important; }
+[data-controller="sessions"][data-sessions-state-value="1"] .only-s1 { display: flex !important; }
+[data-controller="sessions"][data-sessions-state-value="2"] .only-s2 { display: flex !important; }
+
+[data-controller="registration"][data-registration-state-value="0"] .only-s0 { display: flex !important; }
+[data-controller="registration"][data-registration-state-value="1"] .only-s1 { display: flex !important; }
+[data-controller="registration"][data-registration-state-value="2"] .only-s2 { display: flex !important; }
+
+
+.sessions {
+    display: flex;
+    flex-direction: row;
+    flex: 1;    /* Stretch vertically */
+    //flex: 1 1 auto;
+    width: 100%;
+    height: 100%; /* Ensure it fills the workspace */
+    min-height: 0;
+    overflow: hidden;
+}
+.sessions__side {
+    display: flex;
+    /* Use 100% height to fill the .sessions container */
+    height: var(--V-signin-height);
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0; /* Forces both sides to be exactly equal */
+}
+//.sessions__frame {
+//    flex-shrink: 0; /* Prevents the login box from squishing */
+//    width: var(--V-signin-width, 400px); /* Set your desired width */
+//    height: var(--V-signin-height, 500px);
+//    background: var(--color-surface);
+//}
+.sessions__frame{
+    position: relative;
+    overflow: hidden;
+    @include size-lock(var(--V-signin-width), var(--V-signin-height));
+    @extend %flex-col;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.sessions__card {
+    @extend %flex-col;
+    flex-grow: 1;
+    justify-content: center;
+    @include size-lock-w(var(--V-signin-width));
+    border: 1px solid var(--color-signin-bg-line);
+    border-radius: var(--border-radius-medium, 15px);
+    background-color: var(--color-signin-bg);
+    opacity: 100%;
+
+    @include mixins.for-size(600px) {
+        border: 0;
+        transition: 1s;
+    }
+}
+
+.sessions__body{
+    @extend %flex-col;
+    flex-grow: 1;
+    @include size-lock-w(var(--V-signin-width));
+}
+.sessions__logo{
+    margin-top: 35px;
+    @extend %flex-center-row;
+    align-self: center;
+}
+.sessions__title{
+    min-height: 30px;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    @extend %flex-center-row;
+    align-self: center;
+    width: 95%;
+}
+.sessions__floating-label-wrap{
+    margin-top: 15px;
+    @extend %flex-col;
+    align-self: center;
+    align-items: flex-start;
+    width: 80%;
+    height: 15px;
+}
+.sessions__floating-label{
+    position: absolute;
+    z-index: 900;
+    margin-left: 15px;
+    margin-top: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    background-color: var(--color-signin-bg);
+    opacity: 1;
+    height: 20px;}
+      
+// INPUT FIELD
+.sessions__input-wrap{
+    margin-top: 0;
+    display: flex;
+    align-self: center;
+    background-color: transparent;
+    width: 80%;
+    height: 50px;
+    border: 1px solid var(--color-signin-input-border);
+    border-radius: 5px;}
+
+.sessions__form{
+    height: 100%;
+    padding-left: 25px;
+    display: flex;
+    flex: 1;
+    margin-right: auto;
+    border-radius: 5px;}
+
+.sessions__form input,
+.sessions__form input:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+/* kill browser default styling differences */
+.sessions__form .sessions__input {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.sessions__input{
+    margin-left: 0;
+    margin-top: 5px;
+    outline: none;
+    height: 80%;
+    width: 100%;
+    border-radius: 5px;
+    background-color: transparent !important
+}
+
+.sessions__input::placeholder {
+  opacity: 0.7;
+    background-color: transparent !important
+}
+
+.sessions__input-wrap:focus-within,
+.sessions__input:focus-within{
+    color: #000000;
+}
+
+.sessions__input:-webkit-autofill,
+.sessions__input:-webkit-autofill:hover,
+.sessions__input:-webkit-autofill:focus,
+.sessions__input:-webkit-autofill:active{
+  -webkit-text-fill-color: var(--font-color-signin__input);
+  transition: background-color 100000s ease-in-out 0s; /* keeps bg transparent */
+  -webkit-box-shadow: 0 0 0 30px var(--color-signin--login-bg) inset !important;
+}
+
+//input:-internal-autofill-selected
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  }
+
+
+.sessions__toggle-password{
+    display: flex;
+    align-self: center;
+    width: 35px;
+    margin-right: 15px;
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;}
+.sessions__toggle-password-icon{
+    opacity: 0.2;}
+.sessions__toggle-password-icon-path{
+    fill: var(--color-signin-h_icon_bg);}
+.sessions__toggle-password-icon:hover{
+    opacity: 0.5;}
+
+.sessions__password-tooltip{
+    position: absolute;
+    z-index: 900;
+    text-align: right;
+    margin-left: -70px;
+    margin-top: 55px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: var(--color-signin-bg);
+    opacity: 1;}
+
+.sessions__forgot{
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-self: center;
+    width: 80%;
+    min-height: 25px;
+    opacity: 0.7;
+    background-color: transparent;}
+
+.sessions__forgot-btn{
+    outline: none;
+    text-decoration: none; 
+    background-color: transparent; 
+    border: 0;
+    overflow: hidden !important;
+    cursor: pointer;}
+
+.sessions__spacer {
+  width: 10px
+}
+
+.sessions__actions{
+    margin-top: 45px;
+    @extend %flex-row;
+    align-self: center;
+    width: 80%;
+}
+
+.sessions__create-wrap{
+  margin-top: 12px;
+  display: flex;
+  flex-grow: 1;}
+.sessions__create-btn{
+    height: 40px; min-height: 40px; max-height: 40px;
+    width: auto;
+    margin-left: 4px;
+    padding-right: 5px;
+    outline: none;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;}
+
+.sessions__create-btn:hover{
+    //padding-top: 1px;
+    //padding-left: 1px;
+    color: var(--color-signin-T-p-hover);}
+
+.sessions__proceed{
+    display: flex;
+    justify-content: flex-end;}
+
+.sessions__proceed-btn{
+    // 1. Kill the browser defaults
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+
+    height: 40px; min-height: 40px; max-height: 40px;
+    width: auto; min-width: 130px; max-width: 130px;
+    text-align: center;
+    padding: 0 15px;
+    border: 1px solid var(--color-signin-proceed-btn-line);
+    border-radius: 5px;
+    background-color: var(--color-signin-proceed-btn-bg);
+  //background: #f85c23;
+    opacity: 1;
+    cursor: pointer;}
+
+.sessions__proceed-btn span {
+    color:  var(--font-color-signin__proceed) !important;
+}
+
+
+.sessions__proceed-btn:hover{
+    color: var(--font-color-signin__proceed-hover);
+    box-shadow: 1.5px 1.5px 1.5px var(--color-signin-btn-shadow);}
+
+.sessions__proceed-btn:active{
+    background-color: var(--color-signin-btn-bg-active);
+    box-shadow: 1.5px 1.5px 1.5px var(--color-signin-btn-shadow-active);}
+
+// MESSAGE at a bottom
+.sessions__footer{
+    padding-top: 10px;
+    @extend %flex-row;
+    @include size-lock-w(var(--V-signin-width));
+    @include size-lock-h(35px);
+}
+
+.sessions__footer-link, .sessions__footer-link--secondary{
+    margin-left: 15px;
+  align-items: center;
+    outline: none;
+    text-decoration: none; 
+    background-color: transparent;
+    border: 0;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+.sessions__footer-link:hover, .sessions__footer-link--secondary:hover, .sessions__locale-select:hover {
+  color: var(--font-color-signin__footer-hover);
+
+}
+
+.sessions__footer-link--secondary{
+    margin-left: 35px;}
+
+.sessions__footer-spacer{
+    margin: auto;}
+.sessions__footer-spacer--sm{
+  width: 5px;}
+
+.sessions__locale-select {
+    background-color: transparent;
+    border: 0;
+    border-radius: 3px;
+  transform: translateY(-4px);
+}
+
+.sessions__locale-option{
+    border: 0.1px solid var(--color-signin-bg-line);
+    background-color: transparent;
+    padding: 5px 5px;
+}
+
+.sessions__locale-select:focus, .sessions__locale-option:focus {
+    outline: none;
+    background-color: transparent;
+}
+    
+.sessions__locale-option:hover{
+  color: var(--color-signin-T-next-btn-hover);}
+
+.testSubjectA{
+  margin-left: 50px;
+  color: blue;
+  font-size: 1.2rem;
+}
+
+.sessions-footer{
+  height: var(--v-signin-footer-h);
+  max-height: var(--v-signin-footer-h);
+  background: transparent;
+  //border:1px dashed red;
+}
+
+
+//
+//.spinner {
+//  position: absolute;
+//  justify-content: center;
+//  align-self: center;
+//  background-color: transparent;}
+

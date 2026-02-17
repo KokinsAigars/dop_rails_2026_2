@@ -1,0 +1,24 @@
+<div class="sessions__footer">
+
+  <%= link_to t("sessions.f_Terms", default: "Terms of Service"), terms_path, class: "sessions__footer-link t-sessions__footer" %>
+
+  <%= link_to t("sessions.f_Cookies", default: "Cookies"), cookie_consent_path, class: "sessions__footer-link--secondary t-sessions__footer" %>
+
+  <div class="sessions__footer-spacer"></div>
+
+  <div class="sessions__footer-link T-sessions-msg">
+    <select data-controller="i18n"
+            data-i18n-id-value="019a4439-a181-7f2e-9b14-ee6bf5787b3c"
+            data-i18n-locales-value='["en","lv"]'
+            data-action="change->i18n#fn_changeLocale"
+            class="sessions__locale-select t-sessions__footer"
+            id="si_i18n">
+      <option value="en" class="sessions__locale-option t-sessions__footer">english</option>
+      <option value="lv" class="sessions__locale-option t-sessions__footer">latviešu</option>
+    </select>
+    <label for="si_i18n"></label>
+  </div>
+
+  <div class="sessions__footer-spacer--sm"></div>
+
+</div>

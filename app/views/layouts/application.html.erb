@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= I18n.locale %>" data-font="system" data-theme="dark">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+<!--  <body data-ui="<%#= current_ui_settings.to_json %>" class="<%#= class_names(body_css_classes) %>">-->
+  <body>
+
+    <div data-controller="layouts"
+         data-layouts-id-value="019a85d5-2002-77a2-bdec-327a1693588a"
+         class="layout">
+
+
+
+      <%= yield %>
+
+    </div>
+
+    <%# if show_footer? %> <%#= render "shared/footer/site-footer" %> <%# end %>
+
+    <div id="flash-registry"> <%= render "shared/flash/flash" %> </div>
+    <div id="modals"><%= yield :modals if content_for?(:modals) %></div>
+    <div id="layers"><%= yield :layers if content_for?(:layers) %></div>
+
+    <%= vite_typescript_tag 'application_body' %>
+
+    <%= yield :scripts if content_for?(:scripts) %>
+
+  </body>
+</html>
+

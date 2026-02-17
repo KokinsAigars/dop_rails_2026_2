@@ -1,0 +1,115 @@
+
+<div class="workspace">
+
+  <div data-controller="passwords"
+       data-passwords-id-value="b51986d3-d01f-4924-8b0d-76e5a4c1587c"
+       data-passwords-state-value="0"
+       class="sessions registration">
+
+    <div class="sessions__side"></div>
+
+    <div class="sessions__frame">
+
+      <div data-passwords-target="guides" class="GUIDS"></div>
+
+      <div class="sessions__card">
+
+        <div class="sessions__body">
+
+          <div class="sessions__logo">
+            <%= render "shared/svg/icon" %>
+          </div>
+
+          <div class="sessions__title">
+            <div data-passwords-target="title"
+                 class="t-sessions__title">
+              <%= t("passwords.title_default") %>
+            </div>
+          </div>
+
+          <div class="sessions__floating-label-wrap">
+            <div data-passwords-target="inputBeautyRegA" class="sessions__floating-label hidden">
+              <div class="t-sessions__superscript"><%= t("registrations.superscript_emailAddress") %></div>
+            </div>
+          </div>
+
+          <div class="sessions__input-wrap" id="passw_step_0">
+            <div data-action="keydown.enter->passwords#fn_handleEnter"
+                 class="sessions__form">
+
+              <label for="passwEm"></label>
+              <input data-passwords-target="email"
+                     data-passwords-state-value="0"
+                     class="sessions__input t-sessions__input"
+                     id="passwEm"
+                     type="email"
+                     spellcheck="false"
+                     autocomplete="off"
+                     required
+                     placeholder="<%= t("registrations.email_address") %>"
+                     data-action="input->passwords#render">
+            </div>
+          </div>
+
+          <div class="reg__office-only" aria-hidden="true">
+            <label for="userName"></label>
+            <input type="text"
+              id="userName"
+              name="userName"
+              data-passwords-target="userName"
+              tabindex="-1"
+              autocomplete="off">
+          </div>
+
+          <div class="reg__input-wrap-empty" id="passw_step_0-1"></div>
+
+          <div class="sessions__actions">
+
+            <div class="sessions__create-wrap">
+              <%= link_to t("sessions.login"),
+                          new_session_path,
+                          class: "sessions__create-btn t-sessions__proceed_2"
+              %>
+            </div>
+
+            <div class="sessions__proceed">
+              <%= button_tag type: "button",
+                             class: "sessions__proceed-btn t-sessions__proceed",
+                             data: { action: "click->passwords#fn_next" } do %>
+                <span data-passwords-target="btnLabel">
+                  <%= t("registrations.button_continue") %>
+                </span>
+              <% end %>
+            </div>
+
+          </div>
+
+          <div class="hidden" aria-hidden="true">
+            <label for="passwd"></label>
+            <input id="passwd" data-passwords-target="password">
+          </div>
+
+        </div>
+
+      </div>
+
+      <%= render "shared/sessions/sessions_footer" %>
+
+    </div>
+
+    <div class="sessions__side"></div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

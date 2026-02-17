@@ -1,0 +1,41 @@
+
+<p>USER STATS</p>
+
+<div class="stats-container">
+
+  <header class="stats-header">
+    <h1>User Management Overview</h1>
+    <p>System status as of <%= Time.current.strftime("%H:%M") %></p>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="label">Total Accounts</span>
+      <span class="count"><%= User.count %></span>
+    </div>
+
+
+<!--    <div class="stat-card">-->
+<!--      <span class="label">Admins</span>-->
+<!--      <span class="count"><%#= Role.find_by(name: 'admin')&.Users&.count || 0 %></span>-->
+<!--    </div>-->
+
+
+    <div class="stat-card warning">
+      <span class="label">Disabled</span>
+      <span class="count"><%= User.where(enabled: false).count %></span>
+    </div>
+  </div>
+
+  <div class="recent-activity">
+    <h3>Recently Joined</h3>
+    <ul>
+      <% User.order(created_at: :desc).limit(5).each do |u| %>
+        <li><%= u.email_address %> <small><%= time_ago_in_words(u.created_at) %> ago</small></li>
+      <% end %>
+    </ul>
+
+  </div>
+</div>
+
+

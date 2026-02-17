@@ -1,0 +1,46 @@
+class ApplicationRecord < Object
+end
+
+class User < ApplicationRecord
+  include GhostTraceable
+
+  # Checks if the user has a specific role assigned.
+  def has_role?: (String | Symbol) -> bool
+
+  # Specifically, checks if the user has administrative privileges.
+  def admin?: -> bool
+
+  # Combines first and last name into a single string.
+  def full_name: -> String
+
+  # Returns the best available name for UI display.
+  def label: -> String
+
+  # Retrieves the 'ui' sub-hash from the settings JSONB column.
+  def ui_settings: -> Hash[String, untyped]
+
+  # Updates a specific UI setting and persists it to the database immediately.
+  def set_ui!: (String | Symbol, untyped) -> bool
+
+  # Checks if the user's email has been verified.
+  def verified?: -> bool
+
+  # Marks the user as verified and records the current timestamp.
+  def verify!: -> bool
+
+  # Generates a SecureRandom token for password resets.
+  def generate_password_reset_token: -> String
+
+  # Checks if a specific notification type is enabled.
+  def notification_enabled?: (String | Symbol) -> bool
+
+  private
+
+  def private_normalize_email: -> void
+
+  def private_set_defaults: -> void
+
+  def private_set_display_name: -> void
+
+  def private_settings_must_be_valid_json: -> void
+end

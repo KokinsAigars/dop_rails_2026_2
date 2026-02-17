@@ -1,0 +1,54 @@
+
+  <link rel="profile" href="http://www.w3.org/1999/xhtml/vocab">
+
+  <%= display_meta_tags reverse: true %>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Language" content="en_US" />
+
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="googlebot" content="notranslate">
+  <meta name="google" content="notranslate" />
+
+  <meta name="Keywords" content="<%= ", #{@page_title}" if @page_title %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="revisit-after" content="3 days">
+
+  <link rel="icon" href="<%= vite_asset_path('assets/images/favicon.ico') %>">
+
+  <script>
+      (function() {
+          try {
+              var theme = localStorage.getItem('theme');
+              var font  = localStorage.getItem('font');
+
+              // System fallback (only if no saved theme)
+              var systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                  ? "dark"
+                  : "light";
+
+              // Apply
+              document.documentElement.setAttribute("data-theme", theme || systemTheme);
+              document.documentElement.setAttribute("data-font",  font  || "system");
+          } catch (e) {}
+      })();
+  </script>
+
+  <%# 1. Security %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%# 2. Vite Client (Must be high up for HMR) %>
+  <%= vite_client_tag %>
+
+  <%# 3. Styles (Vite will handle preloading automatically in production) %>
+  <%= vite_stylesheet_tag 'application_styles.scss', 'data-turbo-track': 'reload', preload: { as: 'style' }, media: 'all' %>
+
+  <%# 4. Typescript %>
+  <%= vite_typescript_tag 'application_head', 'data-turbo-track': 'reload', type: 'module' %>
+
+  <%# 5. Page-specific stuff %>
+  <% yield :head %>

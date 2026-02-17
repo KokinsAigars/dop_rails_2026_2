@@ -1,0 +1,31 @@
+
+// VARIABLES add to :root
+:root {
+
+  /* GLOBAL */
+  --V-screen-height: 100vh;
+  --V-screen-width: 100vw;
+  --V-scrollbar-width: 16px;
+
+  // SIGNIN && LOGIN
+  --V-signin-height: 650px;
+  --V-signin-width: 450px;
+
+  /* header */
+  --v-header-a-h: 3px;
+  --v-header-b-h: 35px;
+  --v-header-b-icon-w: 26px;
+
+  /* footer */
+  --v-footer-h: 27px;
+
+  /* activity-bar */
+  --v-activity-bar-w: 36px;
+  --v-activity-bar-icon-w: 24px;
+
+  /* Explorer Area */
+  --v-expl-w: 300px;
+
+  --v-title-h: 32px;
+  --v-title-button-h: 24px;
+}

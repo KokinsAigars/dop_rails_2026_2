@@ -1,0 +1,22 @@
+<h1>Abbr Publication Sources</h1>
+
+<div style="margin-bottom: 1rem;">
+  <%= link_to "New", new_ui_abbr_abbr_publication_source_path(locale: I18n.locale) %>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Revision</th>
+    <th>Modified</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @rows.each do |row| %>
+    <%= render partial: "row", locals: { row: row } %>
+  <% end %>
+  </tbody>
+</table>

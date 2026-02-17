@@ -1,0 +1,36 @@
+
+<%# app/views/admin/shared/_explorer.html.erb %>
+<!--<div class="explorer-wrapper" data-controller="explorer">-->
+
+<!--  <div id="explorer-users" class="explorer-section" data-explorer-target="section">-->
+<!--    <div class="explorer-group-header">-->
+<!--      <span>USERS</span>-->
+      <%#= link_to "+", new_admin_user_path, data: { turbo_frame: "main_content" } %>
+<!--    </div>-->
+<!--    <div class="explorer-items">-->
+      <%# if @explorer_users.present? %>
+        <%# @explorer_users.each do |u| %>
+          <%#= link_to u.email_address, admin_user_path(u), data: { turbo_frame: "main_content" }, class: "explorer-item" %>
+        <%# end %>
+      <%# end %>
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div id="explorer-apps" class="explorer-section d-none" data-explorer-target="section">-->
+<!--    <div class="explorer-group-header">-->
+<!--      <span>OAUTH APPS</span>-->
+      <%#= link_to "+", new_admin_oauth_application_path, data: { turbo_frame: "main_content" } %>
+<!--    </div>-->
+<!--    <div class="explorer-items">-->
+      <%# if @apps.present? %>
+        <%# @apps.each do |app| %>
+          <%#= link_to admin_oauth_application_path(app), data: { turbo_frame: "main_content" }, class: "explorer-item" do %>
+<!--            <span class="icon">🔌</span>-->
+<!--            <span class="label"><%#= app.name %></span>-->
+          <%# end %>
+        <%# end %>
+      <%# end %>
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</div>-->

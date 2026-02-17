@@ -1,0 +1,18 @@
+<%# app/views/admin/management/users/_explorer_list.html.erb %>
+<div class="explorer-section">
+  <div class="explorer-category-header">Administrators (<%= admins.count %>)</div>
+  <div class="explorer-group">
+    <% admins.each do |admin| %>
+      <%= render "admin/management/users/explorer_item", user: admin %>
+    <% end %>
+  </div>
+</div>
+
+<div class="explorer-section">
+  <div class="explorer-category-header">Standard Users (<%= users.count %>)</div>
+  <div class="explorer-group">
+    <% users.each do |user| %>
+      <%= render "admin/management/users/explorer_item", user: user %>
+    <% end %>
+  </div>
+</div>

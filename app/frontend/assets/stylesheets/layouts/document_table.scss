@@ -1,0 +1,37 @@
+.tab-bar {
+  display: flex;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  height: 35px;
+  min-height: 35px;
+  overflow-x: auto;
+
+  &:empty {
+    border-bottom: 0; // Hide the line if no tabs are present
+  }
+
+  .workspace-tab {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 100%;
+    border-right: 1px solid var(--color-border);
+    cursor: pointer;
+    font-size: 12px;
+    background: var(--color-bg-dim);
+    color: var(--color-text-dim);
+    user-select: none;
+
+    &.is-active {
+      background: var(--color-bg-main);
+      color: var(--color-text-bright);
+      border-bottom: 2px solid green;
+    }
+
+    .tab-close {
+      margin-left: 10px;
+      opacity: 0.5;
+      &:hover { opacity: 1; color: red; }
+    }
+  }
+}

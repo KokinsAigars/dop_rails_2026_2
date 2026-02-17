@@ -1,0 +1,23 @@
+
+
+/* kill browser default styling differences */
+.input-cls-a input,
+.input-cls-a input:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+.input-cls-a {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+//Actual INPUT
+.input-cls-a {
+  width: 100%;
+  height: 30px;
+  padding-left: 20px;
+  border: 1px solid var(--color-site-secondary-line);
+  background: var(--color-site-secondary-bg);
+}
+
+

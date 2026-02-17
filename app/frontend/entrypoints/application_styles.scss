@@ -1,0 +1,19 @@
+/* Vite Ruby stylesheet entrypoint.
+   This file pulls in SCSS from app/assets so it can be bundled by Vite
+   and referenced via <%= vite_stylesheet_tag 'application_styles.scss' %> */
+
+
+
+@use "@fonts/fonts_OpenSans.scss";
+@use "@fonts/fonts_Roboto.scss";
+@use "@fonts/fonts_NotoSerif.scss";
+@use "@fonts/fonts_RobotoMono.scss";
+@use "@fonts/fonts_Gilroy.scss";
+@use "@fonts/fonts_Inter.scss";
+
+@use "@styles/styles";
+
+@use "@typography/typography";
+
+
+

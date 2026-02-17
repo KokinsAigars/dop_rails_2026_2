@@ -1,0 +1,11 @@
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="label">Active OAuth Apps</span>
+    <span class="count"><%= keys.count %></span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Total Tokens Issued</span>
+    <span class="count"><%= Doorkeeper::AccessToken.count %></span>
+  </div>
+</div>
+

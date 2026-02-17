@@ -1,0 +1,165 @@
+
+/* local utilities to reduce repetition */
+@mixin size-lock-w($w) { width: $w; min-width: $w; max-width: $w; }
+@mixin size-lock-h($h) { height: $h; min-height: $h; max-height: $h; }
+@mixin size-lock($w, $h) { @include size-lock-w($w); @include size-lock-h($h); }
+
+//
+.AB-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  @include size-lock(var(--v-activity-bar-w), var(--v-activity-bar-w));
+  background: transparent;
+  //border: 1px dashed green;
+}
+.AB-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include size-lock(var(--v-activity-bar-icon-w), var(--v-activity-bar-icon-w));
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  .AB-icon-btn-svg{
+    @include size-lock(var(--v-activity-bar-icon-w), var(--v-activity-bar-icon-w));
+  }
+
+  // Default Icon Fill
+  .abib-svg-fill-a {
+    fill: var(--color-icon-fill-default);
+  }
+
+  // 1. HOVER STATE (Only if NOT active)
+  &:hover:not(.is-active), &.is-hovered:not(.is-active) {
+    background: var(--color-icon-bg-hover);
+    .abib-svg-fill-a {
+      fill: var(--color-icon-fill-hover);
+    }
+  }
+
+  // 2. ACTIVE STATE (Higher priority)
+  &.is-active {
+    background: var(--color-icon-bg-active) !important; // Forced for testing
+    .abib-svg-fill-a {
+      fill: var(--color-icon-fill-active);
+    }
+
+    // Ensure hover doesn't change anything while active
+    &:hover {
+      background: var(--color-icon-bg-active) !important;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+//
+.AB-divider-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  @include size-lock-w(var(--v-activity-bar-w));
+  height: 15px;
+  background: transparent;
+  //border: 1px dashed green;
+}
+.AB-divider{
+  @include size-lock-w(var(--v-activity-bar-icon-w));
+  height: 2px;
+  background: var(--color-border-third);
+}
+
+//
+.AB-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  @include size-lock(var(--v-header-b-h), var(--v-header-b-h));
+  background: transparent;
+  //border: 1px dashed green;
+}
+.AB-header-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include size-lock(var(--v-header-b-icon-w), var(--v-header-b-icon-w));
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  overflow: hidden !important;
+  //border: 1px dashed violet;
+}
+.AB-header-icon-btn-svg{
+  @include size-lock(var(--v-header-b-icon-w), var(--v-header-b-icon-w));
+  //border: 1px dashed red;
+}
+.abib-svg-fill-header-a {
+  fill:none;
+  stroke: var(--color-icon-fill-default);
+  stroke-linecap:round;
+  stroke-miterlimit:10;
+}
+.AB-header-icon-btn:hover, .AB-header-icon-btn.is-hovered {
+  background: var(--color-icon-bg-hover);
+  .abib-svg-fill-header-a  {
+    fill:none;
+    stroke: var(--color-icon-fill-hover);
+    stroke-linecap:round;
+    stroke-miterlimit:10;
+  }
+}
+.AB-header-icon-btn.is-active {
+  background: var(--color-icon-bg-active);
+  .abib-svg-fill-header-a {
+    fill:none;
+    stroke: var(--color-icon-fill-active);
+    stroke-linecap:round;
+    stroke-miterlimit:10;
+  }
+}
+
+//
+.AB-header-logout-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  @include size-lock(47px, var(--v-header-b-h));
+  background: transparent;
+  //border: 1px dashed green;
+}
+.AB-header-logout-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include size-lock(100%, 100%);
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  overflow: hidden !important;
+  //border: 1px dashed violet;
+}
+.AB-header-logout-icon-btn-svg {
+
+}
+
+
+//.st0{fill:#E72029;}
+//.st1{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}

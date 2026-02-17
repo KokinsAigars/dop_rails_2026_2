@@ -1,0 +1,6 @@
+module GhostTraceable
+  private
+
+  def private_ghost_trace: -> bool
+end
+

@@ -1,0 +1,26 @@
+<%# app/views/dictionary/abbr/typographicals/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav>
+      <%= link_to "← Back to List", abbr_typographicals_path %> |
+      <%= link_to "History", history_abbr_typographical_path(@record) %>
+    </nav>
+    <h1><%= @record.abbr_name %></h1>
+    <span class="badge">Typographical</span>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>Estonian ID/Symbol:</strong>
+      <p><code><%= @record.abbr_id_est %></code></p>
+    </div>
+
+    <% if @record.abbr_ref_id.present? %>
+      <div class="detail-row">
+        <strong>Reference ID:</strong>
+        <p><%= @record.abbr_ref_id %></p>
+      </div>
+    <% end %>
+
+  </section>
+</article>

@@ -1,0 +1,53 @@
+
+// ROOT
+@use "@styles/_root/reset";
+@use "@styles/_root/variables.scss";
+@use "@styles/_root/index";
+@use "@styles/_root/z-index.scss";
+@use "@styles/_root/theme/theme-dark";
+@use "@styles/_root/theme/theme-light";
+@use "@styles/_root/theme/theme-terra";
+@use "@styles/_root/theme/theme-companyA";
+
+@use "@styles/_root/_breakpoints";
+@use "@styles/_root/_media-queries";
+@use "@styles/_root/_mixins";
+
+@use "@styles/_root/buttons";
+@use "@styles/_root/borders";
+@use "@styles/_root/padding";
+@use "@styles/_root/select.scss";
+
+@use "@styles/_root/guids/guids_horizontal.scss";
+@use "@styles/_root/guids/guids_vertical.scss";
+@use "@styles/_root/guids/screen-dimming.scss";
+
+// LAYOUTS
+@use "layouts/flash.scss";
+@use "layouts/admin.scss";
+@use "layouts/document_table";
+@use "layouts/temp";
+@use "layouts/svg/vivente-icon.scss";
+@use "layouts/explorer.scss";
+@use "layouts/explorer-title.scss";
+@use "layouts/edit.scss";
+@use "layouts/edit-title.scss";
+@use "layouts/header-a.scss";
+@use "layouts/header-b.scss";
+@use "layouts/site-footer";
+@use "layouts/site-sidebar.scss";
+@use "layouts/site-main.scss";
+@use "layouts/errors.scss";
+@use "layouts/footer.scss";
+@use "layouts/ab-icon.scss";
+
+// VIEWS
+@use "views/user-workspace.scss";
+@use "views/sessions.scss";
+@use "views/registration.scss";
+@use "views/application_styles.scss";
+@use "views/companies.scss";
+@use "views/article-a.scss";
+
+
+@use "layouts/kaminari_pagination.scss";

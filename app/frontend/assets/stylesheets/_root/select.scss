@@ -1,0 +1,27 @@
+*::selection {
+  background: var(--color-selection-workspace);
+  color: var(--color-selection-color);
+}
+*::-moz-selection {
+  background: var(--color-selection-workspace);
+  color: var(--color-selection-color);
+}
+
+//.workspace::selection {
+//  background: var(--color-selection-workspace);
+//  color: var(--color-selection-color);
+//}
+//.workspace::-moz-selection{
+//  background: var(--color-selection-workspace);
+//  color: var(--color-selection-color);
+//}
+
+//.sidebar::selection {
+//  background: var(--color-selection-sidebar);
+//  color: var(--color-selection-color);
+//}
+//.sidebar::-moz-selection{
+//  background: var(--color-selection-sidebar);
+//  color: var(--color-selection-color);
+//}
+

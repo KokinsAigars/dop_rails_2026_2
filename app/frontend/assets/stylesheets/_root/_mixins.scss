@@ -1,0 +1,16 @@
+
+@mixin visually-hidden {
+  position: absolute; width:1px; height:1px; overflow:hidden;
+  clip: rect(0 0 1px 1px); clip-path: inset(50%); white-space: nowrap;
+}
+
+$max-width: var(--M-max-width);
+@mixin for-size($max-width) {
+  @media (max-width: $max-width) {
+    @content;
+  }
+
+  @media (min-width: #{$max-width + 1}px) {
+    display: none;
+  }
+}

@@ -1,0 +1,9 @@
+// before doing changes here, please check other apps which also share this file, currently shared with:
+// - Files app
+// - Projects app
+
+.row.menu_row
+  .col.s12
+    = link_to "#{Rails.application.config.api_keys.site}/#{I18n.locale}", class: "menu_link" do
+      -# %i.material-icons.small{style: "vertical-align: -6px"} home
+      .hide_on_colapse= t("misc.home")

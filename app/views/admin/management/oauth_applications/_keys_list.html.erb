@@ -1,0 +1,19 @@
+<p>Key list</p>
+
+<%# app/views/admin/management/oauth_applications/_keys_list.html.erb %>
+<div class="explorer-section">
+  <div class="explorer-category-header">OAUTH APPLICATIONS</div>
+  <div class="explorer-group">
+    <%# CHANGE 'keys.each' loop variable to 'app' %>
+    <% keys.each do |app| %>
+      <div class="explorer-item"
+           data-action="click->user-workspace#fn_selectItem"
+           data-url="<%= admin_management_oauth_application_path(app) %>">
+        <div class="user-label">
+          <span class="main-text"><%= app.name %></span>
+          <span class="sub-text">UID: <%= app.uid.truncate(12) %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

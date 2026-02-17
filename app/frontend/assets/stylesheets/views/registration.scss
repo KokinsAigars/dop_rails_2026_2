@@ -1,0 +1,92 @@
+.registration {
+
+  // Base stage hiding (only affects children of .registration)
+  .stage-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  // Active State logic
+  &[data-registration-state-value="0"] .only-s0,
+  &[data-registration-state-value="1"] .only-s1,
+  &[data-registration-state-value="2"] .only-s2 {
+    display: flex !important;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .reg__space{
+    margin-top: 20px;
+  }
+
+  .reg__floating-label-wrap{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: flex-start;
+    width: 80%;
+    height: 15px;
+  }
+
+  .reg__input-wrap-empty{
+    margin-top: 0;
+    display: flex;
+    align-self: center;
+    background-color: transparent;
+    width: 80%;
+    height: 50px;
+    border-radius: 5px;}
+
+}
+
+.reg__proceed-btn{
+  height: 40px; min-height: 40px; max-height: 40px;
+  width: auto; min-width: 130px; max-width: 130px;
+  text-align: center;
+  padding: 0 15px;
+  border: 1px solid var(--color-reg-proceed-btn-line);
+  border-radius: 5px;
+  background-color: var(--color-reg-proceed-btn-bg);
+  //background: #f85c23;
+  opacity: 1;
+  cursor: pointer;}
+
+.reg__proceed-btn:hover{
+  color: var(--font-color-signin__proceed-hover);
+  box-shadow: 1.5px 1.5px 1.5px var(--color-signin-btn-shadow);}
+
+.reg__proceed-btn:active{
+  background-color: var(--color-signin-btn-bg-active);
+  box-shadow: 1.5px 1.5px 1.5px var(--color-signin-btn-shadow-active);}
+
+// honeypot
+.reg__office-only {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.reg__proceed-space{
+  display: flex;
+  flex-direction: column; // Stack them vertically
+  gap: 16px;              // Precise space between the buttons
+  width: 100%;            // Ensure they fill the container
+}
+
+.passw_form_margin_top{
+  margin-top: 2px;
+  margin-bottom: 20px;
+}
+
+// to switch off Rails form_with css
+// just display my classes instead of Rails ones
+.cls_passw-form{
+  display: contents;
+}

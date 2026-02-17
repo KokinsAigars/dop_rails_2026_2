@@ -1,0 +1,15 @@
+<nav class="explorer-breadcrumbs">
+  <span data-action="click->user-workspace#fn_loadSection"
+        data-url="<%= admin_storage_explorer_path(path: '') %>">
+    Root
+  </span>
+
+  <% breadcrumbs(@path).each do |node| %>
+    <span class="sep">/</span>
+    <span data-action="click->user-workspace#fn_loadSection"
+          data-url="<%= admin_storage_explorer_path(path: node[:path]) %>">
+      <%= node[:name] %>
+    </span>
+  <% end %>
+</nav>
+

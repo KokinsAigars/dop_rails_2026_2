@@ -1,0 +1,9 @@
+// before doing changes here, please check other apps which also share this file, currently shared with:
+// - Files app
+// - Projects app
+
+.logo
+  - if logo_url.present?
+    %img{src: logo_url, class: "comapny_logo"}
+  - else
+    = image_tag "company_logo.png", class: "comapny_logo"

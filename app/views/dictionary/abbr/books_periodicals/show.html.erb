@@ -1,0 +1,24 @@
+<%# app/views/dictionary/abbr/books_periodicals/show.html.erb %>
+<article class="article-layout">
+  <header>
+    <nav><%= link_to "← Back to list", abbr_books_periodicals_path %></nav>
+    <h1><%= @record.abbr_name %></h1>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>Latvian/Full Title:</strong>
+      <span><%= @record.abbr_lv %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Estonian/Reference:</strong>
+      <span><%= @record.abbr_id_est %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Notes:</strong>
+      <p><%= @record.abbr_note %></p>
+    </div>
+  </section>
+</article>
+
+

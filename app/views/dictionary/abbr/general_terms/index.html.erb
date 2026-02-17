@@ -1,0 +1,46 @@
+<%# app/views/dictionary/abbr/general_terms/index.html.erb %>
+<div class="dictionary-container">
+  <h1>General Terms (Abbreviations)</h1>
+
+  <%= form_with url: abbr_general_terms_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, value: params[:q], placeholder: "Search general terms...", class: "search-input" %>
+    <%= f.submit "Search", class: "btn-primary" %>
+  <% end %>
+
+  <div class="alpha-nav">
+    <% ('A'..'Z').each do |letter| %>
+      <%= link_to letter, abbr_general_terms_path(letter: letter),
+                  class: ("active" if params[:letter] == letter) %>
+    <% end %>
+  </div>
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>Abbreviation</th>
+      <th>Estonian</th>
+      <th>Latvian</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= link_to record.abbr_name, abbr_general_term_path(record) %></td>
+        <td><%= record.abbr_id_est %></td>
+        <td><%= record.abbr_lv %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%# Simple Pagination %>
+  <div class="pagination-simple">
+    <% if @page > 1 %>
+      <%= link_to "← Previous", abbr_general_terms_path(page: @page - 1, q: params[:q], letter: params[:letter]), class: "btn" %>
+    <% end %>
+    <span class="page-info">Page <%= @page %></span>
+    <% if @records.count == @per_page %>
+      <%= link_to "Next →", abbr_general_terms_path(page: @page + 1, q: params[:q], letter: params[:letter]), class: "btn" %>
+    <% end %>
+  </div>
+</div>

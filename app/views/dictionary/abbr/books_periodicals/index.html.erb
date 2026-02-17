@@ -1,0 +1,66 @@
+<%# app/views/dictionary/abbr/books_periodicals/index.html.erb %>
+
+<div class="article-layout">
+
+  <div class="body-light">
+    <%= link_to "Home", root_path %> /
+    <% if admin? %>
+      <%= link_to "Admin Dashboard", admin_root_path %> /
+    <% else %>
+      <%= link_to "My Dashboard", account_root_path %> /
+    <% end %>
+  </div>
+
+  <div class="title-article-h1">
+    <h1>Books & Periodicals</h1>
+  </div>
+  <div class="sub-title-article-h1">
+    <h6>Last modified: </h6>
+  </div>
+
+
+  <%= form_with url: abbr_books_periodicals_path, method: :get, local: true, class: "search-form" do |f| %>
+    <%= f.text_field :q, value: params[:q], placeholder: "Search abbreviations...", class: "search-input" %>
+    <%= f.submit "Search", class: "btn-primary" %>
+  <% end %>
+
+
+  <div class="title-article-h3">
+    <% ('A'..'Z').each do |letter| %>
+      <%= link_to letter, abbr_books_periodicals_path(letter: letter),
+                  class: ("active" if params[:letter] == letter) %>
+    <% end %>
+  </div>
+
+
+  <table class="dic-table">
+    <thead>
+    <tr>
+      <th>Abbreviation</th>
+      <th>Full Name / Meaning</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= link_to record.abbr_name, abbr_books_periodical_path(record.id) %></td>
+        <td><%= link_to record.abbr_id_est, abbr_books_periodical_path(record.id) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= paginate @records, window: 0, outer_window: 0, left: 0, right: 0 %>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+

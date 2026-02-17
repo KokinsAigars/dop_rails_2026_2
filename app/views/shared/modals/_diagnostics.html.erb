@@ -1,0 +1,29 @@
+
+<% content_for :modals do %>
+  <section
+    id="diagnostics-modal"
+    class="modal"
+    hidden
+    data-controller="modal"
+    data-action="open->modal#open">
+
+    <div class="modal__backdrop" data-modal-target="backdrop" data-action="click->modal#backdrop"></div>
+
+    <div class="modal__window" data-modal-target="window" tabindex="-1" aria-labelledby="diag-title">
+      <header class="modal__header">
+        <div class="modal__title" id="diag-title">System diagnostics</div>
+        <button class="modal__close" type="button" aria-label="Close" data-action="modal#close">×</button>
+      </header>
+
+      <div data-controller="diagnostics" data-diagnostics-target="content">
+        <!-- DiagnosticsController will render here -->
+      </div>
+
+      <footer style="margin-top:1rem; display:flex; justify-content:flex-end; gap:.5rem;">
+        <button type="button" class="btn" data-action="modal#close">Close</button>
+      </footer>
+    </div>
+  </section>
+<% end %>
+
+

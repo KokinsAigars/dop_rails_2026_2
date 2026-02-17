@@ -1,0 +1,39 @@
+
+//-----------
+//-----------
+%guid-h {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #ef10dc;
+  z-index: 2147483640;
+  pointer-events: none;
+  opacity: 0.5;
+}
+%guid-color-red {
+  height: 1px;
+  background: #d71218;
+  opacity: 0.5;
+}
+
+// Registration form guids - horizontal
+.reg-gh0 { @extend %guid-h; @extend %guid-color-red; top: 210px;}
+.reg-gh1 { @extend %guid-h; top: 261px;}
+.reg-gh1-1 { @extend %guid-h; top: 264px;}
+.reg-gh2 { @extend %guid-h; top: 310px;}
+.reg-gh3 { @extend %guid-h; top: 331px;}
+.reg-gh3-1 { @extend %guid-h; top: 334px;}
+.reg-gh4 { @extend %guid-h; top: 380px;}
+.reg-gh5 { @extend %guid-h; top: 426px;}
+.reg-gh6 { @extend %guid-h; top: 451px;}
+.reg-gh7 { @extend %guid-h; top: 465px;}
+
+// Sign in form guids - horizontal
+.signi-gh1 { @extend %guid-h; top: 261px;}
+.signi-gh2 { @extend %guid-h; top: 264px;}
+.signi-gh3 { @extend %guid-h; top: 310px;}
+.signi-gh4 { @extend %guid-h; top: 396px;}
+.signi-gh5 { @extend %guid-h; top: 421px;}
+.signi-gh6 { @extend %guid-h; top: 435px;}
+

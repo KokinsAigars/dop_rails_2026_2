@@ -1,0 +1,33 @@
+<%# app/views/admin/global_configs/index.html.erb %>
+<div class="admin-panel">
+  <h1>System Settings</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @configs.each do |config| %>
+      <tr>
+        <td><%= config.key.humanize %></td>
+        <td>
+            <span class="status-tag <%= config.value == 'true' ? 'enabled' : 'disabled' %>">
+              <%= config.value.upcase %>
+            </span>
+        </td>
+        <td>
+          <%= button_to "Toggle", admin_global_config_path(config),
+                        method: :patch,
+                        class: "btn-toggle" %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+

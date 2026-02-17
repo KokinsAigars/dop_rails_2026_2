@@ -1,0 +1,218 @@
+en:
+
+  sessions:
+    title_msg_default: "Dictionary of Pāļi"
+    title_msg_Reset_password: "Change your password"
+    placeholder_EmailUser: "Enter email address"
+    placeholder_Password: "Password"
+    superscript_email: "email address"
+    superscript_password: "password"
+    forgot_msg: "Forgot?"
+    create_account: "Create an account"
+    proceed_btn: "Proceed"
+    placeholder_incorrect: "incorrect"
+    password_show: "Show password"
+    password_hide: "Hide password"
+    f_Terms: "Terms of Service"
+    f_Cookies: "Cookie Consent"
+    Cookies_alert: "This website uses cookies"
+    placeholder_OnForgot: "Enter email address"
+    title_OnForgot: "Reset your password"
+    Alert_Email_sent: "Email sent to "
+    login: "Sign-in"
+
+  registrations:
+    title_default: "Registration Form"
+    first_name: "First Name"
+    last_name: "Last Name"
+    email_address: "Email Address"
+    enter_email_address: "Enter your email"
+    create_password: "Create Password"
+    reset_password: "Reset Password ?"
+    button_back: "Back"
+    button_next: "Next"
+    button_updating: "Updating..."
+    button_success: "Success!"
+    button_processing: "Processing..."
+    button_continue: "Continue"
+    button_submit: "Submit"
+    superscript_firstName: "first name"
+    superscript_lastName: "last name"
+    superscript_emailAddress: "email address"
+    superscript_password: "password"
+
+  passwords:
+    title_default: "Change password"
+    title_default_edit: "Create a password"
+    rate_limit_error: "Too many password reset requests. Please try again in a few minutes."
+    reset_sent_notice: "Email sent with password reset instructions"
+    reset_success: "Your password has been reset."
+    invalid_token: "The password reset link is invalid or has expired."
+    database_failed: "Database update failed. Please try again."
+    check_inbox_title: "Check your email"
+    mailer_subject: "Reset your password"
+    mailer:
+      hello: "Hello,"
+      instruction: "You can reset your password by clicking the link below:"
+      reset_link: "Reset password"
+      fallback: "If you didn't request this, please ignore this email."
+
+  activerecord:
+    models:
+      user: "users"
+    attributes:
+      user:
+        email: E-mail
+        first_name: Name
+        last_name: Surname
+        full_name: Name, Surname
+        password: Password
+        new_password: New password
+        new_password_confirmation: New password confirmation
+        default_language: Language
+        send_add_user_notification: Send notification about adding user
+        role: Role
+
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              existing_user: is already added to company
+
+  app_types:
+    files: Documents
+    projects: Projects
+
+  audit:
+    action: Action
+    settings: Settings
+    object_attrs: Object attributes
+    changed_attrs: Changed attributes
+    timestamp: Timestamp
+    user: User
+    table: Table
+    table_object_id: table object id
+    no_data: No data yet
+    system: system
+    actions:
+      i: Insert
+      u: Update
+      d: Delete
+
+  companies:
+    title: Companies
+    info: Choose active company to work with
+
+  flashes:
+    success_create: "Successfully created."
+    success_create_with_name: "Successfully created '%{name}'."
+    success_save: "Successfully saved."
+    success_save_with_name: "Successfully saved '%{name}'."
+    success_destroy: "Successfully deleted."
+    success_remove: "Successfully removed."
+    error_on_save: "Error on save."
+
+  languages:
+    en: English
+    lv: Latviešu
+
+  mailer:
+    hello: Hello!
+    reset_password:
+      subject: Reset password
+      button: Reset password
+      info_text: Your password reset usr is this
+      click_here: Click here
+      link_limit: Reset url works only 15 minutes
+    send_add_user_notification:
+      subject: Invitations to join company '%{company_title}'
+      info_text: You are invited to join company '%{company_title}'
+      info_text_2: Please open link to join and access company data
+      open: Open
+      info_text_3: If you are not registered please click here
+      forget_password_link: forgot password
+
+  misc:
+    privacy_banner: By continuing homepage browsing you accept this page cookies.
+    change: Change
+    logout: Logout
+    home: Home
+    no: "No"
+    save: Save
+    back: Back
+    settings: Settings
+    audit: Audit
+    login_button: Proceed
+    continue: Continue
+    reset_password: Reset password
+    terms_of_service: Terms of service
+    cookie_consent: Cookie consent
+    login_title: Sign in to Ramus Stock
+    company: Company
+    edit: Edit
+    delete: Delete
+    no_data: "No"
+    language: Language
+
+  models:
+    user: "user"
+
+  layouts:
+    Search:
+      placeholder: Search
+      button: Search
+      results: Search results
+      no_results: No results found
+    Theme:
+      Theme_Light: Light theme
+      Theme_Dark: Dark theme
+      Theme_Custom: Customized
+    Settings:
+      Change_Layout: Change Layout
+      Settings: Settings
+      Header: Header
+      Footer: Footer
+      Sign_Out: Sign Out
+      Appearance: Appearance
+      ThemePref: Theme preferences
+      LanguagePref: Language
+      LayoutPref: Layout
+      ProfilePref: Profile
+      User: User
+      eMail: e-mail
+      LoginPassword: Login and Password
+      ActivityBar: Activity Bar
+      SaveClose: Save and Close
+      Reset: Reset
+
+  users:
+    title: Users
+    new: New user
+    can_not_remove_yourself: Can't remove yourself
+    confirmation: Are you sure?
+    remove: Remove
+    forgot_password: Forgot password
+    reset_password_info: Instructions of password reset will be sent to email
+    roles:
+      admin: Admin
+      user: User
+    notifications:
+      created: User %{name} created
+      updated: User %{name} updated
+      self_delete_error: Can't remove yourself
+      last_admin_delete_error: Last admin can't be deleted
+      deleted: User %{name} deleted
+      delete_failed: User %{name} delete failed
+
+      not_correct_input: Email and/or password - not correct
+      set_new_password: Please enter new password
+      password_and_confirmation_is_not_maching: Password and pasword confirmation is not matching
+      thanks_please_login: Thank you, please login now
+      no_companies_for_user: Your user is not assigned to any company, please contact the administrator
+      please_login: Please login
+      password_reset_email_no_found: No users with that email
+      password_reset_sent_to_email: Password reset instructions sent to email
+      emails_already_sent: Password reset instructions already sent to email, please check your email (including spam folder)
+      token_is_expired: Password link is not correct or expired
+

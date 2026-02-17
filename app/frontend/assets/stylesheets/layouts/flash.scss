@@ -1,0 +1,134 @@
+
+//flash[:alert] = "Bot Intercepted from IP: 192.168.1.1"
+//notify("Be careful", :warning)
+
+.flash-notice { border-left-color: #ffffff; } /* Blue - Info */
+.flash-alert  { border-left-color: #ef4444; } /* Red - Bot Trapped! */
+.flash-success { border-left-color: #0070ff; } /* Green - Saved */
+.flash-warning { border-left-color: yellow; }
+
+#flash-registry {
+  /* 1. The Anchor: Locks it to the viewport */
+  position: fixed;
+  bottom: 24px; /* Space from bottom */
+  right: 24px;  /* Space from right */
+  z-index: 10000;
+
+  /* 2. The Logic: Stacks messages vertically */
+  display: flex;
+  flex-direction: column-reverse; /* Newest on top, pushes old ones UP */
+  gap: 12px;
+
+  //align-items: flex-start;
+  //justify-content: space-between;
+
+  /* 3. The Passthrough: Ensures you can still click things BEHIND the container */
+  pointer-events: none;
+}
+
+/* Individual messages */
+.flash-message {
+  pointer-events: auto; /* Re-enable clicking for the actual message/close button */
+  min-width: 300px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+
+
+
+.flash-content {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.flash-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+.flash-close:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+.flash-close-svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Slide Out Animation */
+.flash-closing {
+  animation: slideOutRight 0.3s ease-in forwards !important;
+}
+
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(100%); }
+}
+
+.flash-message {
+  /* Re-enable pointer events so you can click the 'X' */
+  pointer-events: auto;
+
+  width: 320px;
+  padding: 16px;
+  background: var(--C-flash-bg);
+  color: var(--C-flash-color);
+  border-radius: 4px;
+  border-left: 4px solid var(--C-flash-border);
+  box-shadow: 0 4px 12px var(--C-flash-box-shadow);
+
+  /* Animation: Slide in from the right */
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+
+
+
+
+/* Ensure the toast itself DOES catch clicks */
+.flash-message {
+  pointer-events: auto;
+  /* Add a slight blur for that premium "Beauty UI" feel */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.flash-success {
+  border-left: 4px solid #10b981;
+  background: rgb(182, 189, 244); /* Deep dark green tint */
+}
+.flash-alert {
+  border-left: 4px solid #ef4444;
+  background: rgb(123,189,233);/* Deep dark red tint */
+}
+.flash-info {
+  border-left: 4px solid #3b82f6;
+  background: #1a1f2e; /* Deep dark blue tint */
+}
+
+.flash-title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  margin-bottom: 4px;
+  opacity: 0.6;
+}
+

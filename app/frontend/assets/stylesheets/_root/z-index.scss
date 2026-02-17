@@ -1,0 +1,21 @@
+
+// VARIABLES add to :root
+/* Z-DEPTH */
+:root {
+
+  /* BODY */
+  --z-index-body-1: 1;
+
+  /* Footer group */
+  --z-index-footer-50: 50;
+
+  /* Header group */
+  --z-index-header-100: 100;
+
+  /* Workspace group */
+  --z-index-workspace-200: 200;
+  --z-index-workspace-220: 220;
+
+  /* Action group */
+  --z-index-action-1000: 1000;
+}

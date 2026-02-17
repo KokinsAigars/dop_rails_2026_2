@@ -1,0 +1,32 @@
+<%# app/views/dictionary/dic/vocab/index.html.erb %>
+<div class="dictionary-container">
+  <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
+
+  <div class="lang-nav">
+    <% %w[pi en lv].each do |l| %>
+      <%= link_to l.upcase, dic_vocab_index_path(lang: l, q: params[:q]),
+                  class: ("active" if @lang == l) %>
+    <% end %>
+  </div>
+
+  <%= form_with url: dic_vocab_index_path, method: :get, local: true do |f| %>
+    <%= f.hidden_field :lang, value: @lang %>
+    <%= f.text_field :q, value: @query, placeholder: "Type a word..." %>
+    <%= f.submit "Search" %>
+  <% end %>
+
+  <div class="results-list">
+    <% if @terms.any? %>
+      <ul>
+        <% @terms.each do |v| %>
+          <li>
+            <%# This link triggers the EntriesController#index logic we discussed %>
+            <%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang) %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No words found matching "<%= @query %>".</p>
+    <% end %>
+  </div>
+</div>

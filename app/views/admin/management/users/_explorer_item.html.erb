@@ -1,0 +1,10 @@
+<%# app/views/admin/management/users/_explorer_item.html.erb %>
+<div class="explorer-item"
+     data-action="click->user-workspace#fn_selectUser"
+     data-url="<%= edit_admin_management_user_path(user) %>">
+  <div class="user-status-dot <%= user.enabled ? 'online' : 'offline' %>"></div>
+  <div class="user-label">
+    <span class="main-text"><%= user.first_name %> <%= user.last_name %></span>
+    <span class="sub-text"><%= user.email_address %></span>
+  </div>
+</div>

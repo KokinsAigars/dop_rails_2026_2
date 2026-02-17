@@ -1,0 +1,7 @@
+
+.edit-body{
+  flex: 1 1 auto; /* Take all remaining vertical space */
+  overflow-y: auto; /* Allow the content to scroll */
+  background: var(--color-bg-second);
+  border-radius: 0 0 10px 10px;
+}

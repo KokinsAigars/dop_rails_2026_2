@@ -1,0 +1,187 @@
+
+/* Target the body when it has the active class */
+body.resizing-active {
+  /* 1. Global cursor safety */
+  cursor: col-resize !important;
+
+  /* 2. Target the Edit Area and Explorer Body */
+  .user-workspace-edit,
+  .explorer-body {
+    pointer-events: none !important;
+    user-select: none !important; /* Extra safety against text highlighting */
+  }
+}
+
+.user-workspace-body {
+  z-index: var(--z-index-body-1);
+  height: var(--V-screen-height);
+  width: var(--V-screen-width);
+  background: var(--color-bg-prime);
+  margin: 0;
+}
+
+
+.user-workspace {
+  z-index: var(--z-index-workspace-200);
+  display: flex;
+  align-items: stretch; /* Ensure all children take full height */
+  justify-content: flex-start; /* Align from the start of the flex direction */
+  height: calc(100vh - var(--v-header-a-h) - var(--v-header-b-h) - var(--v-footer-h));
+  width: var(--V-screen-width);
+  overflow: hidden;
+  background: var(--color-bg-prime);
+  border-left: 1px solid var(--color-border-prime);
+  border-right: 1px solid var(--color-border-prime);
+}
+.user-workspace[data-user-workspace-layout-value="right"] { flex-direction: row-reverse; }
+.user-workspace[data-user-workspace-layout-value="left"]  { flex-direction: row; }
+.user-workspace.resizing-active {
+  cursor: col-resize !important; /* Force the cursor globally during drag */
+
+  /* Prevent text selection while dragging */
+  user-select: none;
+}
+
+
+/* Side bar spacer */
+.user-workspace-side-bar{
+  width: 6px;
+}
+
+/* Edit Area */
+.user-workspace-edit {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0; /* Grow to fill space */
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Separation line */
+.user-workspace-sep {
+  z-index: var(--z-index-workspace-220);
+  width: 5px;
+  cursor: ew-resize;
+  flex-shrink: 0; /* Prevents it from being squashed */
+  background: var(--color-bg-prime);
+  touch-action: none; /* REQUIRED for pointer events to work correctly on mobile/touch */
+
+  &.is-active {
+    /* Make it a bit wider visually during drag so it's easier to keep track of */
+    background: var(--color-primary-active);
+  }
+}
+.user-workspace-sep:hover, user-workspace-sep.active {
+  background: var(--color-bg-prime);
+}
+.user-workspace-sep.is-active {
+  width: 5px;
+  cursor: ew-resize;
+  background: var(--color-bg-prime);
+  z-index: var(--z-index-action-1000);
+  opacity: 1;
+}
+.is-resizing-hidden-cursor {
+  cursor: none !important;
+}
+
+/* Explorer Area */
+.user-workspace-expl {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; // Don't let flexbox squash this
+
+  &:not(.is-resizing) {
+    transition: width 0.2s; // Only animate when NOT dragging
+  }
+
+  &.is-hidden {
+    display: none !important; // Force it away
+
+    & + .user-workspace-sep {
+      display: none !important;
+    }
+  }
+}
+.user-workspace-expl.is-hidden,
+.user-workspace-sep.is-hidden {
+  display: none !important;
+}
+
+/* Activity bar */
+.user-workspace-activity-bar{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  -ms-flex-align: start;
+  width: var(--v-activity-bar-w);
+  background: var(--color-bg-prime);
+}
+
+
+
+/* Activity Bar Button Active State */
+.AB-icon-btn.is-active {
+  background-color: var(--active-bg-color);
+  color: var(--primary-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+
+//
+.explorer-category {
+  .category-header {
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    background: rgba(0,0,0,0.05);
+  }
+
+  .explorer-item {
+    padding: 6px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover { background: var(--color-bg-hover); }
+    &.is-active { background: var(--color-bg-active); color: var(--color-primary); }
+  }
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  &.is-online { background: #28a745; }
+  &.is-offline { background: #6c757d; }
+}
+
+.explorer-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

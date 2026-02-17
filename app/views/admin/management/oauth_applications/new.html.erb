@@ -1,0 +1,33 @@
+<!--new.html.erb-->
+<h1>New OAuth Application</h1>
+
+<%= form_with model: @app, url: admin_oauth_applications_path do |f| %>
+  <% if @app.errors.any? %>
+    <div style="color:red;">
+      <ul>
+        <% @app.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <div>
+    <%= f.label :scopes, "Scopes (space-separated)" %><br>
+    <%= f.text_field :scopes, value: (@app.scopes.presence || "admin") %>
+    <div><small>Example: <code>public admin</code></small></div>
+  </div>
+
+  <%= f.hidden_field :redirect_uri, value: "urn:ietf:wg:oauth:2.0:oob" %>
+  <%= f.hidden_field :confidential, value: true %>
+
+  <div style="margin-top:1rem;">
+    <%= f.submit "Create" %>
+    <%= link_to "Back", admin_oauth_applications_path %>
+  </div>
+<% end %>

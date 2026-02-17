@@ -1,0 +1,22 @@
+{
+  "all": {
+    "sourceCodeDir": "app/frontend",
+    "entrypointsDir": "entrypoints",
+    "watchAdditionalPaths": ["app/views/**/*"],
+    "outDir": "public/vite-assets",
+    "publicDir": "public"
+  },
+  "development": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-assets",
+    "port": 3040
+  },
+  "test": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-test",
+    "port": 3041
+  },
+  "production": {
+    "publicOutputDir": "vite-assets"
+  }
+}

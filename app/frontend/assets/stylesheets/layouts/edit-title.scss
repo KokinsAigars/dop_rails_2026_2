@@ -1,0 +1,39 @@
+
+.edit-title{
+  flex: 0 0 var(--v-title-h); /* Fixed height for titles/tabs */
+  height: var(--v-title-h);
+  background: var(--color-bg-third);
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid var(--color-border-second);
+}
+
+.tab-bar {
+  display: flex;
+  overflow-x: auto;
+  background: transparent;
+  align-items: center;
+  height: var(--v-title-button-h);
+
+  .tab-item {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 100%;
+    //cursor: pointer;
+    white-space: nowrap;
+
+    &.is-active {
+      background: var(--color-active-bg-prime);
+      border: 1px solid var(--color-active-border-prime);
+      border-radius: 5px;
+      color: #5e95e7;
+    }
+
+    .tab-close {
+      margin-left: 8px;
+      opacity: 0.5;
+      &:hover { opacity: 1; }
+    }
+  }
+}
+

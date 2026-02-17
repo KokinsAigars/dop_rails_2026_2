@@ -1,0 +1,49 @@
+
+.container {
+  padding-left: 50px;
+}
+
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.alert-success { color: var(--success); }
+.alert-warning { color: var(--warning); }
+.alert-error   { color: var(--error); }
+
+.btn {
+  background: var(--muted);
+  color: var(--fg);
+}
+
+.theme-switcher,
+.font-switcher {
+  margin-top: 5px;
+}
+
+.theme-switcher button,
+.font-switcher button {
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.2rem;
+  border: 1px solid var(--muted);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.theme-switcher button.active,
+.font-switcher button.active {
+  border-color: var(--fg);
+  font-weight: bold;
+}

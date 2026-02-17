@@ -1,0 +1,134 @@
+
+
+<h1>Admin Dashboard</h1>
+<%= link_to "Home", root_path %>
+
+<%#= link_to "Trigger Alert", admin_test_flash_path(type: "alert"), class: "btn-test-red" %>
+<%#= link_to "Trigger Success", admin_test_flash_path(type: "success"), class: "btn-test-green" %>
+<%#= link_to "Trigger notice", admin_test_flash_path(type: "notice"), class: "btn-test-green" %>
+<%#= link_to "Trigger info", admin_test_flash_path(type: "info"), class: "btn-test-green" %>
+<%#= link_to "Trigger warning", admin_test_flash_path(type: "warning"), class: "btn-test-green" %>
+
+<%#= link_to admin_global_configs_path, class: "btn-admin-config" do %>
+<!--  <div>SETTINGS</div>-->
+<%# end %>
+
+
+<%# app/views/admin/dashboard/show.html.erb %>
+<!--<main class="edit">-->
+<!--  <turbo-frame id="main_content">-->
+<!--    <div class="empty-state-container">-->
+<!--      <div class="ghost-icon">👻</div>-->
+<!--      <h2>Ghost Admin Terminal</h2>-->
+<!--      <p>Select a user from the explorer to begin inspection or-->
+<!--        <%#= link_to "create a new entity", new_admin_user_path, data: { turbo_frame: "main_content" } %>.-->
+<!--      </p>-->
+
+<!--      <div class="system-stats">-->
+        <%# Maybe show some general stats here later %>
+<!--        <small>System Status: Online</small>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </turbo-frame>-->
+<!--</main>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<p>The Admin Dashboard in your app is more like "Staff Mode."</p>-->
+<!--<p>It’s a place where you (the owner) see things regular users never see—like those bot logs, server health, and global user lists.</p>-->
+
+<!--  <div class="body-light">-->
+<!--    <%#= link_to "public Home", root_path %> /-->
+    <%# if Current.user&.admin? %>
+<!--      <%#= link_to "private Admin Dashboard", admin_root_path %> /-->
+
+    <%# end %>
+
+<!--    <%#= link_to "My Workspace", account_root_path %> /-->
+
+    <%#= button_to "Sign out", session_path, method: :delete %>
+<!--  </div>-->
+
+<!--<div class="dev-tools" style="padding: 20px; border: 1px dashed #444; margin-top: 20px;">-->
+<!--  <h4 style="color: #888; font-size: 10px; margin-bottom: 10px;">UI TEST TOOLS</h4>-->
+
+
+<!--</div>-->
+
+<%#= link_to "Test Alert", admin_trigger_flash_path(type: "alert") %>
+
+<%#= link_to "Test Success", admin_trigger_flash_path(type: "success") %>
+
+
+
+<!--<div class="admin-container">-->
+<!--  <header class="admin-view-header">-->
+<!--    <h1 class="t-h1">Command Center</h1>-->
+<!--    <div class="admin-badge">Admin Mode Active</div>-->
+<!--    <p>Logged in as: <strong><%#= Current.user.email_address %></strong></p>-->
+<!--  </header>-->
+
+<!--  <div class="admin-stats-grid">-->
+<!--    <div class="admin-card">-->
+<!--      <span class="admin-card__label">Users</span>-->
+<!--      <span class="admin-card__value"><%#= @total_users %></span>-->
+<!--    </div>-->
+
+<!--    <div class="admin-card">-->
+<!--      <span class="admin-card__label">Bots (24h)</span>-->
+<!--      <span class="admin-card__value alert"><%#= @bot_count_24h %></span>-->
+<!--    </div>-->
+
+<!--    <div class="admin-card">-->
+<!--      <span class="admin-card__label">Server Status</span>-->
+<!--      <span class="admin-card__value status-ok">Healthy</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="admin-section">-->
+<!--    <h2 class="t-h2">Ghost Protocol: Recent Interceptions</h2>-->
+<!--    <div class="admin-table-wrapper">-->
+<!--      <table class="admin-table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th>Time</th>-->
+<!--          <th>IP Address</th>-->
+<!--          <th>Trap Source</th>-->
+<!--          <th>User Agent</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+        <%# @recent_bots.each do |bot| %>
+<!--          <tr>-->
+<!--            <td><%#= time_ago_in_words(bot.event_at) %> ago</td>-->
+<!--            <td class="code-font"><%#= bot.ip %></td>-->
+<!--            <td><span class="badge"><%#= bot.note %></span></td>-->
+<!--            <td class="ua-text"><%#= truncate(bot.user_agent, length: 50) %></td>-->
+<!--          </tr>-->
+        <%# end %>
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<%#= render "dashboard/stats" %>
+
+<!--<section class="admin-tools">-->
+  <%#= render "admin/users_table" %>
+  <%#= render "admin/change_queue" %>
+<!--</section>-->
+
+

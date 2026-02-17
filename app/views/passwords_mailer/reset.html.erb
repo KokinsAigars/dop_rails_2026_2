@@ -1,0 +1,7 @@
+<h1><%= t("passwords.mailer.hello") %></h1>
+
+<p><%= t("passwords.mailer.instruction") %></p>
+
+<%= link_to t("passwords.mailer.reset_link"), edit_password_url(token: @token) %>
+
+<p><%= t("passwords.mailer.fallback") %></p>

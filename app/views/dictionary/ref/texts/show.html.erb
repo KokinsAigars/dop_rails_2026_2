@@ -1,0 +1,30 @@
+<%# app/views/dictionary/ref/texts/show.html.erb %>
+<article class="dictionary-entry">
+  <header>
+    <nav><%= link_to "← Back to Reference Texts", ref_texts_path %></nav>
+    <div class="entry-meta">
+      <span class="badge"># <%= @record.ref_texts_no %></span>
+      <span class="badge lang"><%= @record.ref_texts_lang %></span>
+    </div>
+    <h1><%= @record.ref_texts_title %></h1>
+    <% if @record.ref_title.present? %>
+      <p class="ref-subtitle"><%= @record.ref_title %></p>
+    <% end %>
+  </header>
+
+  <section class="details">
+    <div class="detail-row">
+      <strong>Full Title / Text Content:</strong>
+      <div class="text-display-box">
+        <%= simple_format(@record.ref_texts_title) %>
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <strong>Notes:</strong>
+      <div class="note-box">
+        <%= simple_format(@record.ref_note) %>
+      </div>
+    </div>
+  </section>
+</article>

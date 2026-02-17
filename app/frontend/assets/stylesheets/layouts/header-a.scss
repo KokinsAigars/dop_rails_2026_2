@@ -1,0 +1,27 @@
+
+/* The loading bar */
+.header-a {
+  position: relative; /* so the progress can be absolutely positioned */
+  height: var(--v-header-a-h);
+  background: var(--color-bg-prime);
+  border-top: 1px solid var(--color-border-prime);
+  border-left: 1px solid var(--color-border-prime);
+  border-right: 1px solid var(--color-border-prime);
+}
+.header-a__progress {
+  height: 3px; /* thin strip at the top of the header */
+  width: 100%;
+  background: var(--color-header-a-loading-bg, #E50909FF);
+  transform-origin: 0 0;
+  transform: scaleX(0);
+  opacity: 0;
+  transition:
+    transform 200ms ease-out,
+    opacity 150ms linear;
+}
+
+/* visible state when loading */
+.header-a__progress--visible {
+  opacity: 1;
+}
+

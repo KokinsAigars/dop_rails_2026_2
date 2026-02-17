@@ -1,0 +1,30 @@
+
+<div class="flash-container" id="flash-registry">
+
+  <% flash.each do |type, message| %>
+
+    <div data-controller="flash"
+         data-flash-id-value="29055155-e100-41a0-b27a-427d3b76527e"
+         data-flash-target="item"
+         class="flash-message
+         <%= flashHelper_class(type) %>">
+
+
+      <button class="flash-close" data-action="click->flash#fn_close">
+        <svg viewBox="0 0 40 40" class="flash-close-svg">
+          <path d="M10,10 L30,30 M30,10 L10,30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <div class="flash-content">
+        <div class="flash-title"><%= type.to_s.upcase %></div>
+        <%= message %>
+      </div>
+
+    </div>
+
+  <% end %>
+
+</div>
+
+
