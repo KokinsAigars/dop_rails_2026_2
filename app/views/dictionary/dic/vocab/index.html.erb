@@ -1,5 +1,5 @@
 <%# app/views/dictionary/dic/vocab/index.html.erb %>
-<div class="dictionary-container">
+<div class="article-layout">
   <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
 
   <div class="lang-nav">
@@ -9,24 +9,49 @@
     <% end %>
   </div>
 
-  <%= form_with url: dic_vocab_index_path, method: :get, local: true do |f| %>
+  <%= form_with url: dic_vocab_index_path, method: :get,
+                data: {
+                  controller: "search",
+                  turbo_frame: "_top",
+                  turbo_action: "advance"       # Updates the URL in the browser bar
+                } do |f| %>
     <%= f.hidden_field :lang, value: @lang %>
-    <%= f.text_field :q, value: @query, placeholder: "Type a word..." %>
+    <%= f.text_field :q, value: @query,
+                     placeholder: "Type to search...",
+                     data: { action: "input->search#submit" } %>
     <%= f.submit "Search" %>
   <% end %>
 
-  <div class="results-list">
-    <% if @terms.any? %>
-      <ul>
+  <div class="results-wrapper">
+    <%# This frame is the only part of the page that will reload %>
+    <%= turbo_frame_tag "vocab_results" do %>
+      <ul class="results-list">
         <% @terms.each do |v| %>
-          <li>
-            <%# This link triggers the EntriesController#index logic we discussed %>
-            <%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang) %>
-          </li>
+          <%# Add data-turbo-frame="_top" to tell Rails to reload the WHOLE page %>
+          <li><%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" } %></li>
         <% end %>
       </ul>
-    <% else %>
-      <p>No words found matching "<%= @query %>".</p>
+
+      <%# Only show page numbers if we aren't filtering by a specific search query %>
+      <div class="pagination-box">
+        <% if @query.blank? %>
+          <%# window: 2 shows 2 pages around the current page %>
+          <%# outer_window: 1 shows the first and last page %>
+          <%= paginate @terms, window: 2, outer_window: 1 %>
+
+          <div class="stats-text">
+            Showing <strong><%= @terms.offset_value + 1 %></strong>
+            - <strong><%= [@terms.offset_value + @terms.length, @terms.total_count].min %></strong>
+            of <strong><%= number_with_delimiter(@terms.total_count) %></strong> words
+          </div>
+        <% end %>
+      </div>
+
     <% end %>
   </div>
+
+
 </div>
+
+
+

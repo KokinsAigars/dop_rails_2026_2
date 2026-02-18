@@ -81,6 +81,20 @@ COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings
 
 
 --
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -2465,6 +2479,20 @@ CREATE UNIQUE INDEX uq_ref_texts_root_version ON sc_02_bibliography.ref_texts US
 
 
 --
+-- Name: idx_dic_vocab_term_norm_trgm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE INDEX idx_dic_vocab_term_norm_trgm ON sc_03_dictionary.dic_vocab USING gin (term_norm public.gin_trgm_ops);
+
+
+--
+-- Name: idx_dic_vocab_term_trgm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE INDEX idx_dic_vocab_term_trgm ON sc_03_dictionary.dic_vocab USING gin (term public.gin_trgm_ops);
+
+
+--
 -- Name: ix_dic_eg_fk_entry; Type: INDEX; Schema: sc_03_dictionary; Owner: -
 --
 
@@ -3223,6 +3251,7 @@ ALTER TABLE ONLY sc_07_hash.temporary_hash
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260218063636'),
 ('20260209050443'),
 ('20260207152542'),
 ('20260206045823'),

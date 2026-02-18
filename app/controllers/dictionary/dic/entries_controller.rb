@@ -2,28 +2,57 @@
 module Dictionary
   module Dic
     class EntriesController < ApplicationController
+
+      # This is the action that was "missing"
       def index
-        # Search for the word in the main dictionary
-        @entries = Sc03Dictionary::DicEntry.where(name: params[:q], lang: params[:lang], is_current: true)
+
+        query = params[:q]
+
+        # Try 1: Direct match (finds the exact messy string)
+        @entries = Sc03Dictionary::DicEntry.where(lang: params[:lang], is_current: true)
+                                           .where("name = :q OR name ILIKE :fuzzy",
+                                                  q: query,
+                                                  fuzzy: "%-#{query}")
+
+        # Try 2: If nothing found, try searching by "dic_name" or "name_orig"
+        # which might be cleaner versions of the word
+        if @entries.empty?
+          clean_name = query.gsub(/[1234567890\[\]\-\/]/, '')
+          @entries = Sc03Dictionary::DicEntry.where("name ILIKE ?", "#{clean_name}%")
+                                             .where(lang: params[:lang], is_current: true)
+        end
 
         if @entries.count == 1
-          # Jump straight to the full data
+          # If exactly one exists, skip the list and go to the full data
           redirect_to dic_entry_path(@entries.first)
         elsif @entries.count > 1
-          # Multiple homographs found - render a selection list
+          # If multiple (homographs), show a selection page
           render :homograph_selection
         else
-          redirect_to dic_vocab_index_path, alert: "No detailed entry found."
+          # If none, go back to search with a warning
+          redirect_to dic_vocab_index_path(lang: params[:lang]), alert: "Entry details not found."
         end
       end
 
       def show
-        # THE BIG JOIN: Load the entry and all its satellite data
+        # 1. Load the entry and eager-load ITS children (refs, notes, quotes, egs)
+        # 2. Also eager-load the parent index and the index's children (scans)
         @entry = Sc03Dictionary::DicEntry.includes(
-          dic_index: [:dic_scans, :dic_refs, :dic_notes, :dic_quotes, :dic_egs]
+          :dic_refs, :dic_notes, :dic_quotes, :dic_egs,
+          dic_index: [:dic_scans]
         ).find(params[:id])
 
-        # Data is now accessible via @entry.dic_index.dic_refs, etc.
+        # 3. Correctly map the variables for the view
+        @index  = @entry.dic_index
+
+        # These come from the Entry
+        @refs   = @entry.dic_refs.where(is_current: true).order(:ref_no)
+        @egs    = @entry.dic_egs.where(is_current: true).order(:eg_no)
+        @quotes = @entry.dic_quotes.where(is_current: true).order(:quote_no)
+        @notes  = @entry.dic_notes.where(is_current: true).order(:note_no)
+
+        # These come from the Index
+        @scans  = @index.dic_scans.where(is_current: true)
       end
     end
   end

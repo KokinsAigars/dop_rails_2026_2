@@ -27,6 +27,10 @@ import ActivityIconController from "./layouts/activity_icon_controller.ts"
 // import ExplorerItemController from "./layouts/explorer_item_controller.ts"
 
 
+import SearchController from "./search_controller.ts"
+
+
+
 window.Stimulus ||= Application.start();
 
 window.Stimulus.register("layouts", LayoutsController);
@@ -48,4 +52,4 @@ window.Stimulus.register("flash", FlashController);
 window.Stimulus.register("activity-icon", ActivityIconController);
 // window.Stimulus.register("flash", ExplorerItemController);
 
-
+window.Stimulus.register("search", SearchController);
