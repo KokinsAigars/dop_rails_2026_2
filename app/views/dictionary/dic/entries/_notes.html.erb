@@ -1,0 +1,17 @@
+<%# app/views/dictionary/dic/entries/_notes.html.erb %>
+<% if notes.any? %>
+  <div class="notes-section">
+    <h5>Notes & Commentary</h5>
+    <% notes.each do |note| %>
+      <div class="note-item <%= 'revision-pending' if note.revision %>">
+        <div class="note-content">
+          <%= simple_format(note.note_text) %>
+        </div>
+
+        <% if note.revision && note.revision_comment.present? %>
+          <small class="text-muted">Rev: <%= note.revision_comment %></small>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

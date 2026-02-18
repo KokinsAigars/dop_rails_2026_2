@@ -1,0 +1,15 @@
+<% if quotes.any? %>
+  <section class="entry-quotes">
+    <h4>Quotes & Citations</h4>
+    <ul>
+      <% quotes.each do |quote| %>
+        <li>
+          <blockquote class="pali-quote">
+            <%= quote.quote_text %>
+          </blockquote>
+          <cite>— <%= quote.citation %></cite>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

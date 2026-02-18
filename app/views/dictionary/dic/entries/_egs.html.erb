@@ -1,0 +1,21 @@
+<%# app/views/dictionary/dic/entries/_egs.html.erb %>
+<% if egs.any? %>
+  <div class="egs-section mt-4">
+    <h6 class="text-uppercase small fw-bold text-muted">Usage Examples</h6>
+    <% egs.each do |eg| %>
+      <div class="eg-item border-start border-4 border-info ps-3 mb-3">
+        <p class="pali-text mb-1 fst-italic">
+          <%= eg.eg_text %>
+        </p>
+        <% if eg.eg_translation.present? %>
+          <p class="translation-text text-secondary small">
+            <%= eg.eg_translation %>
+          </p>
+        <% end %>
+        <% if eg.citation.present? %>
+          <small class="text-muted d-block text-end">— <%= eg.citation %></small>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

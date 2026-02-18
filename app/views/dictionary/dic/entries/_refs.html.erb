@@ -1,0 +1,15 @@
+<%# app/views/dictionary/dic/entries/_refs.html.erb %>
+<% if refs.any? %>
+  <div class="refs-section mt-3">
+    <h6 class="text-uppercase small fw-bold text-muted">Cross References</h6>
+    <div class="d-flex flex-wrap gap-2">
+      <% refs.each do |ref| %>
+        <%# If you have the referenced ID, link to it; otherwise, link to a search for the name %>
+        <%= link_to dic_vocab_index_path(q: ref.xref_name),
+                    class: "btn btn-sm btn-outline-secondary rounded-pill" do %>
+          <i class="icon-link"></i> <%= ref.xref_name %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

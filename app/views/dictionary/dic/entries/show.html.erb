@@ -1,121 +1,72 @@
 <%# app/views/dictionary/dic/entries/show.html.erb %>
-<div class="dictionary-master-entry">
-  <header class="entry-header">
-    <nav><%= link_to "← New Search", dic_vocab_index_path(lang: @entry.lang) %></nav>
+<div class="article-layout">
 
-    <div class="word-main">
-      <h1>
+      <h2>
         <%= @entry.name %>
-        <% if @index.homograph_no.present? %>
-          <small class="homograph-no"><sup><%= @index.homograph_no %></sup></small>
+        <% if @index_head.homograph.present? %>
+        <span class="badge bg-primary ms-2" title="Homograph Group">
+          <%= @index_head.homograph %> <%= @index_head.homograph_no %>
+        </span>
         <% end %>
-      </h1>
-      <div class="tags">
-        <span class="badge lang"><%= @entry.lang.upcase %></span>
-        <span class="badge grammar"><%= @entry.grammar %></span>
-        <span class="badge gender"><%= @entry.gender %></span>
-      </div>
-    </div>
+      </h2>
 
-    <% if @entry.etymology.present? %>
-      <div class="etymology-section">
-        <strong>Etymology:</strong> <%= @entry.etymology %>
+      <div class="metadata text-end">
+        <span class="badge bg-secondary">Index #<%= @index_head.entry_no %></span>
+      </div>
+
+    <%# SEARCH FOR OTHER HOMOGRAPHS %>
+    <%
+      other_homographs = Sc03Dictionary::DicIndex.where(
+        "(homograph = ? OR homograph_uuid = ?) AND id != ?",
+        @index_head.homograph, @index_head.homograph_uuid, @index_head.id
+      ).limit(5)
+    %>
+
+    <% if other_homographs.any? %>
+      <div class="homograph-switcher mt-2 p-2 bg-white border rounded">
+        <small class="text-uppercase fw-bold text-muted">Other meanings for this word:</small>
+        <div class="btn-group btn-group-sm ms-2">
+          <% other_homographs.each do |other| %>
+            <%# Link to the 'current' entry for that specific index %>
+            <% target_entry = other.dic_entries.find_by(lang: @lang, is_current: true) %>
+            <% if target_entry %>
+              <%= link_to "(#{other.homograph_no})", dic_entry_path(target_entry), class: "btn btn-outline-primary" %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     <% end %>
-  </header>
 
-  <div class="entry-grid">
-    <main class="entry-body">
 
-      <%# 1. References (Ref) %>
-      <% if @refs.any? %>
-        <section class="dic-section">
-          <h3>References</h3>
-          <ul class="ref-list">
-            <% @refs.each do |ref| %>
-              <li>
-                <strong><%= ref.citation_abbrev %></strong>
-                <%= "Vol #{ref.citation_vol}" if ref.citation_vol.present? %>:
-                <%= ref.ref_name %>
-              </li>
-            <% end %>
-          </ul>
-        </section>
-      <% end %>
 
-      <%# 2. Examples (Eg) %>
-      <% if @egs.any? %>
-        <section class="dic-section">
-          <h3>Examples</h3>
-          <% @egs.each do |eg| %>
-            <div class="eg-item">
-              <span class="eg-text">"<%= eg.eg_name %>"</span>
-              <% if eg.eg_note.present? %><small class="eg-note">— <%= eg.eg_note %></small><% end %>
-            </div>
-          <% end %>
-        </section>
-      <% end %>
+      <div>
+        <h4>Source:</h4> <%= @index_head.source_file %> |
+        <h4>Order:</h4> <%= @index_head.source_order %>
+      </div>
 
-      <%# 3. Quotes %>
-      <% if @quotes.any? %>
-        <section class="dic-section">
-          <h3>Citations & Quotes</h3>
-          <% @quotes.each do |q| %>
-            <div class="quote-block">
-              <p class="quote-text"><%= q.quote_name %></p>
-              <cite>— Source: <%= q.citation_abbrev %>, p. <%= q.citation_p %></cite>
-            </div>
-          <% end %>
-        </section>
-      <% end %>
+      <div>
+        <h4>Index ID:</h4> <%= @index_head.entry_no %>
+      </div>
 
-      <%# 4. General Notes %>
-      <% if @notes.any? %>
-        <section class="dic-section notes-section">
-          <h3>Editorial Notes</h3>
-          <% @notes.each do |n| %>
-            <div class="note-entry">
-              <%= simple_format(n.note_note) %>
-            </div>
-          <% end %>
-        </section>
-      <% end %>
+      <div>
+        <h4>Version:</h4> <%= @index_head.version %>
+        <h4>Updated:</h4> <%= @index_head.modified_date.to_date %>
+      </div>
 
-    </main>
 
-<!--    <aside class="entry-sidebar">-->
-      <%# if @scans.any? %>
-<!--        <section class="scan-gallery">-->
-<!--          <h4><i class="bi bi-image"></i> Manuscript Scans</h4>-->
-<!--          <div class="scan-list">-->
-            <%# @scans.each do |scan| %>
-<!--              <div class="scan-item">-->
-<!--                <span class="scan-name"><%#= scan.scan_filename %></span>-->
+<!--    <div class="card-body">-->
+<!--     <span class="badge rounded-pill bg-info text-dark mb-3">-->
+<!--       <%#= @entry.lang.upcase %> Entry-->
+<!--     </span>-->
 
-                <%# If you have the scan text/raw text, we can show a snippet %>
-                <%# if scan.scan_text.present? %>
-<!--                  <div class="scan-preview-text">-->
-                    <%#= truncate(scan.scan_text, length: 100) %>
-<!--                  </div>-->
-                <%# end %>
-
-<!--                <button class="btn-view-scan" data-filename="<%#= scan.scan_filename %>">-->
-<!--                  Open Full Scan-->
-<!--                </button>-->
-<!--              </div>-->
-            <%# end %>
-<!--          </div>-->
-<!--        </section>-->
-      <%# end %>
-
-<!--      <div class="entry-meta-card">-->
-<!--        <h5>Source Info</h5>-->
-<!--        <p><strong>File:</strong> <%#= @index.source_file %></p>-->
-<!--        <p><strong>Order:</strong> <%#= @index.source_order %></p>-->
-<!--        <p><strong>ID:</strong> <code class="small-id"><%#= @index.id %></code></p>-->
+<!--      <div class="entry-meta mb-3">-->
+<!--        <strong>Grammar:</strong> <%#= @entry.grammar %> |-->
+<!--        <strong>Gender:</strong> <%#= @entry.gender %>-->
 <!--      </div>-->
-<!--    </aside>-->
 
+<!--      <div class="entry-text">-->
+        <%#= @entry.note %>
+<!--      </div>-->
+<!--    </div>-->
 
-  </div>
 </div>

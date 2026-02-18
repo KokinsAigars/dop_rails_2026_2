@@ -35,25 +35,30 @@ module Dictionary
       end
 
       def show
-        # 1. Load the entry and eager-load ITS children (refs, notes, quotes, egs)
-        # 2. Also eager-load the parent index and the index's children (scans)
-        @entry = Sc03Dictionary::DicEntry.includes(
-          :dic_refs, :dic_notes, :dic_quotes, :dic_egs,
-          dic_index: [:dic_scans]
-        ).find(params[:id])
-
-        # 3. Correctly map the variables for the view
-        @index  = @entry.dic_index
-
-        # These come from the Entry
-        @refs   = @entry.dic_refs.where(is_current: true).order(:ref_no)
-        @egs    = @entry.dic_egs.where(is_current: true).order(:eg_no)
-        @quotes = @entry.dic_quotes.where(is_current: true).order(:quote_no)
-        @notes  = @entry.dic_notes.where(is_current: true).order(:note_no)
-
-        # These come from the Index
-        @scans  = @index.dic_scans.where(is_current: true)
+        @entry = Sc03Dictionary::DicEntry.includes(:dic_index).find(params[:id])
+        @index_head = @entry.dic_index
       end
+
+      # def show
+      #   # 1. Load the entry and eager-load ITS children (refs, notes, quotes, egs)
+      #   # 2. Also eager-load the parent index and the index's children (scans)
+      #   @entry = Sc03Dictionary::DicEntry.includes(
+      #     :dic_refs, :dic_notes, :dic_quotes, :dic_egs,
+      #     dic_index: [:dic_scans]
+      #   ).find(params[:id])
+      #
+      #   # 3. Correctly map the variables for the view
+      #   @index  = @entry.dic_index
+      #
+      #   # These come from the Entry
+      #   @refs   = @entry.dic_refs.where(is_current: true).order(:ref_no)
+      #   @egs    = @entry.dic_egs.where(is_current: true).order(:eg_no)
+      #   @quotes = @entry.dic_quotes.where(is_current: true).order(:quote_no)
+      #   @notes  = @entry.dic_notes.where(is_current: true).order(:note_no)
+      #
+      #   # These come from the Index
+      #   @scans  = @index.dic_scans.where(is_current: true)
+      # end
     end
   end
 end

@@ -1,0 +1,16 @@
+<%# app/views/dictionary/dic/entries/_scans.html.erb %>
+<% if scans.any? %>
+  <div class="manuscript-gallery">
+    <h5>Manuscript Scans</h5>
+    <div class="d-flex flex-wrap gap-2">
+      <% scans.each do |scan| %>
+        <div class="scan-thumbnail">
+          <%# Adjust 'scan_url' to whatever field holds your image path %>
+          <%= link_to scan.image_url, target: "_blank" do %>
+            <i class="icon-file-image"></i> Page <%= scan.page_no %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
