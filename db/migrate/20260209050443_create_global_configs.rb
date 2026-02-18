@@ -14,3 +14,5 @@ class CreateGlobalConfigs < ActiveRecord::Migration[8.1]
     add_index :global_configs, :key, unique: true
   end
 end
+
+

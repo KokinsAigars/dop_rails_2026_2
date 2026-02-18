@@ -1,6 +1,6 @@
-# frozen_string_literal: true
+# bin/rails routes
 
-# rails routes
+# frozen_string_literal: true
 
 Rails.application.routes.draw do
   use_doorkeeper
@@ -103,6 +103,12 @@ Rails.application.routes.draw do
         resources :internet_sources, only: [:index, :show]
         resources :texts, only: [:index, :show]
       end
+
+
+      # dic_root_path	/dic	Dictionary::Dic::Vocab#index
+      # dic_vocab_index_path	/dic/vocab	Dictionary::Dic::Vocab#index
+      # dic_entries_path	/dic/entries	Dictionary::Dic::Entries#index
+      # dic_entry_path(id)	/dic/entries/:id	Dictionary::Dic::Entries#show
 
       namespace :dic do
         # This makes http://localhost:3000/dic the search entry point

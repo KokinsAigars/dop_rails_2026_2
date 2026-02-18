@@ -9,28 +9,27 @@
     <% end %>
   </div>
 
+  <%# The form stays OUTSIDE the frame so it isn't replaced %>
   <%= form_with url: dic_vocab_index_path, method: :get,
                 data: {
-                  controller: "search",
-                  turbo_frame: "_top",
-                  turbo_action: "advance"       # Updates the URL in the browser bar
+                  controller: "search",             # Connects to the Stimulus controller
+                  turbo_frame: "vocab_results",     # Tells Turbo where to put the results
+                  turbo_action: "advance"
                 } do |f| %>
     <%= f.hidden_field :lang, value: @lang %>
     <%= f.text_field :q, value: @query,
-                     placeholder: "Type to search...",
+                     autocomplete: "off",
                      data: { action: "input->search#submit" } %>
-    <%= f.submit "Search" %>
   <% end %>
 
-  <div class="results-wrapper">
-    <%# This frame is the only part of the page that will reload %>
-    <%= turbo_frame_tag "vocab_results" do %>
-      <ul class="results-list">
-        <% @terms.each do |v| %>
-          <%# Add data-turbo-frame="_top" to tell Rails to reload the WHOLE page %>
-          <li><%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" } %></li>
-        <% end %>
-      </ul>
+
+  <%# Only this part gets replaced by Turbo %>
+  <%= turbo_frame_tag "vocab_results" do %>
+    <ul class="results-list">
+      <% @terms.each do |v| %>
+        <li><%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" } %></li>
+      <% end %>
+    </ul>
 
       <%# Only show page numbers if we aren't filtering by a specific search query %>
       <div class="pagination-box">

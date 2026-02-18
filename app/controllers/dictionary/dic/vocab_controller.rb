@@ -15,21 +15,23 @@ module Dictionary
         if @query.present?
           # 1. SEARCH MODE (No Kaminari needed for top hits)
           # Use the Unicode letter matcher, but only if @query isn't empty
-          clean_q = @query.gsub(/[^\p{L}\s]/, '').downcase
+          # replace user typed characters with their normalized equivalents š => s, and search in terms_norm
+          clean_q = Sc03Dictionary::DicVocab.normalize(@query)
 
           # Check if clean_q is empty after stripping noise (e.g. user just typed "123")
           if clean_q.length > 1 # Only do fuzzy search if they typed at least 2 letters
             @terms = @terms.where(
               "term_norm ILIKE :prefix OR term_norm ILIKE :compound OR term_norm ILIKE :fuzzy",
-              prefix: "#{clean_q}%",       # Starts with (agn...)
-              compound: "%-#{clean_q}%",   # Starts after a dash (a-baddha)
-              fuzzy: "%#{clean_q}%"        # Anywhere (subaddha)
+              prefix: "#{clean_q}%",
+              compound: "%-#{clean_q}%",
+              fuzzy: "%#{clean_q}%"
             ).order(
-              Arel.sql("CASE
-    WHEN term_norm ILIKE '#{clean_q}' THEN 0 -- Exact match first
-    WHEN term_norm ILIKE '#{clean_q}%' THEN 1 -- Starts with second
-    ELSE 2 -- Fuzzy/Inside matches last
-  END"),
+              Arel.sql(
+                "CASE " \
+                  "WHEN term_norm = #{Sc03Dictionary::DicVocab.connection.quote(clean_q)} THEN 0 " \
+                  "WHEN term_norm LIKE #{Sc03Dictionary::DicVocab.connection.quote(clean_q + '%')} THEN 1 " \
+                  "ELSE 2 END"
+              ),
               :term_norm
             ).limit(50)
           else

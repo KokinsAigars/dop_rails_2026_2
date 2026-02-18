@@ -2605,20 +2605,6 @@ CREATE INDEX ix_dic_ref_index_entry ON sc_03_dictionary.dic_ref USING btree (fk_
 
 
 --
--- Name: ix_dic_vocab_lang_term_norm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
---
-
-CREATE INDEX ix_dic_vocab_lang_term_norm ON sc_03_dictionary.dic_vocab USING btree (lang, term_norm);
-
-
---
--- Name: ix_dic_vocab_term_norm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
---
-
-CREATE INDEX ix_dic_vocab_term_norm ON sc_03_dictionary.dic_vocab USING btree (term_norm);
-
-
---
 -- Name: uq_dic_doc_root_current; Type: INDEX; Schema: sc_03_dictionary; Owner: -
 --
 
@@ -3251,6 +3237,7 @@ ALTER TABLE ONLY sc_07_hash.temporary_hash
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260218180629'),
 ('20260218063636'),
 ('20260209050443'),
 ('20260207152542'),
