@@ -1,4 +1,13 @@
 
+# Nuke Docker
+    docker ps -aq | xargs -r docker rm -f
+    docker image prune -af
+    docker builder prune -af
+    docker system prune -af
+    docker network prune -f
+
+    storage is untached?
+        sudo du -sh /var/lib/docker/volumes/app_storage/_data || true
 
 # Development
 ### docker-compose.dev.yml => .env => Dockerfile.dev => entrypoint.dev.sh

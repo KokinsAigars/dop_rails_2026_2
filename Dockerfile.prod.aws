@@ -110,6 +110,9 @@ RUN bundle install --verbose --jobs 4 --retry 3
 # This makes "npm ci" re-run only when package.json / lock changes.
 COPY --chown=${UID}:${GID} package.json package-lock.json ./
 
+# if some dependency have older, legacy, packages, just install
+RUN npm config set legacy-peer-deps true
+
 # Install JS dependencies exactly as locked (good for repeatable builds)
 # writes node_modules/ in the working directory (/rails/node_modules)
 RUN npm ci
