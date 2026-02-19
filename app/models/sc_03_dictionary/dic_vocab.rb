@@ -11,8 +11,10 @@ module Sc03Dictionary
     def self.normalize(text)
       return "" if text.blank?
       text.to_s.downcase
-          .tr('āīūṃṇñṭḍḷščžēģķļņŗ', 'aiumnntdlsczegklnr')
-          .gsub(/[^\p{L}\s]/, '')
+          .tr('āīūṃṇñṭḍḷščžēģķļņŗ', 'aiumnntdlsczegklnr') # Transliterate specific characters
+          .gsub(/[-;.,]/, '')   # Specific elimination of dash, semicolon, etc.
+          .gsub(/[^\p{L}\s]/, '') # Final safety: remove anything that isn't a letter or space
+          .squish               # Remove double spaces if any were created
     end
 
   end

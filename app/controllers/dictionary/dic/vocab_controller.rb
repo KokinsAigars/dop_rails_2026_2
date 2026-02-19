@@ -10,30 +10,36 @@ module Dictionary
         @terms = Sc03Dictionary::DicVocab.where(lang: @lang)
 
         if @query.present?
-          # 1. Standard clean (abhavita)
-          clean_q = Sc03Dictionary::DicVocab.normalize(@query)
+          # Detect if the user used "exact quotes"
+          if @query.start_with?('"') && @query.end_with?('"')
+            # EXACT MODE: Strip quotes and search for the literal string only
+            literal_q = @query.gsub('"', '')
+            clean_q = Sc03Dictionary::DicVocab.normalize(literal_q)
 
-          # 2. Flexible version (a%bhavita)
-          # This turns the hyphen into a wildcard so it matches "a-bhāvita" OR "abhāvita"
-          flex_q = @query.downcase
-                         .tr('āīūṃṇñṭḍḷščžēģķļņŗ', 'aiumnntdlsczegklnr')
-                         .gsub('-', '%')
+            @terms = @terms.where("term = :raw OR term_norm = :clean", raw: literal_q, clean: clean_q)
+                           .order(:term_norm)
+                           .limit(50)
+          else
+            # FUZZY MODE: (Your existing logic)
+            clean_q = Sc03Dictionary::DicVocab.normalize(@query)
 
-          @terms = @terms.where(
-            "term_norm ILIKE :q OR term_norm ILIKE :flex OR term ILIKE :flex",
-            q: "%#{clean_q}%",
-            flex: "%#{flex_q}%"
-          ).order(
-            Arel.sql("CASE
-              WHEN term_norm = #{Sc03Dictionary::DicVocab.connection.quote(clean_q)} THEN 0
-              WHEN term ILIKE #{Sc03Dictionary::DicVocab.connection.quote(@query)} THEN 1
-              WHEN term_norm LIKE #{Sc03Dictionary::DicVocab.connection.quote(clean_q + '%')} THEN 2
-              ELSE 3 END"),
-            :term_norm
-          ).limit(10)
+            @terms = @terms.where(
+              "term_norm ILIKE :q OR term ILIKE :raw",
+              q: "%#{clean_q}%",
+              raw: "%#{@query}%"
+            ).order(
+              Arel.sql("CASE
+          WHEN term = #{Sc03Dictionary::DicVocab.connection.quote(@query)} THEN 0
+          WHEN term_norm = #{Sc03Dictionary::DicVocab.connection.quote(clean_q)} THEN 1
+          WHEN term_norm LIKE #{Sc03Dictionary::DicVocab.connection.quote(clean_q + '%')} THEN 2
+          ELSE 3
+        END"),
+              Arel.sql("LENGTH(term_norm) ASC"),
+              :term_norm
+            ).limit(50)
+          end
         else
-          # 2. BROWSE MODE (Kaminari is active here)
-          @terms = @terms.order(:term_norm).page(params[:page]).per(10)
+          @terms = @terms.order(:term_norm).page(params[:page]).per(100)
         end
       end
 

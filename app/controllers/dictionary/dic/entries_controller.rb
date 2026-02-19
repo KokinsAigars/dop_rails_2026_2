@@ -36,6 +36,10 @@ module Dictionary
       def show
         @entry = Sc03Dictionary::DicEntry.includes(:dic_index).find(params[:id])
         @index_head = @entry.dic_index
+
+        # Fetch all current scans linked to this index record
+        @scans = @index_head.dic_scans.where(is_current: true).order(:scan_version)
+
       end
 
       # def show

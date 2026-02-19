@@ -22,6 +22,40 @@
 
 
 
+  <% if @scans.any? %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-dark text-white">
+        <i class="bi bi-image"></i> Manuscript Scans
+      </div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          <% @scans.each do |scan| %>
+            <li class="list-group-item">
+              <small class="text-muted d-block">Version: <%= scan.scan_version %></small>
+
+              <%# If you have an image URL field, use it here %>
+              <% if scan.respond_to?(:image_url) && scan.image_url.present? %>
+                <%= link_to scan.image_url, target: "_blank", class: "d-block mb-2" do %>
+                  <div class="scan-preview border rounded p-2 bg-light text-center">
+                    <i class="bi bi-file-earmark-image fs-1"></i>
+                    <p class="mb-0 mt-1">View Original Page</p>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <div class="scan-raw-text mt-2 small text-monospace bg-light p-2 rounded">
+                <strong>Raw OCR/Text:</strong>
+                <div class="mt-1"><%= scan.scan_text_raw %></div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+
 <!--    <div class="card-body">-->
 <!--     <span class="badge rounded-pill bg-info text-dark mb-3">-->
 <!--       <%#= @entry.lang.upcase %> Entry-->
