@@ -34,38 +34,31 @@ module Dictionary
       end
 
       def show
-
-        # params[:id] is the word from the URL, e.g., "a-baddha"
-        word_from_url = params[:id]
-
-        # We "search again" inside the show action to find the current version
+        # 1. Use the 'word' from the URL to find the entry.
+        # No .find(params[:id]) magic—just a clear find_by on the 'name' column.
         @entry = Sc03Dictionary::DicEntry.find_by(
-          name: word_from_url,
-          is_current: true,
-          lang: params[:lang] || 'pi' # Default to Pali if lang isn't specified
+          name: params[:id],
+          is_current: true
         )
 
-        if @entry
-          @index_head = @entry.dic_index
-          @scans = @index_head.dic_scans.where(is_current: true)
-          @related_entries = @index_head.dic_entries.where(is_current: true)
-        else
-          # Fallback if no "current" version exists
-          render "not_found"
-        end
+        # 2. Safety check: if the word doesn't exist, stop here.
+        return render_not_found if @entry.nil?
 
-        #
-        # # SELECT * FROM dic_entry WHERE id = 123;
-        # @entry = Sc03Dictionary::DicEntry.includes(:dic_index).find(params[:id])
-        #
-        # # SELECT * FROM dic_index WHERE id = [fk_index_id_value];
-        # @index_head = @entry.dic_index
-        #
-        # # SELECT * FROM dic_scan WHERE fk_index_id = [@index_head.id];
-        # @scans = @index_head.dic_scans.where(is_current: true)
-        #
-        #
-        # @related_entries = @index_head.dic_entries.where(is_current: true)
+        # 3. Explicitly reach out to the Index table using the foreign key
+        # instead of calling @entry.dic_index
+        @index_head = Sc03Dictionary::DicIndex.find_by(id: @entry.fk_index_id)
+
+        # 4. Explicitly find scans tied to that specific Index ID
+        @scans = Sc03Dictionary::DicScan.where(
+          fk_index_id: @index_head.id,
+          is_current: true
+        )
+
+        # 5. Explicitly find other language versions (synoptic view)
+        @related_entries = Sc03Dictionary::DicEntry.where(
+          fk_index_id: @index_head.id,
+          is_current: true
+        )
       end
 
       # def show
