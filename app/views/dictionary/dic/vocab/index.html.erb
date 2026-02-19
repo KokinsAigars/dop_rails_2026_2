@@ -1,16 +1,35 @@
 <%# app/views/dictionary/dic/vocab/index.html.erb %>
 <div class="article-layout">
-  <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
+
+  <div class="body-light">
+    <%= link_to "Home", root_path %> /
+    <% if admin? %>
+      <%= link_to "Admin Dashboard", admin_root_path %> /
+    <% else %>
+      <%= link_to "My Dashboard", account_root_path %> /
+    <% end %>
+    <%= link_to "Dictionary", dic_root_path %>
+  </div>
+
+  <div class="title-article-h1">
+    <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
+  </div>
+  <div class="sub-title-article-h1">
+    <h6>Last modified: 19 Feb 2026</h6>
+  </div>
+
 
   <div class="lang-nav">
     <% %w[pi en lv].each do |l| %>
-      <%= link_to l.upcase, dic_vocab_index_path(lang: l, q: params[:q]),
+      <%= link_to l.upcase,
+                  dic_vocab_index_path(lang: l, q: params[:q]),
                   class: ("active" if @lang == l) %>
     <% end %>
   </div>
 
   <%# The form stays OUTSIDE the frame so it isn't replaced %>
-  <%= form_with url: dic_vocab_index_path, method: :get,
+  <%= form_with url: dic_vocab_index_path,
+                method: :get,
                 data: {
                   controller: "search",             # Connects to the Stimulus controller
                   turbo_frame: "vocab_results",     # Tells Turbo where to put the results
@@ -25,11 +44,18 @@
 
   <%# Only this part gets replaced by Turbo %>
   <%= turbo_frame_tag "vocab_results" do %>
+
     <ul class="results-list">
       <% @terms.each do |v| %>
-        <li><%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" } %></li>
+        <div class="result-item-row">
+        <%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang),
+                    data: { turbo_frame: "_top" },
+                    class: "result-item" %>
+        </div>
       <% end %>
     </ul>
+  <% end %>
+
 
       <%# Only show page numbers if we aren't filtering by a specific search query %>
       <div class="pagination-box">
@@ -46,7 +72,7 @@
         <% end %>
       </div>
 
-    <% end %>
+
   </div>
 
 

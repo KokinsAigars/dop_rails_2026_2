@@ -1,57 +1,25 @@
 <%# app/views/dictionary/dic/entries/show.html.erb %>
 <div class="article-layout">
 
-      <h2>
-        <%= @entry.name %>
-        <% if @index_head.homograph.present? %>
-        <span class="badge bg-primary ms-2" title="Homograph Group">
-          <%= @index_head.homograph %> <%= @index_head.homograph_no %>
-        </span>
-        <% end %>
-      </h2>
-
-      <div class="metadata text-end">
-        <span class="badge bg-secondary">Index #<%= @index_head.entry_no %></span>
-      </div>
-
-    <%# SEARCH FOR OTHER HOMOGRAPHS %>
-    <%
-      other_homographs = Sc03Dictionary::DicIndex.where(
-        "(homograph = ? OR homograph_uuid = ?) AND id != ?",
-        @index_head.homograph, @index_head.homograph_uuid, @index_head.id
-      ).limit(5)
-    %>
-
-    <% if other_homographs.any? %>
-      <div class="homograph-switcher mt-2 p-2 bg-white border rounded">
-        <small class="text-uppercase fw-bold text-muted">Other meanings for this word:</small>
-        <div class="btn-group btn-group-sm ms-2">
-          <% other_homographs.each do |other| %>
-            <%# Link to the 'current' entry for that specific index %>
-            <% target_entry = other.dic_entries.find_by(lang: @lang, is_current: true) %>
-            <% if target_entry %>
-              <%= link_to "(#{other.homograph_no})", dic_entry_path(target_entry), class: "btn btn-outline-primary" %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+  <div class="body-light">
+    <%= link_to "Home", root_path %> /
+    <% if admin? %>
+      <%= link_to "Admin Dashboard", admin_root_path %> /
+    <% else %>
+      <%= link_to "My Dashboard", account_root_path %> /
     <% end %>
+    <%= link_to "Dictionary", dic_root_path %>
+  </div>
 
+  <div class="title-article-h1">
+    <h1><%= @entry.name %></h1>
+  </div>
+  <div class="sub-title-article-h1">
+    <h6>Last modified: <%= @index_head.modified_date.to_date %></h6>
+  </div>
 
+  <%= render "index" %>
 
-      <div>
-        <h4>Source:</h4> <%= @index_head.source_file %> |
-        <h4>Order:</h4> <%= @index_head.source_order %>
-      </div>
-
-      <div>
-        <h4>Index ID:</h4> <%= @index_head.entry_no %>
-      </div>
-
-      <div>
-        <h4>Version:</h4> <%= @index_head.version %>
-        <h4>Updated:</h4> <%= @index_head.modified_date.to_date %>
-      </div>
 
 
 <!--    <div class="card-body">-->

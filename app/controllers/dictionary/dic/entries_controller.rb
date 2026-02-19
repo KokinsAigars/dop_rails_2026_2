@@ -9,10 +9,9 @@ module Dictionary
         query = params[:q]
 
         # Try 1: Direct match (finds the exact messy string)
-        @entries = Sc03Dictionary::DicEntry.where(lang: params[:lang], is_current: true)
-                                           .where("name = :q OR name ILIKE :fuzzy",
-                                                  q: query,
-                                                  fuzzy: "%-#{query}")
+        @entries = Sc03Dictionary::DicEntry
+                     .where(lang: params[:lang], is_current: true)
+                     .where("name = :q OR name ILIKE :fuzzy", q: query, fuzzy: "%-#{query}")
 
         # Try 2: If nothing found, try searching by "dic_name" or "name_orig"
         # which might be cleaner versions of the word

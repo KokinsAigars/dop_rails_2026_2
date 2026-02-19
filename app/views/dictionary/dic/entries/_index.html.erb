@@ -1,0 +1,81 @@
+
+
+  <div class="title-article-h3">
+    <h3>LIBRARY CARD (INDEX)</h3>
+  </div>
+
+  <p class="article-p">
+  <h5>ID: <%= @index_head.id %></h5>
+  <h5>dictionary: <%= @index_head.dictionary %></h5>
+  <h5>entry_no: <%= @index_head.entry_no %></h5>
+  </p>
+
+  <p class="article-p">
+  <h5>homograph: <%= @index_head.homograph %></h5>
+  <h5>homograph_no: <%= @index_head.homograph_no %></h5>
+  <h5>homograph_uuid: <%= @index_head.homograph_uuid %></h5>
+  </p>
+
+<!--  <p class="article-p">-->
+<!--    <h5>source file: <%#= @index_head.source_file %></h5>-->
+<!--    <h5>source order: <%#= @index_head.source_order %></h5>-->
+<!--    <h5>source xml index id: <%#= @index_head.xml_index_id %></h5>-->
+<!--  </p>-->
+
+  <p class="article-p">
+    <h5>revision: <%= @index_head.revision %></h5>
+    <h5>revision comment: <%= @index_head.revision_comment %></h5>
+  </p>
+
+<!--  <p class="article-p">-->
+<!--    <h5>root id: <%#= @index_head.root_id %></h5>-->
+<!--    <h5>version: <%#= @index_head.version %></h5>-->
+<!--    <h5>is current: <%#= @index_head.is_current %></h5>-->
+<!--    <h5>superseded at: <%#= @index_head.superseded_at %></h5>-->
+<!--    <h5>superseded by: <%#= @index_head.superseded_by %></h5>-->
+<!--  </p>-->
+
+<!--  <p class="article-p">-->
+<!--    <h5>created at: <%#= @index_head.created_at %></h5>-->
+<!--    <h5>modified date: <%#= @index_head.modified_date %></h5>-->
+<!--    <h5>modified_by: <%#= @index_head.modified_by %></h5>-->
+<!--  </p>-->
+
+
+
+
+  <div class="vertical-space"></div>
+
+  <h2>
+    <% if @index_head.homograph.present? %>
+          <span class="badge bg-primary ms-2" title="Homograph Group">
+            <%= @index_head.homograph %> <%= @index_head.homograph_no %>
+          </span>
+    <% end %>
+  </h2>
+
+
+  <%# SEARCH FOR OTHER HOMOGRAPHS %>
+  <%
+    other_homographs = Sc03Dictionary::DicIndex.where(
+      "(homograph = ? OR homograph_uuid = ?) AND id != ?",
+      @index_head.homograph, @index_head.homograph_uuid, @index_head.id
+    ).limit(5)
+  %>
+
+  <% if other_homographs.any? %>
+    <div class="homograph-switcher mt-2 p-2 bg-white border rounded">
+      <small class="text-uppercase fw-bold text-muted">Other meanings for this word:</small>
+      <div class="btn-group btn-group-sm ms-2">
+        <% other_homographs.each do |other| %>
+          <%# Link to the 'current' entry for that specific index %>
+          <% target_entry = other.dic_entries.find_by(lang: @lang, is_current: true) %>
+          <% if target_entry %>
+            <%= link_to "(#{other.homograph_no})", dic_entry_path(target_entry), class: "btn btn-outline-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+

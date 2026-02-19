@@ -117,4 +117,25 @@
   border-left: 3px solid #fcc419;
 }
 
-
+.results-list{
+  //border: 1px solid green;
+}
+.result-item-row{
+  border: 1px solid gray ;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  margin-top: 5px;
+  width: 50%;
+  height: 35px;
+}
+.result-item{
+  padding-left: 10px;
+  height: 70px;
+  size: 2rem;
+}
+.active{
+  color: green;
+}
+.vertical-space{
+  padding-bottom: 30px;
+}

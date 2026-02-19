@@ -25,15 +25,15 @@ module Dictionary
             flex: "%#{flex_q}%"
           ).order(
             Arel.sql("CASE
-        WHEN term_norm = #{Sc03Dictionary::DicVocab.connection.quote(clean_q)} THEN 0
-        WHEN term ILIKE #{Sc03Dictionary::DicVocab.connection.quote(@query)} THEN 1
-        WHEN term_norm LIKE #{Sc03Dictionary::DicVocab.connection.quote(clean_q + '%')} THEN 2
-        ELSE 3 END"),
+              WHEN term_norm = #{Sc03Dictionary::DicVocab.connection.quote(clean_q)} THEN 0
+              WHEN term ILIKE #{Sc03Dictionary::DicVocab.connection.quote(@query)} THEN 1
+              WHEN term_norm LIKE #{Sc03Dictionary::DicVocab.connection.quote(clean_q + '%')} THEN 2
+              ELSE 3 END"),
             :term_norm
-          ).limit(50)
+          ).limit(10)
         else
           # 2. BROWSE MODE (Kaminari is active here)
-          @terms = @terms.order(:term_norm).page(params[:page]).per(100)
+          @terms = @terms.order(:term_norm).page(params[:page]).per(10)
         end
       end
 
