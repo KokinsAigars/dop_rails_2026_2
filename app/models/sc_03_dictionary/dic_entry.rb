@@ -18,6 +18,7 @@ module Sc03Dictionary
 
     validates :lang, :dictionary, :entry_version, :entry_no, presence: true
 
+    # Rails creates a method dic_index()
     belongs_to :dic_index,
                class_name: "Sc03Dictionary::DicIndex",
                foreign_key: :fk_index_id,

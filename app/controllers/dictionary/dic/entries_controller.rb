@@ -34,12 +34,38 @@ module Dictionary
       end
 
       def show
-        @entry = Sc03Dictionary::DicEntry.includes(:dic_index).find(params[:id])
-        @index_head = @entry.dic_index
 
-        # Fetch all current scans linked to this index record
-        @scans = @index_head.dic_scans.where(is_current: true).order(:scan_version)
+        # params[:id] is the word from the URL, e.g., "a-baddha"
+        word_from_url = params[:id]
 
+        # We "search again" inside the show action to find the current version
+        @entry = Sc03Dictionary::DicEntry.find_by(
+          name: word_from_url,
+          is_current: true,
+          lang: params[:lang] || 'pi' # Default to Pali if lang isn't specified
+        )
+
+        if @entry
+          @index_head = @entry.dic_index
+          @scans = @index_head.dic_scans.where(is_current: true)
+          @related_entries = @index_head.dic_entries.where(is_current: true)
+        else
+          # Fallback if no "current" version exists
+          render "not_found"
+        end
+
+        #
+        # # SELECT * FROM dic_entry WHERE id = 123;
+        # @entry = Sc03Dictionary::DicEntry.includes(:dic_index).find(params[:id])
+        #
+        # # SELECT * FROM dic_index WHERE id = [fk_index_id_value];
+        # @index_head = @entry.dic_index
+        #
+        # # SELECT * FROM dic_scan WHERE fk_index_id = [@index_head.id];
+        # @scans = @index_head.dic_scans.where(is_current: true)
+        #
+        #
+        # @related_entries = @index_head.dic_entries.where(is_current: true)
       end
 
       # def show

@@ -48,9 +48,12 @@
     <ul class="results-list">
       <% @terms.each do |v| %>
         <div class="result-item-row">
-        <%= link_to v.term, dic_entries_path(q: v.term, lang: v.lang),
-                    data: { turbo_frame: "_top" },
-                    class: "result-item" %>
+
+          <%= link_to v.term, dic_entry_path(id: v.term, lang: v.lang),
+                      data: { turbo_frame: "_top" } %>
+
+        <%#= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" }, class: "result-item" %>
+
         </div>
       <% end %>
     </ul>
