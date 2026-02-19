@@ -1189,6 +1189,18 @@ CREATE TABLE sc_03_dictionary.dic_scan (
 
 
 --
+-- Name: dic_search_indexes; Type: TABLE; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE TABLE sc_03_dictionary.dic_search_indexes (
+    term character varying NOT NULL,
+    term_norm character varying NOT NULL,
+    lang character varying(10),
+    fk_index_id uuid NOT NULL
+);
+
+
+--
 -- Name: dic_vocab; Type: TABLE; Schema: sc_03_dictionary; Owner: -
 --
 
@@ -2479,6 +2491,27 @@ CREATE UNIQUE INDEX uq_ref_texts_root_version ON sc_02_bibliography.ref_texts US
 
 
 --
+-- Name: idx_dic_search_fk_index; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE INDEX idx_dic_search_fk_index ON sc_03_dictionary.dic_search_indexes USING btree (fk_index_id);
+
+
+--
+-- Name: idx_dic_search_term_norm_trgm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE INDEX idx_dic_search_term_norm_trgm ON sc_03_dictionary.dic_search_indexes USING gin (term_norm public.gin_trgm_ops);
+
+
+--
+-- Name: idx_dic_search_term_trgm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE INDEX idx_dic_search_term_trgm ON sc_03_dictionary.dic_search_indexes USING gin (term public.gin_trgm_ops);
+
+
+--
 -- Name: idx_dic_vocab_term_norm_trgm; Type: INDEX; Schema: sc_03_dictionary; Owner: -
 --
 
@@ -2490,6 +2523,13 @@ CREATE INDEX idx_dic_vocab_term_norm_trgm ON sc_03_dictionary.dic_vocab USING gi
 --
 
 CREATE INDEX idx_dic_vocab_term_trgm ON sc_03_dictionary.dic_vocab USING gin (term public.gin_trgm_ops);
+
+
+--
+-- Name: idx_unique_search_entry; Type: INDEX; Schema: sc_03_dictionary; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_unique_search_entry ON sc_03_dictionary.dic_search_indexes USING btree (term, lang, fk_index_id);
 
 
 --
@@ -3237,8 +3277,7 @@ ALTER TABLE ONLY sc_07_hash.temporary_hash
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20260218180629'),
-('20260218063636'),
+('20260219191541'),
 ('20260209050443'),
 ('20260207152542'),
 ('20260206045823'),

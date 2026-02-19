@@ -1,4 +1,5 @@
 # bin/rails routes
+# bin/rails routes -g search_indexes
 
 # frozen_string_literal: true
 
@@ -104,17 +105,12 @@ Rails.application.routes.draw do
         resources :texts, only: [:index, :show]
       end
 
-
-      # dic_root_path	/dic	Dictionary::Dic::Vocab#index
-      # dic_vocab_index_path	/dic/vocab	Dictionary::Dic::Vocab#index
-      # dic_entries_path	/dic/entries	Dictionary::Dic::Entries#index
-      # dic_entry_path(id)	/dic/entries/:id	Dictionary::Dic::Entries#show
-
       namespace :dic do
         # This makes http://localhost:3000/dic the search entry point
-        root to: 'vocab#index'
+        # Point the root to your new SearchIndex controller
+        root to: 'search_indexes#index'
 
-        resources :vocab, only: [:index]
+        resources :search_indexes, only: [:index]
         resources :entries, only: [:index, :show]
       end
 

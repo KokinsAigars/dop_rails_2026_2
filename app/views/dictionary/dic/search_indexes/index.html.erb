@@ -15,24 +15,32 @@
     <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
   </div>
   <div class="sub-title-article-h1">
-    <h6>Last modified: 19 Feb 2026</h6>
+    <h6>
+      Last modified:
+      <% if @current_release %>
+        <%= @current_release.released_at.strftime("%d %b %Y") %>
+        <span class="text-muted" title="Release: <%= @current_release.number %>"></span>
+      <% else %>
+        Date pending
+      <% end %>
+    </h6>
   </div>
 
 
   <div class="lang-nav">
     <% %w[pi en lv].each do |l| %>
       <%= link_to l.upcase,
-                  dic_vocab_index_path(lang: l, q: params[:q]),
+                  dic_search_indexes_path(lang: l, q: params[:q]),
                   class: ("active" if @lang == l) %>
     <% end %>
   </div>
 
   <%# The form stays OUTSIDE the frame so it isn't replaced %>
-  <%= form_with url: dic_vocab_index_path,
+  <%= form_with url: dic_search_indexes_path,
                 method: :get,
                 data: {
                   controller: "search",             # Connects to the Stimulus controller
-                  turbo_frame: "vocab_results",     # Tells Turbo where to put the results
+                  turbo_frame: "search_index_results",     # Tells Turbo where to put the results
                   turbo_action: "advance"
                 } do |f| %>
     <%= f.hidden_field :lang, value: @lang %>
@@ -43,16 +51,13 @@
 
 
   <%# Only this part gets replaced by Turbo %>
-  <%= turbo_frame_tag "vocab_results" do %>
+  <%= turbo_frame_tag "search_index_results" do %>
 
     <ul class="results-list">
       <% @terms.each do |v| %>
         <div class="result-item-row">
 
-          <%= link_to v.term, dic_entry_path(id: v.term, lang: v.lang),
-                      data: { turbo_frame: "_top" } %>
-
-        <%#= link_to v.term, dic_entries_path(q: v.term, lang: v.lang), data: { turbo_frame: "_top" }, class: "result-item" %>
+          <%= link_to v.term, dic_entry_path(v.fk_index_id, term: v.term), data: { turbo_frame: "_top" } %>
 
         </div>
       <% end %>

@@ -1,45 +1,48 @@
-# to run
-# bin/rails dictionary:rebuild_vocab
+#  bin/rails dictionary:rebuild_search_index
 
 # lib/tasks/dictionary.rake
+#
 namespace :dictionary do
-  task rebuild_vocab: :environment do
-    puts "--- Starting Vocab Rebuild ---"
+
+  task rebuild_search_index: :environment do
+
+    puts "--- Starting Search Index Rebuild ---"
 
     # 1. Clear the old data
-    Sc03Dictionary::DicVocab.delete_all
+    # Note: Using the new class name we discussed
+    Sc03Dictionary::DicSearchIndex.delete_all
 
-    # 2. Get the data, rejecting anything where name is blank
-    # name.presence ensures that empty strings "" are also treated as nil
+    # 2. Get Name, Lang, AND ID
+    # We need the ID to populate the fk_entry_id bridge
     data = Sc03Dictionary::DicEntry.where(is_current: true)
-                                   .distinct
-                                   .pluck(:name, :lang)
-                                   .reject { |name, lang| name.blank? }
+                                   .where.not(name: [nil, ""]) # SQL-level rejection
+                                   .select(:name, :lang, :fk_index_id)
+                                   .group(:name, :lang, :fk_index_id)
+                                   .pluck(:name, :lang, :fk_index_id)
 
     if data.any?
-      puts "Filtered out blanks. Processing #{data.size} valid terms..."
+      puts "Found #{data.size} unique term-index pairs. Processing..."
 
-      # 3. Process in batches of 5,000 to keep memory low
+      # 3. Process in batches
       data.each_slice(5000) do |batch|
-        sql_values = batch.map do |name, lang|
-          # Normalize using the model method
-          norm_val = Sc03Dictionary::DicVocab.normalize(name)
+        sql_values = batch.map do |name, lang, fk_id|
+          norm_val = Sc03Dictionary::DicSearchIndex.normalize(name)
 
-          # Cap lengths to prevent the B-Tree index error we saw earlier
-          safe_name = name.to_s.strip[0..250]
-          safe_norm = norm_val[0..250]
-
-          name_esc = ActiveRecord::Base.connection.quote(safe_name)
+          name_esc = ActiveRecord::Base.connection.quote(name.to_s.strip[0..250])
           lang_esc = ActiveRecord::Base.connection.quote(lang)
-          norm_esc = ActiveRecord::Base.connection.quote(safe_norm)
+          norm_esc = ActiveRecord::Base.connection.quote(norm_val[0..250])
+          fk_esc   = ActiveRecord::Base.connection.quote(fk_id)
 
-          "(#{lang_esc}, #{name_esc}, #{norm_esc})"
+          "(#{lang_esc}, #{name_esc}, #{norm_esc}, #{fk_esc})"
         end.join(", ")
 
         ActiveRecord::Base.connection.execute(
-          "INSERT INTO sc_03_dictionary.dic_vocab (lang, term, term_norm) VALUES #{sql_values}"
+          "INSERT INTO sc_03_dictionary.dic_search_indexes
+          (lang, term, term_norm, fk_index_id)
+          VALUES #{sql_values}
+          ON CONFLICT (term, lang, fk_index_id) DO NOTHING"
         )
-        print "." # Progress indicator
+        print "."
       end
 
       puts "\nSuccess! Indexed #{data.size} terms."

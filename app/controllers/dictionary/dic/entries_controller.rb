@@ -34,53 +34,32 @@ module Dictionary
       end
 
       def show
-        # 1. Use the 'word' from the URL to find the entry.
-        # No .find(params[:id]) magic—just a clear find_by on the 'name' column.
-        @entry = Sc03Dictionary::DicEntry.find_by(
-          name: params[:id],
-          is_current: true
-        )
 
-        # 2. Safety check: if the word doesn't exist, stop here.
-        return render_not_found if @entry.nil?
+        # 1. params[:id] is now the UUID (fk_index_id) from the link
+        @index_head = Sc03Dictionary::DicIndex.find_by(id: params[:id])
 
-        # 3. Explicitly reach out to the Index table using the foreign key
-        # instead of calling @entry.dic_index
-        @index_head = Sc03Dictionary::DicIndex.find_by(id: @entry.fk_index_id)
+        # Safety check: if no index found, go back to search
+        if @index_head.nil?
+          return redirect_to dic_root_path, alert: "Index record not found."
+        end
 
-        # 4. Explicitly find scans tied to that specific Index ID
-        @scans = Sc03Dictionary::DicScan.where(
+        # 2. Get all language versions (Pali, Latvian, etc.) linked to this UUID
+        # We explicitly filter by is_current to ensure we see the latest versions
+        @entries = Sc03Dictionary::DicEntry.where(
           fk_index_id: @index_head.id,
           is_current: true
-        )
+        ).order(:lang)
 
-        # 5. Explicitly find other language versions (synoptic view)
-        @related_entries = Sc03Dictionary::DicEntry.where(
+        # Use the first entry's name as the main title for the page
+        @page_title = @entries.any? ? @entries.first.name : "Word Not Found"
+
+        # 3. Get all manuscript scans tied to this UUID
+        @scans = Sc03Dictionary::DicScan.where(
           fk_index_id: @index_head.id,
           is_current: true
         )
       end
 
-      # def show
-      #   # 1. Load the entry and eager-load ITS children (refs, notes, quotes, egs)
-      #   # 2. Also eager-load the parent index and the index's children (scans)
-      #   @entry = Sc03Dictionary::DicEntry.includes(
-      #     :dic_refs, :dic_notes, :dic_quotes, :dic_egs,
-      #     dic_index: [:dic_scans]
-      #   ).find(params[:id])
-      #
-      #   # 3. Correctly map the variables for the view
-      #   @index  = @entry.dic_index
-      #
-      #   # These come from the Entry
-      #   @refs   = @entry.dic_refs.where(is_current: true).order(:ref_no)
-      #   @egs    = @entry.dic_egs.where(is_current: true).order(:eg_no)
-      #   @quotes = @entry.dic_quotes.where(is_current: true).order(:quote_no)
-      #   @notes  = @entry.dic_notes.where(is_current: true).order(:note_no)
-      #
-      #   # These come from the Index
-      #   @scans  = @index.dic_scans.where(is_current: true)
-      # end
     end
   end
 end

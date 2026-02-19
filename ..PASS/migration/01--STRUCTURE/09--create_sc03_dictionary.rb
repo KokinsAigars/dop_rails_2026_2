@@ -28,7 +28,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       $$;
     SQL
 
-    create_table "sc_03_dictionary.dic_doc", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_doc",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.text  :doc_title
       t.text  :doc_license
       t.jsonb :doc_reference, default: {}
@@ -47,7 +49,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_index", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_index",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.integer :dictionary, null: false, default: 1
 
       t.integer :entry_no
@@ -73,7 +77,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_entry", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_entry",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid   :fk_index_id, null: false
       t.column :lang, "sc_03_dictionary.dic_lang", null: false
 
@@ -113,7 +119,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_scan", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_scan",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid    :fk_index_id,  null: false
       t.integer :scan_version, null: false
 
@@ -139,7 +147,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_ref", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_ref",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid :fk_index_id, null: false
       t.uuid :fk_entry_id, null: false
 
@@ -179,7 +189,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_eg", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_eg",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid :fk_index_id, null: false
       t.uuid :fk_entry_id, null: false
 
@@ -219,7 +231,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_quote", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_quote",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid :fk_index_id, null: false
       t.uuid :fk_entry_id, null: false
 
@@ -259,7 +273,9 @@ class CreateSc03Dictionary < ActiveRecord::Migration[8.1]
       t.jsonb     :modified_by, default: {}
     end
 
-    create_table "sc_03_dictionary.dic_note", id: :uuid, default: -> { "gen_random_uuid()" } do |t|
+    create_table "sc_03_dictionary.dic_note",
+                 id: :uuid,
+                 default: -> { "gen_random_uuid()" } do |t|
       t.uuid :fk_index_id, null: false
       t.uuid :fk_entry_id, null: false
 

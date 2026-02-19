@@ -12,13 +12,25 @@
   </div>
 
   <div class="title-article-h1">
-    <h1><%= @entry.name %></h1>
+    <h1><%= @page_title %></h1>
   </div>
   <div class="sub-title-article-h1">
     <h6>Last modified: <%= @index_head.modified_date.to_date %></h6>
   </div>
 
   <%= render "index" %>
+
+
+  <% @entries.each_with_index do |entry, index| %>
+    <div class="entry-card">
+      <h3>
+        <%= entry.name %>
+        <% if @entries.count > 1 && entry.lang == 'pi' %>
+          <small class="text-muted">(<%= index + 1 %>)</small>
+        <% end %>
+      </h3>
+    </div>
+  <% end %>
 
 
 
