@@ -48,7 +48,7 @@ create  app/views/kaminari/_prev_page.html.erb
     <%= paginate @records %>
   </div>
 
-</div>
+
 
 
 <div class="pagination-wrapper">
@@ -82,5 +82,24 @@ create  app/views/kaminari/_prev_page.html.erb
 <% end %>
 </div>
 
+
+
+
+<%# Kaminari pagination %>
+<!--    <div class="pagination-box">-->
+<%# if @query.blank? %>
+<%#= paginate @terms, window: 2, outer_window: 1 %>
+
+<!--        <div class="stats-text">-->
+<!--          Showing <strong><%#= @terms.offset_value + 1 %></strong>-->
+<!--          - <strong><%#= [@terms.offset_value + @terms.length, @terms.total_count].min %></strong>-->
+<!--          of <strong><%#= number_with_delimiter(@terms.total_count) %></strong> words-->
+<!--        </div>-->
+<%# end %>
+<!--    </div>-->
+
+<%# window: 2 shows 2 pages around the current page %>
+<%# outer_window: 1 shows the first and last page %>
+<%#= paginate @terms, window: 2, outer_window: 1 %>
 
 

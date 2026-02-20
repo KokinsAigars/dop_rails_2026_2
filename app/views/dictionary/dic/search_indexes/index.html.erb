@@ -1,31 +1,13 @@
 <%# app/views/dictionary/dic/vocab/index.html.erb %>
 <div class="article-layout">
 
-  <div class="body-light">
-    <%= link_to "Home", root_path %> /
-    <% if admin? %>
-      <%= link_to "Admin Dashboard", admin_root_path %> /
-    <% else %>
-      <%= link_to "My Dashboard", account_root_path %> /
-    <% end %>
-    <%= link_to "Dictionary", dic_root_path %>
-  </div>
+  <%= render 'dictionary/shared/dic_home_links' %>
 
   <div class="title-article-h1">
     <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
   </div>
 
-  <div class="sub-title-article-h1">
-    <h6>
-      Last modified:
-      <% if @current_release %>
-        <%= @current_release.released_at.strftime("%d %b %Y") %>
-        <span class="text-muted" title="Release: <%= @current_release.number %>"></span>
-      <% else %>
-        Date pending
-      <% end %>
-    </h6>
-  </div>
+  <%= render 'dictionary/shared/db_release' %>
 
   <div class="lang-nav">
     <% %w[pi en lv].each do |l| %>
@@ -35,7 +17,7 @@
     <% end %>
   </div>
 
-  <div>
+  <div class="dictionary-search">
     <%= form_with url: dic_search_indexes_path,
                   method: :get,
                   data: {
@@ -50,7 +32,8 @@
     <% end %>
   </div>
 
-  <div>
+  <div class="dictionary-search-results">
+
     <%= turbo_frame_tag "search_index_results" do %>
 
       <%# Calculate the offset: (current_page - 1) * items_per_page %>
@@ -92,6 +75,7 @@
                        remote: true %> <%# Ensure it plays nice with Ajax/Turbo %>
         </div>
     <% end %>
+
   </div>
 
 </div>
@@ -100,26 +84,3 @@
 <!-- rukkho -->
 
 
-
-
-
-
-
-
-
-<%# Kaminari pagination %>
-<!--    <div class="pagination-box">-->
-<%# if @query.blank? %>
-<%#= paginate @terms, window: 2, outer_window: 1 %>
-
-<!--        <div class="stats-text">-->
-<!--          Showing <strong><%#= @terms.offset_value + 1 %></strong>-->
-<!--          - <strong><%#= [@terms.offset_value + @terms.length, @terms.total_count].min %></strong>-->
-<!--          of <strong><%#= number_with_delimiter(@terms.total_count) %></strong> words-->
-<!--        </div>-->
-<%# end %>
-<!--    </div>-->
-
-<%# window: 2 shows 2 pages around the current page %>
-<%# outer_window: 1 shows the first and last page %>
-<%#= paginate @terms, window: 2, outer_window: 1 %>

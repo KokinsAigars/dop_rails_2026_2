@@ -1,0 +1,13 @@
+
+<div class="sub-title-article-h1">
+  <h6>
+    Last modified:
+    <% if @current_release %>
+      <%= @current_release.released_at.strftime("%d %b %Y") %>
+      <span class="text-muted" title="Release: <%= @current_release.number %>"></span>
+    <% else %>
+      Date pending
+    <% end %>
+  </h6>
+</div>
+

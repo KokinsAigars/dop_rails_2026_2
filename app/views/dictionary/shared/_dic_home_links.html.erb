@@ -1,0 +1,11 @@
+
+<div class="body-light">
+  <%= link_to "Home", root_path %> /
+  <% if admin? %>
+    <%= link_to "Admin Dashboard", admin_root_path %> /
+  <% else %>
+    <%= link_to "My Dashboard", account_root_path %> /
+  <% end %>
+  <%= link_to "Dictionary", dic_root_path %>
+</div>
+
