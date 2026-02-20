@@ -1,5 +1,5 @@
 
-
+kaminari pagination
 
 helper on html and controllers to view pagination
 posts per page && next previus posts

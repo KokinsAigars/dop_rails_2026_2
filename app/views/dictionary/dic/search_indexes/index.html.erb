@@ -14,6 +14,7 @@
   <div class="title-article-h1">
     <h1>Dictionary Search (<%= @lang.upcase %>)</h1>
   </div>
+
   <div class="sub-title-article-h1">
     <h6>
       Last modified:
@@ -26,7 +27,6 @@
     </h6>
   </div>
 
-
   <div class="lang-nav">
     <% %w[pi en lv].each do |l| %>
       <%= link_to l.upcase,
@@ -35,56 +35,91 @@
     <% end %>
   </div>
 
-  <%# The form stays OUTSIDE the frame so it isn't replaced %>
-  <%= form_with url: dic_search_indexes_path,
-                method: :get,
-                data: {
-                  controller: "search",             # Connects to the Stimulus controller
-                  turbo_frame: "search_index_results",     # Tells Turbo where to put the results
-                  turbo_action: "advance"
-                } do |f| %>
-    <%= f.hidden_field :lang, value: @lang %>
-    <%= f.text_field :q, value: @query,
-                     autocomplete: "off",
-                     data: { action: "input->search#submit" } %>
-  <% end %>
-
-
-  <%# Only this part gets replaced by Turbo %>
-  <%= turbo_frame_tag "search_index_results" do %>
-
-    <ul class="results-list">
-      <% @terms.each do |v| %>
-        <div class="result-item-row">
-
-          <%= link_to v.term, dic_entry_path(v.fk_index_id, term: v.term), data: { turbo_frame: "_top" } %>
-
-        </div>
-      <% end %>
-    </ul>
-  <% end %>
-
-
-      <%# Only show page numbers if we aren't filtering by a specific search query %>
-      <div class="pagination-box">
-        <% if @query.blank? %>
-          <%# window: 2 shows 2 pages around the current page %>
-          <%# outer_window: 1 shows the first and last page %>
-          <%= paginate @terms, window: 2, outer_window: 1 %>
-
-          <div class="stats-text">
-            Showing <strong><%= @terms.offset_value + 1 %></strong>
-            - <strong><%= [@terms.offset_value + @terms.length, @terms.total_count].min %></strong>
-            of <strong><%= number_with_delimiter(@terms.total_count) %></strong> words
-          </div>
-        <% end %>
-      </div>
-
-
+  <div>
+    <%= form_with url: dic_search_indexes_path,
+                  method: :get,
+                  data: {
+                    controller: "search-input",             # Connects to the Stimulus controller
+                    turbo_frame: "search_index_results",     # Tells Turbo where to put the results
+                    turbo_action: "advance"
+                  } do |f| %>
+      <%= f.hidden_field :lang, value: @lang %>
+      <%= f.text_field :q, value: @query,
+                       autocomplete: "off",
+                       data: { action: "input->search-input#submit" } %>
+    <% end %>
   </div>
 
+  <div>
+    <%= turbo_frame_tag "search_index_results" do %>
+
+      <%# Calculate the offset: (current_page - 1) * items_per_page %>
+      <% offset = (@terms.current_page - 1) * @terms.limit_value %>
+
+        <div class="T-tab-bar">
+          Found <%= number_with_delimiter(@terms.total_count) %> entries
+          (Showing <%= @terms.offset_value + 1 %> - <%= @terms.offset_value + @terms.length %>)
+        </div>
+
+        <ul data-controller="search-result"
+            class="results-list" >
+          <% @terms.each_with_index do |v, index| %>
+            <li class="suggestion-item"
+                data-search-result-target="item"
+                data-term="<%= v.term %>"
+                data-uuid="<%= v.fk_index_id %>"
+                data-score="<%= v.try(:search_rank) || 0 %>"
+                data-global-index="<%= offset + index + 1 %>">
+
+              <span class="T-tab-bar">[<%= offset + index + 1 %>]</span>
+
+              <%= link_to dic_entry_path(v.fk_index_id), data: { turbo_frame: "_top" } do %>
+                <span class="term-text"><%= v.term %></span>
+              <% end %>
+
+            </li>
+          <% end %>
+        </ul>
+
+        <% console %>
+        <%#= @terms.class %>
+
+        <div class="kaminari-pagination-container">
+          <%= paginate @terms,
+                       window: 2,
+                       outer_window: 1,
+                       params: { q: @query, lang: @lang },
+                       remote: true %> <%# Ensure it plays nice with Ajax/Turbo %>
+        </div>
+    <% end %>
+  </div>
 
 </div>
 
 
+<!-- rukkho -->
 
+
+
+
+
+
+
+
+
+<%# Kaminari pagination %>
+<!--    <div class="pagination-box">-->
+<%# if @query.blank? %>
+<%#= paginate @terms, window: 2, outer_window: 1 %>
+
+<!--        <div class="stats-text">-->
+<!--          Showing <strong><%#= @terms.offset_value + 1 %></strong>-->
+<!--          - <strong><%#= [@terms.offset_value + @terms.length, @terms.total_count].min %></strong>-->
+<!--          of <strong><%#= number_with_delimiter(@terms.total_count) %></strong> words-->
+<!--        </div>-->
+<%# end %>
+<!--    </div>-->
+
+<%# window: 2 shows 2 pages around the current page %>
+<%# outer_window: 1 shows the first and last page %>
+<%#= paginate @terms, window: 2, outer_window: 1 %>

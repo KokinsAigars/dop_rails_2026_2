@@ -26,9 +26,8 @@ import FlashController from "./layouts/flash_controller.ts"
 import ActivityIconController from "./layouts/activity_icon_controller.ts"
 // import ExplorerItemController from "./layouts/explorer_item_controller.ts"
 
-
-import SearchController from "./search_controller.ts"
-
+import SearchInputController from "./search_input_controller.ts"
+import SearchResultController from "./search_result_controller.ts"
 
 
 window.Stimulus ||= Application.start();
@@ -52,4 +51,5 @@ window.Stimulus.register("flash", FlashController);
 window.Stimulus.register("activity-icon", ActivityIconController);
 // window.Stimulus.register("flash", ExplorerItemController);
 
-window.Stimulus.register("search", SearchController);
+window.Stimulus.register("search-input", SearchInputController);
+window.Stimulus.register("search-result", SearchResultController);

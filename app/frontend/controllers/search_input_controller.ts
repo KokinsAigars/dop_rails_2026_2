@@ -4,11 +4,14 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["form"]
+    static targets = [
+        "form",
+    ]
+
 
     connect() {
-        // This runs as soon as the form appears on the screen
-        console.log("Search controller connected!")
+
+        console.log("Search input controller connected!")
     }
 
     submit() {
