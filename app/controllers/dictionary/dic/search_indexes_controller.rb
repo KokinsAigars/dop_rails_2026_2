@@ -3,6 +3,7 @@ module Dictionary
   module Dic
     class SearchIndexesController < ApplicationController
 
+      allow_unauthenticated_access only: %i[index]
 
       def index
         @query = params[:q].to_s.strip
@@ -48,8 +49,6 @@ module Dictionary
         # This ensures Kaminari methods (total_pages, etc.) are ALWAYS present.
         @terms = scope.page(params[:page]).per(@query.present? ? 50 : 100)
       end
-
-
 
     end
   end

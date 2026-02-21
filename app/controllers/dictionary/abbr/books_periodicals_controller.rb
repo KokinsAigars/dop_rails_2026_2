@@ -19,8 +19,6 @@ module Dictionary
         @records = scope.order(:abbr_name).page(params[:page]).per(25)
       end
 
-
-
       def show
         # We use find_by to avoid a hard crash if the ID is malformed or missing
         @record = Sc01Abbreviations::AbbrBooksPeriodical.find_by(id: params[:id])
@@ -29,8 +27,6 @@ module Dictionary
           redirect_to abbr_books_periodicals_path, alert: "Record not found."
         end
       end
-
-
 
     end
   end

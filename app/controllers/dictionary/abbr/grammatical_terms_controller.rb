@@ -2,6 +2,9 @@
 module Dictionary
   module Abbr
     class GrammaticalTermsController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show]
+
       def index
         @per_page = 100
         @page = (params[:page] || 1).to_i
@@ -22,6 +25,7 @@ module Dictionary
       rescue ActiveRecord::RecordNotFound
         redirect_to abbr_grammatical_terms_path, alert: "Term not found."
       end
+
     end
   end
 end

@@ -1,139 +1,115 @@
 
-<div class="article-layout">
+<div class="workstation-wrapper" data-controller="dic-workstation">
 
-  <%= render 'dictionary/shared/dic_home_links' %>
+    <%= render 'dictionary/shared/dic_home_links' %>
 
-  <div class="title-article-h1">
-    <h1><%= @pali_entry&.name %></h1>
-  </div>
-
-  <div class="sub-title-article-h1">
-    <h6>Last modified: <%= @index.modified_date.to_date %></h6>
-  </div>
-
-  <%# INDEX %>
-  <div data-controller="toggle" data-toggle-open-value="false">
-    <button data-action="click->toggle#toggle" class="btn">
-      <i data-toggle-target="icon" class="bi bi-chevron-right" ></i>
-      <strong>metadata</strong>
-    </button>
-    <div data-toggle-target="content" class="library-card-container">
-      <strong>Index</strong>
-      <p>id:                <%= @index.id %></p>
-      <p>dictionary:        <%= @index.dictionary %></p>
-      <p>entry_no:          <%= @index.entry_no %></p>
-      <p>homograph:         <%= @index.homograph %></p>
-      <p>homograph_no:      <%= @index.homograph_no %></p>
-      <p>homograph_uuid:    <%= @index.homograph_uuid %></p>
-      <p>source_file:       <%= @index.source_file %></p>
-      <p>source_order:      <%= @index.source_order %></p>
-      <p>xml_index_id:      <%= @index.xml_index_id %></p>
-      <p>revision:          <%= @index.revision %></p>
-      <p>revision_comment:  <%= @index.revision_comment %></p>
-      <p>root_id:           <%= @index.root_id %></p>
-      <p>version:           <%= @index.version %></p>
-      <p>is_current:        <%= @index.is_current %></p>
-      <p>superseded_at:     <%= @index.superseded_at %></p>
-      <p>superseded_by:     <%= @index.superseded_by %></p>
-      <p>created_at:        <%= @index.created_at %></p>
-      <p>modified_date:     <%= @index.modified_date %></p>
-      <p>modified_by:       <%= @index.modified_by %></p>
-      <div class="vertical-space"></div>
-      <p>
-        <strong>Last Modified By:</strong>  <%= @index.actor["fullname"] %> via <%= @index.source["app"] %>
-        <br>
-        <strong>Last modified: </strong>    <%= @index.modified_date.to_date %></h6>
-      </p>
-    </div>
-  </div>
-
-  <div class="vertical-space"></div>
-
-
-  <div class="card-body p-4">
-    <%# LOOP THROUGH EVERY LANGUAGE ENTRY %>
-    <% @all_entries.each do |entry| %>
-      <section class="language-block mb-5 p-3 border-start border-4 <%= entry.lang == 'pi' ? 'border-primary' : 'border-success' %>">
-
-        <div class="d-flex justify-content-between">
-          <h2 class="h4">
-            <span class="badge bg-secondary me-2"><%= entry.lang.upcase %></span>
-            <%= entry.name %>
-          </h2>
-          <span class="text-muted italic"><%= entry.grammar %> (<%= entry.gender %>)</span>
+        <div class="title-article-h1">
+          <h1><%= @pali_entry&.name %></h1>
         </div>
 
-        <%# Translation text if available %>
-        <% if entry.dic_eng_tr.present? %>
-          <p class="fs-5"><%= entry.dic_eng_tr %></p>
-        <% end %>
+        <div class="sub-title-article-h1">
+          <h6>Last modified: <%= @index.modified_date.to_date %></h6>
+        </div>
 
-        <%# EXAMPLES & QUOTES (Specific to THIS language record) %>
-        <div class="row mt-3">
-          <div class="col-md-6">
-            <h6>Examples (<%= entry.lang.upcase %>)</h6>
-            <% entry.dic_egs.each do |eg| %>
-              <div class="small bg-light p-2 mb-1 border rounded"><%= eg.content %></div>
+    <%# UPPER SECTION %>
+    <div class="upper-entry-view"
+         data-dic-workstation-target="upperPane"
+         data-controller="tabs"
+         data-tabs-active-class-value="active-tab"
+         style="height: 350px;">
+
+      <%# --- 1. THE BUTTONS (TAB NAV) --- %>
+      <nav class="lang-tabs flex-shrink-0">
+        <% @grouped_entries.each_with_index do |(lang_code, entries), index| %>
+          <%
+            lang_labels = { 'pi' => 'Pāḷi', 'en' => 'English', 'lv' => 'Latviešu' }
+            label = lang_labels[lang_code] || lang_code.upcase
+          %>
+          <button data-tabs-target="btn"
+                  data-tab-name="lang-<%= lang_code %>"
+                  data-action="click->tabs#switch"
+                  type="button"
+                  <%# If you have an 'active' class, apply it to the first button %>
+                  class="p-2 border-0 bg-transparent <%= 'active-tab-style' if index == 0 %>">
+            <%= label %> (<%= entries.size %>)
+          </button>
+        <% end %>
+      </nav>
+
+      <%# --- 2. THE CONTENT (PANES) --- %>
+      <div class="upper-content-scrollable">
+        <% @grouped_entries.each_with_index do |(lang_code, entries), index| %>
+
+          <%# This is the fix: index is now inside the block %>
+          <div data-tabs-target="pane"
+               data-tab-name="lang-<%= lang_code %>"
+               class="<%= 'd-none' unless index == 0 %>">
+
+            <% entries.each do |entry| %>
+              <div class="entry-item mb-4">
+                <%= render 'entry_main', entry: entry %>
+              </div>
             <% end %>
           </div>
 
-          <%# 1. The Wrapper: Controller and Value must be together %>
-          <div data-controller="toggle" data-toggle-open-value="false" class="col-md-6 mb-3">
+        <% end %>
+      </div>
 
-            <%# 2. The Trigger: Must be inside the wrapper %>
-            <button data-action="click->toggle#toggle" class="btn btn-sm btn-link text-decoration-none p-0">
-              <i class="bi bi-chevron-right" data-toggle-target="icon"></i>
-              <strong>Scholar Notes</strong>
-            </button>
+    </div>
 
-            <%# 3. The Target: Must be inside the wrapper %>
-            <div data-toggle-target="content">
-              <p>Contrary to popular belief, Lorem Ipsum...</p>
-              <% entry.dic_notes.each do |note| %>
-                <div class="small text-warning-emphasis"><%= note.content %></div>
-              <% end %>
-            </div>
+    <%# SEPARATOR %>
+    <div class="dic-v-separator"
+         data-action="pointerdown->dic-workstation#beginDictionaryResize">
+  <!--    <div class="dic-handle-grip"></div>-->
+    </div>
 
+    <%# LOWER SECTION %>
+    <div class="lower-evidence-view">
+      <div data-controller="tabs"
+           data-tabs-active-class-value="active-evidence"
+           class="h-100 d-flex flex-column">
+
+        <%# --- TAB NAVIGATION (Fixed at top of lower pane) --- %>
+        <nav class="lang-tabs flex-shrink-0">
+          <button data-tabs-target="btn" data-tab-name="metadata" data-action="tabs#switch" class="p-2 border-0 bg-transparent">
+            Metadata & Notes
+          </button>
+          <button data-tabs-target="btn" data-tab-name="scans" data-action="tabs#switch" class="p-2 border-0 bg-transparent">
+            Manuscript Scans (<%= @index.dic_scans.size %>)
+          </button>
+          <button data-tabs-target="btn" data-tab-name="audit" data-action="tabs#switch" class="p-2 border-0 bg-transparent">
+            History
+          </button>
+        </nav>
+
+        <%# --- THE COPY BUTTON --- %>
+        <button data-action="click->tabs#copyLink" class="btn-copy-link">
+          <i class="bi bi-share"></i> Copy Tab Link
+        </button>
+
+        <%# --- SCROLLABLE CONTENT AREA --- %>
+        <div class="lower-content-scrollable flex-grow-1 overflow-y-auto p-3">
+
+          <%# PANE 1: Metadata (Set as visible by default index == 0 logic if needed) %>
+          <div data-tabs-target="pane" data-tab-name="metadata">
+            <%= render partial: 'metadata_index', locals: { scans: @index } %>
           </div>
+
+          <%# PANE 2: Scans %>
+          <div data-tabs-target="pane" data-tab-name="scans" class="d-none">
+            <% if @index.dic_scans.any? %>
+              <%= render partial: 'scans', locals: { scans: @index.dic_scans } %>
+            <% end %>
+          </div>
+
+          <%# PANE 3: Audit %>
+          <div data-tabs-target="pane" data-tab-name="audit" class="d-none">
+            <%= render 'audit_history' %>
+          </div>
+
         </div>
-
-
-      </section>
-    <% end %>
-  </div>
-
-
-  <%# SCANS (Attached to the Index, shown at the bottom) %>
-  <% if @index.dic_scans.any? %>
-      <strong>Source Scans</strong>
-
-      <% @index.dic_scans.each do |scan| %>
-        <div class="library-card-container">
-          <p>id: <%= scan.id %> </p>
-          <p>fk_index_id: <%= scan.fk_index_id %> </p>
-          <p>scan_version: <%= scan.scan_version %> </p>
-          <p>scan_filename: <%= scan.scan_filename %> </p>
-          <p>scan_note: <%= scan.scan_note %> </p>
-          <p>scan_text: <%= scan.scan_text %> </p>
-          <p>scan_text_raw: <%= scan.scan_text_raw %> </p>
-          <p>scan_meta: <%= scan.scan_meta %> </p>
-          <p>scan_status: <%= scan.scan_status %> </p>
-          <p>revision: <%= scan.revision %> </p>
-          <p>revision_comment: <%= scan.revision_comment %> </p>
-          <p>root_id: <%= scan.root_id %> </p>
-          <p>version: <%= scan.version %> </p>
-          <p>is_current: <%= scan.is_current %> </p>
-          <p>superseded_at: <%= scan.superseded_at %> </p>
-          <p>superseded_by: <%= scan.superseded_by %> </p>
-          <p>created_at: <%= scan.created_at %> </p>
-          <p>modified_date: <%= scan.modified_date %> </p>
-          <p>modified_by: <%= scan.modified_by %> </p>
-        </div>
-      <% end %>
-  <% end %>
-
-
-
+      </div>
+    </div>
 
 </div>
 

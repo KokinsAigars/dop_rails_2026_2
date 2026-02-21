@@ -1,0 +1,28 @@
+
+
+<%# Rails 8 built-in authentication check %>
+<%# if authenticated? %>
+<!--  <div class="edit-actions">-->
+    <%#= link_to edit_dic_entry_path(entry), class: "btn-edit-pencil" do %>
+<!--      <i class="bi bi-pencil-square"></i> Edit-->
+    <%# end %>
+<!--  </div>-->
+<%# end %>
+
+
+
+<%# Only show the button if a user is logged in %>
+<% if authenticated? %>
+  <p>authenticated user</p>
+  <%#= link_to "Edit Entry", edit_dic_entry_path(entry), class: "btn-edit" %>
+<% end %>
+
+
+
+
+<%# In your Search Results or Gallery %>
+<%#= link_to "View Manuscript Scans", full_dic_entry_path(uuid, anchor: "scans"), class: "btn btn-sm btn-info" %>
+
+
+
+

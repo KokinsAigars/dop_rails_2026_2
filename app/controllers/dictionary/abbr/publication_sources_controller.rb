@@ -2,6 +2,9 @@
 module Dictionary
   module Abbr
     class PublicationSourcesController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show history]
+
       def index
         @per_page = 100
         @page = (params[:page] || 1).to_i

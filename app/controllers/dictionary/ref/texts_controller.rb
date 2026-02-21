@@ -2,6 +2,9 @@
 module Dictionary
   module Ref
     class TextsController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show]
+
       def index
         @per_page = 50
         @page = (params[:page] || 1).to_i
@@ -32,6 +35,7 @@ module Dictionary
       def show
         @record = Sc02Bibliography::RefText.find(params[:id])
       end
+
     end
   end
 end

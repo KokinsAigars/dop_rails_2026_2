@@ -175,4 +175,18 @@
   transform: rotate(180deg);
   transition: transform 0.2s ease;
 }
+.card-body{
+  margin: 5px;
+}
+.language-block{
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.border-primary{
+  border: 1px solid gray;
+}
+.border-secondary{
+  border: 1px solid lightgray;
+}
+
 

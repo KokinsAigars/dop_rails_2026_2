@@ -2,6 +2,9 @@
 module Dictionary
   module Ref
     class InternetSourcesController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show]
+
       def index
         @per_page = 100
         @page = (params[:page] || 1).to_i
@@ -21,6 +24,7 @@ module Dictionary
       def show
         @record = Sc02Bibliography::RefInternetSource.find(params[:id])
       end
+
     end
   end
 end

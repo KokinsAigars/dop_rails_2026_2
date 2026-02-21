@@ -2,6 +2,9 @@
 module Dictionary
   module Ref
     class BibliographiesController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show history]
+
       def index
         @per_page = 50 # Bibliographies are "heavier" records
         @page = (params[:page] || 1).to_i

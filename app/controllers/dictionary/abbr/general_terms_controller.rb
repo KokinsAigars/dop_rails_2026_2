@@ -3,7 +3,8 @@
 module Dictionary
   module Abbr
     class GeneralTermsController < ApplicationController
-      # Publicly accessible index and show
+
+      allow_unauthenticated_access only: %i[index show]
 
       def index
         @per_page = 100
@@ -31,6 +32,7 @@ module Dictionary
       rescue ActiveRecord::RecordNotFound
         redirect_to abbr_general_terms_path, alert: "Record not found."
       end
+
     end
   end
 end

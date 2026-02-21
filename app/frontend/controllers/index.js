@@ -6,30 +6,30 @@
 
 import { Application } from "@hotwired/stimulus";
 
-import LayoutsController from "./views/layouts_controller.ts"
+import LayoutsController from "./views/layouts_controller.ts";
 import SessionsController from "./views/sessions_controller.ts";
-import RegistrationController from "./views/registration_controller.ts"
+import RegistrationController from "./views/registration_controller.ts";
 import PasswordsController from "./views/passwords_controller.ts";
-import UserWorkspaceController from "./views/user-workspace_controller.ts"
+import UserWorkspaceController from "./views/user-workspace_controller.ts";
+import DicWorkstationController from "./views/dic_workstation_controller.ts";
 
 import i18nController from "./i18n_controller.ts";
 import ModalController from "./modal_controller";
 import DiagnosticsController from "./diagnostics_controller.ts";
 import LoadingController from "./loading_controller.ts";
-import HeaderAController from "./header_a_controller.ts"
-import HeaderBController from "./header_b_controller.ts"
-import RemovableController from "./removable_controller.ts"
+import HeaderAController from "./header_a_controller.ts";
+import HeaderBController from "./header_b_controller.ts";
+import RemovableController from "./removable_controller.ts";
+import ActivityBarController from "./activity_bar_controller.ts";
+import FlashController from "./layouts/flash_controller.ts";
+import ActivityIconController from "./layouts/activity_icon_controller.ts";
+import SearchInputController from "./search_input_controller.ts";
+import SearchResultController from "./search_result_controller.ts";
+import ToggleController from "./layouts/toggle_controller.ts";
+import TabsController from "./layouts/tabs_controller.ts";
 
-import ActivityBarController from "./activity_bar_controller.ts"
 
-import FlashController from "./layouts/flash_controller.ts"
-import ActivityIconController from "./layouts/activity_icon_controller.ts"
 // import ExplorerItemController from "./layouts/explorer_item_controller.ts"
-
-import SearchInputController from "./search_input_controller.ts"
-import SearchResultController from "./search_result_controller.ts"
-import ToggleController from "./layouts/toggle_controller.ts"
-
 
 window.Stimulus ||= Application.start();
 
@@ -55,4 +55,7 @@ window.Stimulus.register("activity-icon", ActivityIconController);
 window.Stimulus.register("search-input", SearchInputController);
 window.Stimulus.register("search-result", SearchResultController);
 window.Stimulus.register("toggle", ToggleController);
+window.Stimulus.register("tabs", TabsController);
+window.Stimulus.register("dic-workstation", DicWorkstationController);
+
 

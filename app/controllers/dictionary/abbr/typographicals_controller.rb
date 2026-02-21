@@ -2,6 +2,9 @@
 module Dictionary
   module Abbr
     class TypographicalsController < ApplicationController
+
+      allow_unauthenticated_access only: %i[index show history]
+
       def index
         @per_page = 100
         @page = (params[:page] || 1).to_i
@@ -29,6 +32,7 @@ module Dictionary
                       .where(root_id: root_id).or(Sc01Abbreviations::AbbrTypographical.where(id: root_id))
                       .order(version: :desc)
       end
+
     end
   end
 end

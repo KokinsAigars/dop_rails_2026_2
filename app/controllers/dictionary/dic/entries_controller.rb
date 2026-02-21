@@ -3,6 +3,8 @@ module Dictionary
   module Dic
     class EntriesController < ApplicationController
 
+      allow_unauthenticated_access only: %i[show full]
+
       def show
 
         # 1. Get the Pāḷi name from the UUID passed in
@@ -68,7 +70,33 @@ module Dictionary
         @pali_entry  = @all_entries.find { |e| e.lang == 'pi' }
         @translations = @all_entries.reject { |e| e.lang == 'pi' }
 
+        # Group entries by language: { "pi" => [entry1, entry2], "en" => [entry3] }
+        @grouped_entries = @index.dic_entries.group_by(&:lang)
+
         @scans = @index.dic_scans.unscoped
+      end
+
+
+      # registered users only
+      # edit, update, new, create, destroy
+
+      def update
+        @entry = Sc03Dictionary::DicEntry.find(params[:id])
+
+        # Update the JSONB metadata automatically
+        @entry.modified_by = {
+          actor: {
+            type: "user",
+            user_id: current_user.id,
+            fullname: current_user.fullname
+          },
+          change: { reason: params[:edit_reason] },
+          source: { app: "dictionary-web", client: "rails" }
+        }
+
+        if @entry.update(entry_params)
+          redirect_to full_dic_entry_path(@entry.fk_index_id)
+        end
       end
 
 

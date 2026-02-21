@@ -1,0 +1,99 @@
+
+  <section class="language-block <%= entry.lang == 'pi' ? 'border-primary' : 'border-secondary' %>">
+  <div class="card-body">
+
+    <div class="language-badge">
+      <%
+        lang_labels = { 'pi' => 'Pāḷi', 'en' => 'English', 'lv' => 'Latviešu' }
+        label = lang_labels[entry.lang]
+        final_display = label || entry.lang.upcase
+      %>
+      <i class="bi bi-book-half"></i>
+      <span class="ms-1"><%= final_display %></span>
+    </div>
+
+    <h2> <%= entry.name %> </h2>
+
+
+    <div class="d-flex justify-content-between">
+
+      <span class="text-muted italic"><%= entry.grammar %> (<%= entry.gender %>)</span>
+    </div>
+
+    <%# Translation text if available %>
+    <% if entry.dic_eng_tr.present? %>
+      <p class="fs-5"><%= entry.dic_eng_tr %></p>
+    <% end %>
+
+    <%# EXAMPLES & QUOTES (Specific to THIS language record) %>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <h6>Examples (<%= entry.lang.upcase %>)</h6>
+        <% entry.dic_egs.each do |eg| %>
+          <div class="small bg-light p-2 mb-1 border rounded"><%= eg.content %></div>
+        <% end %>
+      </div>
+
+      <%# 1. The Wrapper: Controller and Value must be together %>
+      <div data-controller="toggle" data-toggle-open-value="false" class="col-md-6 mb-3">
+
+        <%# 2. The Trigger: Must be inside the wrapper %>
+        <button data-action="click->toggle#toggle" class="btn btn-sm btn-link text-decoration-none p-0">
+          <i class="bi bi-chevron-right" data-toggle-target="icon"></i>
+          <strong>Scholar Notes</strong>
+        </button>
+
+        <%# 3. The Target: Must be inside the wrapper %>
+        <div data-toggle-target="content">
+          <p>Contrary to popular belief, Lorem Ipsum...</p>
+          <% entry.dic_notes.each do |note| %>
+            <div class="small text-warning-emphasis"><%= note.content %></div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!--  <div class="row">-->
+  <%# @entries.each_with_index do |entry, i| %>
+  <!--      <h5>entry.id: <%#= entry.id %></h5> </code>-->
+  <!--      <h5>entry.fk_index_id: <%#= entry.fk_index_id %> </h5>-->
+  <!--      <h5>entry.lang: <%#= entry.lang %> </h5>-->
+  <!--      <h5>entry.dictionary: <%#= entry.dictionary %> </h5>-->
+  <!--      <h5>entry.entry_version: <%#= entry.entry_version %> </h5>-->
+  <!--      <h5>entry.entry_no: <%#= entry.entry_no %> </h5>-->
+  <!--      <h5>entry.letter: <%#= entry.letter %> </h5>-->
+  <!--      <h5>entry.name: <%#= entry.name %> </h5>-->
+  <!--      <h5>entry.name_orig: <%#= entry.name_orig %> </h5>-->
+  <!--      <h5>entry.dic_name: <%#= entry.dic_name %> </h5>-->
+  <!--      <h5>entry.dic_name_orig: <%#= entry.dic_name_orig %> </h5>-->
+  <!--      <h5>entry.dic_eng_tr: <%#= entry.dic_eng_tr %> </h5>-->
+  <!--      <h5>entry.gender: <%#= entry.gender %> </h5>-->
+  <!--      <h5>entry.grammar: <%#= entry.grammar %> </h5>-->
+  <!--      <h5>entry.etymology: <%#= entry.etymology %> </h5>-->
+  <!--      <h5>entry.compare: <%#= entry.compare %> </h5>-->
+  <!--      <h5>entry.compare_sanskrit: <%#= entry.compare_sanskrit %> </h5>-->
+  <!--      <h5>entry.sanskrit: <%#= entry.sanskrit %> </h5>-->
+  <!--      <h5>entry.opposite: <%#= entry.opposite %> </h5>-->
+  <!--      <h5>entry.vedic: <%#= entry.vedic %> </h5>-->
+  <!--      <h5>entry.note: <%#= entry.note %> </h5>-->
+  <!--      <h5>entry.xref: <%#= entry.xref %> </h5>-->
+  <!--      <h5>entry.revision: <%#= entry.revision %> </h5>-->
+  <!--      <h5>entry.revision_comment: <%#= entry.revision_comment %> </h5>-->
+  <!--      <h5>entry.root_id: <%#= entry.root_id %> </h5>-->
+  <!--      <h5>entry.version: <%#= entry.version %> </h5>-->
+  <!--      <h5>entry.is_current: <%#= entry.is_current %> </h5>-->
+  <!--      <h5>entry.superseded_at: <%#= entry.superseded_at %> </h5>-->
+  <!--      <h5>entry.superseded_by: <%#= entry.superseded_by %> </h5>-->
+  <!--      <h5>entry.created_at: <%#= entry.created_at %> </h5>-->
+  <!--      <h5>entry.modified_date: <%#= entry.modified_date %> </h5>-->
+  <!--      <h5>entry.modified_by: <%#= entry.modified_by %> </h5>-->
+  <%#= link_to "Open Full Library Card", full_dic_entry_path(entry.fk_index_id), class: "btn btn-primary" %>
+  <!--      <h2>----------------------------------------------</h2>-->
+  <%# end %>
+  <!--  </div>-->

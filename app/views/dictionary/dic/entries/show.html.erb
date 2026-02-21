@@ -19,18 +19,25 @@
 
         <div class="translations-list">
           <% related_records.each do |entry| %>
-            <span>entry.entry_no: <%= entry.entry_no %></span>
-            <div class="lang-row d-flex gap-3 mb-2">
-              <span class="badge bg-light text-dark border" style="width: 40px;">
-                <%= entry.lang.upcase %>
-              </span>
-              <span class="entry-name <%= 'fw-bold text-primary' if entry.lang == 'pi' %>">
-                <%= entry.name %>
-                <% if entry.dic_eng_tr.present? %>
-                  — <span class="text-dark"><%= entry.dic_eng_tr %></span>
-                <% end %>
-              </span>
+
+            <div class="language-badge">
+              <%
+                lang_labels = { 'pi' => 'Pāḷi', 'en' => 'English', 'lv' => 'Latviešu' }
+                label = lang_labels[entry.lang]
+                final_display = label || entry.lang.upcase
+              %>
+              <i class="bi bi-book-half"></i>
+              <span class="ms-1"><%= final_display %></span>
             </div>
+
+            <h2> <%= entry.name %> </h2>
+
+            <% if entry.dic_eng_tr.present? %>
+              — <span class="text-dark"><%= entry.dic_eng_tr %></span>
+            <% end %>
+
+            <div class="vertical-space"></div>
+
           <% end %>
         </div>
 
@@ -53,42 +60,3 @@
 </div>
 
 
-
-<!--  <div class="row">-->
-    <%# @entries.each_with_index do |entry, i| %>
-<!--      <h5>entry.id: <%#= entry.id %></h5> </code>-->
-<!--      <h5>entry.fk_index_id: <%#= entry.fk_index_id %> </h5>-->
-<!--      <h5>entry.lang: <%#= entry.lang %> </h5>-->
-<!--      <h5>entry.dictionary: <%#= entry.dictionary %> </h5>-->
-<!--      <h5>entry.entry_version: <%#= entry.entry_version %> </h5>-->
-<!--      <h5>entry.entry_no: <%#= entry.entry_no %> </h5>-->
-<!--      <h5>entry.letter: <%#= entry.letter %> </h5>-->
-<!--      <h5>entry.name: <%#= entry.name %> </h5>-->
-<!--      <h5>entry.name_orig: <%#= entry.name_orig %> </h5>-->
-<!--      <h5>entry.dic_name: <%#= entry.dic_name %> </h5>-->
-<!--      <h5>entry.dic_name_orig: <%#= entry.dic_name_orig %> </h5>-->
-<!--      <h5>entry.dic_eng_tr: <%#= entry.dic_eng_tr %> </h5>-->
-<!--      <h5>entry.gender: <%#= entry.gender %> </h5>-->
-<!--      <h5>entry.grammar: <%#= entry.grammar %> </h5>-->
-<!--      <h5>entry.etymology: <%#= entry.etymology %> </h5>-->
-<!--      <h5>entry.compare: <%#= entry.compare %> </h5>-->
-<!--      <h5>entry.compare_sanskrit: <%#= entry.compare_sanskrit %> </h5>-->
-<!--      <h5>entry.sanskrit: <%#= entry.sanskrit %> </h5>-->
-<!--      <h5>entry.opposite: <%#= entry.opposite %> </h5>-->
-<!--      <h5>entry.vedic: <%#= entry.vedic %> </h5>-->
-<!--      <h5>entry.note: <%#= entry.note %> </h5>-->
-<!--      <h5>entry.xref: <%#= entry.xref %> </h5>-->
-<!--      <h5>entry.revision: <%#= entry.revision %> </h5>-->
-<!--      <h5>entry.revision_comment: <%#= entry.revision_comment %> </h5>-->
-<!--      <h5>entry.root_id: <%#= entry.root_id %> </h5>-->
-<!--      <h5>entry.version: <%#= entry.version %> </h5>-->
-<!--      <h5>entry.is_current: <%#= entry.is_current %> </h5>-->
-<!--      <h5>entry.superseded_at: <%#= entry.superseded_at %> </h5>-->
-<!--      <h5>entry.superseded_by: <%#= entry.superseded_by %> </h5>-->
-<!--      <h5>entry.created_at: <%#= entry.created_at %> </h5>-->
-<!--      <h5>entry.modified_date: <%#= entry.modified_date %> </h5>-->
-<!--      <h5>entry.modified_by: <%#= entry.modified_by %> </h5>-->
-        <%#= link_to "Open Full Library Card", full_dic_entry_path(entry.fk_index_id), class: "btn btn-primary" %>
-<!--      <h2>----------------------------------------------</h2>-->
-    <%# end %>
-<!--  </div>-->
