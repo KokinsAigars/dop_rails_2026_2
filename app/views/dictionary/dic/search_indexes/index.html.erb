@@ -56,7 +56,7 @@
 
               <span class="T-tab-bar">[<%= offset + index + 1 %>]</span>
 
-              <%= link_to dic_entry_path(v.fk_index_id), data: { turbo_frame: "_top" } do %>
+              <%= link_to dic_entry_path(v.fk_index_id, term: v.term), data: { turbo_frame: "_top" } do %>
                 <span class="term-text"><%= v.term %></span>
               <% end %>
 

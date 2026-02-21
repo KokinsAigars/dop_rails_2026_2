@@ -47,5 +47,6 @@ module Sc03Dictionary
              foreign_key: :fk_entry_id,
              inverse_of: :dic_entry,
              dependent: :destroy
+
   end
 end

@@ -3,63 +3,81 @@ module Dictionary
   module Dic
     class EntriesController < ApplicationController
 
-      # This is the action that was "missing"
-      def index
-
-        query = params[:q]
-
-        # Try 1: Direct match (finds the exact messy string)
-        @entries = Sc03Dictionary::DicEntry
-                     .where(lang: params[:lang], is_current: true)
-                     .where("name = :q OR name ILIKE :fuzzy", q: query, fuzzy: "%-#{query}")
-
-        # Try 2: If nothing found, try searching by "dic_name" or "name_orig"
-        # which might be cleaner versions of the word
-        if @entries.empty?
-          clean_name = query.gsub(/[1234567890\[\]\-\/]/, '')
-          @entries = Sc03Dictionary::DicEntry.where("name ILIKE ?", "#{clean_name}%")
-                                             .where(lang: params[:lang], is_current: true)
-        end
-
-        if @entries.count == 1
-          # If exactly one exists, skip the list and go to the full data
-          redirect_to dic_entry_path(@entries.first)
-        elsif @entries.count > 1
-          # If multiple (homographs), show a selection page
-          render :homograph_selection
-        else
-          # If none, go back to search with a warning
-          redirect_to dic_vocab_index_path(lang: params[:lang]), alert: "Entry details not found."
-        end
-      end
-
       def show
 
-        # 1. params[:id] is now the UUID (fk_index_id) from the link
-        @index_head = Sc03Dictionary::DicIndex.find_by(id: params[:id])
+        # 1. Get the Pāḷi name from the UUID passed in
+        # Rails sees the value in the URL and puts it into the params hash under the key :id
+        # gets id from url /dic/entries/4bab8aa8...) to params[:id]
+        # Database: SELECT * FROM dic_entry WHERE fk_index_id = '...' LIMIT 1
+        # find_by returns one object
+        clicked_entry = Sc03Dictionary::DicEntry.find_by(fk_index_id: params[:id])
 
-        # Safety check: if no index found, go back to search
-        if @index_head.nil?
-          return redirect_to dic_root_path, alert: "Index record not found."
+        # Extracting the Name
+        @term_name = clicked_entry&.name
+
+        # if name exists
+        if @term_name
+
+          # 2. Find all Pāḷi entries with this name
+          # Database: SELECT * FROM dic_entry WHERE name = 'rukkho' AND lang = 'pi'
+          pali_entries = Sc03Dictionary::DicEntry.where(name: @term_name, lang: 'pi')
+
+          # 3. For each Pāḷi entry, find its translations (en, lv) sharing the same fk_index_id
+          # Plucking the IDs
+          # We create a map: { fk_index_id => [array of all entries for that ID] }
+          # Result: This is a Simple Array of Strings (UUIDs). ['uuid-1', 'uuid-2', 'uuid-3'...]
+          all_related_ids = pali_entries.pluck(:fk_index_id)
+
+          # The Big Final Search & Grouping
+          # Database Search: fetches every row (Pāḷi, English, Latvian) for all those UUIDs in one go.
+          # The Grouping: This is Ruby magic. It takes that big list and turns it into a Hash (Map)
+          @grouped_entries = Sc03Dictionary::DicEntry
+                               .includes(:dic_index) # This joins the tables in one/two efficient queries
+                               .where(fk_index_id: all_related_ids)
+                               .group_by(&:fk_index_id)
+
+
+          # What actually arrives at the View
+          # {
+          #   "uuid-123" => [ <Pāḷi Object>, <English Object>, <Latvian Object> ],
+          #   "uuid-456" => [ <Pāḷi Object>, <English Object> ],
+          #   "uuid-789" => [ <Pāḷi Object>, <Latvian Object> ]
+          # }
+
+          # for loop in show.html.erb and outside of loop access
+          if @grouped_entries.any?
+            # Collect all DicIndex objects from the groups, then find the max date
+            all_indices = @grouped_entries.values.flatten.map(&:dic_index).compact
+            @latest_date = all_indices.map(&:modified_date).max
+          end
+
         end
-
-        # 2. Get all language versions (Pali, Latvian, etc.) linked to this UUID
-        # We explicitly filter by is_current to ensure we see the latest versions
-        @entries = Sc03Dictionary::DicEntry.where(
-          fk_index_id: @index_head.id,
-          is_current: true
-        ).order(:lang)
-
-        # Use the first entry's name as the main title for the page
-        @page_title = @entries.any? ? @entries.first.name : "Word Not Found"
-
-        # 3. Get all manuscript scans tied to this UUID
-        @scans = Sc03Dictionary::DicScan.where(
-          fk_index_id: @index_head.id,
-          is_current: true
-        )
       end
+
+      def full
+
+        # 1. Start with the Index (The 'Spine' of the card)
+        # 2. Eager load EVERYTHING attached to it across all languages
+        @index = Sc03Dictionary::DicIndex.includes(
+          dic_entries: [:dic_refs, :dic_notes, :dic_quotes, :dic_egs],
+          dic_scans: []
+        ).find(params[:id])
+
+        # 3. Organise the entries for easy access in the view
+        @all_entries = @index.dic_entries
+        @pali_entry  = @all_entries.find { |e| e.lang == 'pi' }
+        @translations = @all_entries.reject { |e| e.lang == 'pi' }
+
+        @scans = @index.dic_scans.unscoped
+      end
+
 
     end
   end
 end
+
+
+
+#    @entry.modified_by["actor"]["fullname"] # => "Aigars Kokins"
+#     @entry.modified_by.dig("change", "reason")
+

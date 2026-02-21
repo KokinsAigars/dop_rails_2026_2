@@ -106,12 +106,13 @@ Rails.application.routes.draw do
       end
 
       namespace :dic do
-        # This makes http://localhost:3000/dic the search entry point
-        # Point the root to your new SearchIndex controller
         root to: 'search_indexes#index'
-
         resources :search_indexes, only: [:index]
-        resources :entries, only: [:index, :show]
+        resources :entries, only: [:show] do
+          member do
+            get :full
+          end
+        end
       end
 
     end

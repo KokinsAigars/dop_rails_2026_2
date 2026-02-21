@@ -28,6 +28,7 @@ import ActivityIconController from "./layouts/activity_icon_controller.ts"
 
 import SearchInputController from "./search_input_controller.ts"
 import SearchResultController from "./search_result_controller.ts"
+import ToggleController from "./layouts/toggle_controller.ts"
 
 
 window.Stimulus ||= Application.start();
@@ -53,3 +54,5 @@ window.Stimulus.register("activity-icon", ActivityIconController);
 
 window.Stimulus.register("search-input", SearchInputController);
 window.Stimulus.register("search-result", SearchResultController);
+window.Stimulus.register("toggle", ToggleController);
+

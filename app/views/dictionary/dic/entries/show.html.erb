@@ -1,78 +1,94 @@
-<%# app/views/dictionary/dic/entries/show.html.erb %>
+
 <div class="article-layout">
 
   <%= render 'dictionary/shared/dic_home_links' %>
 
   <div class="title-article-h1">
-    <h1><%= @page_title %></h1>
+    <h1><%= @term_name %></h1>
   </div>
   <div class="sub-title-article-h1">
-    <h6>Last modified: <%= @index_head.modified_date.to_date %></h6>
   </div>
 
-  <%= render "index" %>
+  <div>
 
+    <% @grouped_entries.each do |uuid, related_records| %>
+      <%# Pull the metadata for THIS specific homograph %>
+      <% index_info = related_records.first.dic_index %>
 
-  <% @entries.each_with_index do |entry, index| %>
-    <div class="entry-card">
-      <h3>
-        <%= entry.name %>
-        <% if @entries.count > 1 && entry.lang == 'pi' %>
-          <small class="text-muted">(<%= index + 1 %>)</small>
-        <% end %>
-      </h3>
-    </div>
-  <% end %>
+      <div class="library-card-container">
 
-
-
-  <% if @scans.any? %>
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-dark text-white">
-        <i class="bi bi-image"></i> Manuscript Scans
-      </div>
-      <div class="card-body p-0">
-        <ul class="list-group list-group-flush">
-          <% @scans.each do |scan| %>
-            <li class="list-group-item">
-              <small class="text-muted d-block">Version: <%= scan.scan_version %></small>
-
-              <%# If you have an image URL field, use it here %>
-              <% if scan.respond_to?(:image_url) && scan.image_url.present? %>
-                <%= link_to scan.image_url, target: "_blank", class: "d-block mb-2" do %>
-                  <div class="scan-preview border rounded p-2 bg-light text-center">
-                    <i class="bi bi-file-earmark-image fs-1"></i>
-                    <p class="mb-0 mt-1">View Original Page</p>
-                  </div>
+        <div class="translations-list">
+          <% related_records.each do |entry| %>
+            <span>entry.entry_no: <%= entry.entry_no %></span>
+            <div class="lang-row d-flex gap-3 mb-2">
+              <span class="badge bg-light text-dark border" style="width: 40px;">
+                <%= entry.lang.upcase %>
+              </span>
+              <span class="entry-name <%= 'fw-bold text-primary' if entry.lang == 'pi' %>">
+                <%= entry.name %>
+                <% if entry.dic_eng_tr.present? %>
+                  — <span class="text-dark"><%= entry.dic_eng_tr %></span>
                 <% end %>
-              <% end %>
-
-              <div class="scan-raw-text mt-2 small text-monospace bg-light p-2 rounded">
-                <strong>Raw OCR/Text:</strong>
-                <div class="mt-1"><%= scan.scan_text_raw %></div>
-              </div>
-            </li>
+              </span>
+            </div>
           <% end %>
-        </ul>
+        </div>
+
+        <div class="btn-container">
+            <%= link_to "Open Full Library Card",
+                        full_dic_entry_path(uuid),
+                        class: "btn btn-primary" %>
+          </div>
+
+        <div class="sub-title-article-h1">
+          <h6>Record Date: <%= index_info.modified_date.to_date %></h6>
+          <h6>Entry Reference: <%= uuid %></h6>
+        </div>
+
       </div>
-    </div>
-  <% end %>
 
-
-
-<!--    <div class="card-body">-->
-<!--     <span class="badge rounded-pill bg-info text-dark mb-3">-->
-<!--       <%#= @entry.lang.upcase %> Entry-->
-<!--     </span>-->
-
-<!--      <div class="entry-meta mb-3">-->
-<!--        <strong>Grammar:</strong> <%#= @entry.grammar %> |-->
-<!--        <strong>Gender:</strong> <%#= @entry.gender %>-->
-<!--      </div>-->
-
-<!--      <div class="entry-text">-->
-        <%#= @entry.note %>
-<!--      </div>-->
-<!--    </div>-->
+    <% end %>
+  </div>
 
 </div>
+
+
+
+<!--  <div class="row">-->
+    <%# @entries.each_with_index do |entry, i| %>
+<!--      <h5>entry.id: <%#= entry.id %></h5> </code>-->
+<!--      <h5>entry.fk_index_id: <%#= entry.fk_index_id %> </h5>-->
+<!--      <h5>entry.lang: <%#= entry.lang %> </h5>-->
+<!--      <h5>entry.dictionary: <%#= entry.dictionary %> </h5>-->
+<!--      <h5>entry.entry_version: <%#= entry.entry_version %> </h5>-->
+<!--      <h5>entry.entry_no: <%#= entry.entry_no %> </h5>-->
+<!--      <h5>entry.letter: <%#= entry.letter %> </h5>-->
+<!--      <h5>entry.name: <%#= entry.name %> </h5>-->
+<!--      <h5>entry.name_orig: <%#= entry.name_orig %> </h5>-->
+<!--      <h5>entry.dic_name: <%#= entry.dic_name %> </h5>-->
+<!--      <h5>entry.dic_name_orig: <%#= entry.dic_name_orig %> </h5>-->
+<!--      <h5>entry.dic_eng_tr: <%#= entry.dic_eng_tr %> </h5>-->
+<!--      <h5>entry.gender: <%#= entry.gender %> </h5>-->
+<!--      <h5>entry.grammar: <%#= entry.grammar %> </h5>-->
+<!--      <h5>entry.etymology: <%#= entry.etymology %> </h5>-->
+<!--      <h5>entry.compare: <%#= entry.compare %> </h5>-->
+<!--      <h5>entry.compare_sanskrit: <%#= entry.compare_sanskrit %> </h5>-->
+<!--      <h5>entry.sanskrit: <%#= entry.sanskrit %> </h5>-->
+<!--      <h5>entry.opposite: <%#= entry.opposite %> </h5>-->
+<!--      <h5>entry.vedic: <%#= entry.vedic %> </h5>-->
+<!--      <h5>entry.note: <%#= entry.note %> </h5>-->
+<!--      <h5>entry.xref: <%#= entry.xref %> </h5>-->
+<!--      <h5>entry.revision: <%#= entry.revision %> </h5>-->
+<!--      <h5>entry.revision_comment: <%#= entry.revision_comment %> </h5>-->
+<!--      <h5>entry.root_id: <%#= entry.root_id %> </h5>-->
+<!--      <h5>entry.version: <%#= entry.version %> </h5>-->
+<!--      <h5>entry.is_current: <%#= entry.is_current %> </h5>-->
+<!--      <h5>entry.superseded_at: <%#= entry.superseded_at %> </h5>-->
+<!--      <h5>entry.superseded_by: <%#= entry.superseded_by %> </h5>-->
+<!--      <h5>entry.created_at: <%#= entry.created_at %> </h5>-->
+<!--      <h5>entry.modified_date: <%#= entry.modified_date %> </h5>-->
+<!--      <h5>entry.modified_by: <%#= entry.modified_by %> </h5>-->
+        <%#= link_to "Open Full Library Card", full_dic_entry_path(entry.fk_index_id), class: "btn btn-primary" %>
+<!--      <h2>----------------------------------------------</h2>-->
+    <%# end %>
+<!--  </div>-->
