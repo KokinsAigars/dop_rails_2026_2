@@ -3,59 +3,54 @@
 
   <%= render 'dictionary/shared/dic_home_links' %>
 
-  <div class="title-article-h1">
-    <h1><%= @term_name %></h1>
-  </div>
-  <div class="sub-title-article-h1">
-  </div>
+  <div class="vertical-space"></div>
 
-  <div>
+  <% if @grouped_entries.size > 1 %>
+    <div>homographs (<%= @grouped_entries.size %>)</div>
+    <div class="vertical-space"></div>
+  <% end %>
 
-    <% @grouped_entries.each do |uuid, related_records| %>
-      <%# Pull the metadata for THIS specific homograph %>
+
+  <% @grouped_entries.each do |uuid, related_records| %>
+
+    <%# Pull the metadata for THIS specific homograph %>
+    <div class="library-card-container">
       <% index_info = related_records.first.dic_index %>
+        <% related_records.each do |entry| %>
 
-      <div class="library-card-container">
+          <div class="language-badge">
+            <%
+              lang_labels = { 'pi' => 'Pāḷi', 'en' => 'English', 'lv' => 'Latviešu' }
+              label = lang_labels[entry.lang]
+              final_display = label || entry.lang.upcase
+            %>
+            <i class="bi bi-book-half"></i>
+            <span class="ms-1"><%= final_display %></span>
+          </div>
 
-        <div class="translations-list">
-          <% related_records.each do |entry| %>
+          <h3><%= entry.name %></h3>
 
-            <div class="language-badge">
-              <%
-                lang_labels = { 'pi' => 'Pāḷi', 'en' => 'English', 'lv' => 'Latviešu' }
-                label = lang_labels[entry.lang]
-                final_display = label || entry.lang.upcase
-              %>
-              <i class="bi bi-book-half"></i>
-              <span class="ms-1"><%= final_display %></span>
-            </div>
 
-            <h2> <%= entry.name %> </h2>
-
-            <% if entry.dic_eng_tr.present? %>
-              — <span class="text-dark"><%= entry.dic_eng_tr %></span>
-            <% end %>
-
-            <div class="vertical-space"></div>
-
+          <% if entry.dic_eng_tr.present? %>
+            <p>Direct English-Latvian translation</p>
+            <span><%= entry.dic_eng_tr %></span>
           <% end %>
-        </div>
 
+          <div class="vertical-space"></div>
+
+        <% end %>
         <div class="btn-container">
             <%= link_to "Open Full Library Card",
                         full_dic_entry_path(uuid),
                         class: "btn btn-primary" %>
           </div>
-
         <div class="sub-title-article-h1">
           <h6>Record Date: <%= index_info.modified_date.to_date %></h6>
           <h6>Entry Reference: <%= uuid %></h6>
         </div>
+    </div>
 
-      </div>
-
-    <% end %>
-  </div>
+  <% end %>
 
 </div>
 

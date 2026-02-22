@@ -61,7 +61,7 @@ module Dictionary
         # 1. Start with the Index (The 'Spine' of the card)
         # 2. Eager load EVERYTHING attached to it across all languages
         @index = Sc03Dictionary::DicIndex.includes(
-          dic_entries: [:dic_refs, :dic_notes, :dic_quotes, :dic_egs],
+          dic_entries: [:dic_refs, :dic_egs, :dic_quotes, :dic_notes],
           dic_scans: []
         ).find(params[:id])
 

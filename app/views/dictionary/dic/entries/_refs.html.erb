@@ -1,15 +1,38 @@
-<%# app/views/dictionary/dic/entries/_refs.html.erb %>
-<% if refs.any? %>
-  <div class="refs-section mt-3">
-    <h6 class="text-uppercase small fw-bold text-muted">Cross References</h6>
-    <div class="d-flex flex-wrap gap-2">
-      <% refs.each do |ref| %>
-        <%# If you have the referenced ID, link to it; otherwise, link to a search for the name %>
-        <%= link_to dic_vocab_index_path(q: ref.xref_name),
-                    class: "btn btn-sm btn-outline-secondary rounded-pill" do %>
-          <i class="icon-link"></i> <%= ref.xref_name %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+
+  <div class="vertical-space"> </div>
+  <h5>References</h5>
+
+<!--    <%# if ref.id.present? %><p>id: <%#= ref.id %></p> <%# end %>-->
+<!--    <%# if ref.fk_index_id.present? %><p>fk_index_id: <%#= ref.fk_index_id %></p> <%# end %>-->
+<!--    <%# if ref.fk_entry_id.present? %><p>fk_entry_id: <%#= ref.fk_entry_id %></p> <%# end %>-->
+    <% if ref.ref_no.present? %><p>ref_no: <%= ref.ref_no %></p> <% end %>
+    <% if ref.ref_note.present? %><p>ref_note: <%= ref.ref_note %></p> <% end %>
+    <% if ref.ref_name.present? %><p>ref_name: <%= ref.ref_name %></p> <% end %>
+    <% if ref.ref_etymology.present? %><p>ref_etymology: <%= ref.ref_etymology %></p> <% end %>
+    <% if ref.ref_compare.present? %><p>ref_compare: <%= ref.ref_compare %></p> <% end %>
+    <% if ref.ref_compare_sanskrit.present? %><p>ref_compare_sanskrit: <%= ref.ref_compare_sanskrit %></p> <% end %>
+    <% if ref.ref_opposite.present? %><p>ref_opposite: <%= ref.ref_opposite %></p> <% end %>
+    <% if ref.ref_xref.present? %><p>ref_xref: <%= ref.ref_xref %></p> <% end %>
+    <% if ref.bibliography_uuid.present? %><p>bibliography_uuid: <%= ref.bibliography_uuid %></p> <% end %>
+    <% if ref.citation_ref_src.present? %><p>citation_ref_src: <%= ref.citation_ref_src %></p> <% end %>
+    <% if ref.citation_abbrev.present? %><p>citation_abbrev: <%= ref.citation_abbrev %></p> <% end %>
+    <% if ref.citation_vol.present? %><p>citation_vol: <%= ref.citation_vol %></p> <% end %>
+    <% if ref.citation_part.present? %><p>citation_part: <%= ref.citation_part %></p> <% end %>
+    <% if ref.citation_p.present? %><p>citation_p: <%= ref.citation_p %></p> <% end %>
+    <% if ref.citation_pp.present? %><p>citation_pp: <%= ref.citation_pp %></p> <% end %>
+    <% if ref.citation_para.present? %><p>citation_para: <%= ref.citation_para %></p> <% end %>
+    <% if ref.citation_line.present? %><p>citation_line: <%= ref.citation_line %></p> <% end %>
+    <% if ref.citation_verse.present? %><p>citation_verse: <%= ref.citation_verse %></p> <% end %>
+    <% if ref.citation_char.present? %><p>citation_char: <%= ref.citation_char %></p> <% end %>
+    <% if ref.revision.present? %><p>revision: <%= ref.revision %></p> <% end %>
+    <% if ref.revision_comment.present? %><p>revision_comment: <%= ref.revision_comment %></p> <% end %>
+<!--    <%# if ref.root_id.present? %><p>root_id: <%#= ref.root_id %></p> <%# end %>-->
+<!--    <%# if ref.version.present? %><p>version: <%#= ref.version %></p> <%# end %>-->
+<!--    <%# if ref.is_current.present? %><p>is_current: <%#= ref.is_current %></p> <%# end %>-->
+<!--    <%# if ref.superseded_at.present? %><p>superseded_at: <%#= ref.superseded_at %></p> <%# end %>-->
+<!--    <%# if ref.superseded_by.present? %><p>superseded_by: <%#= ref.superseded_by %></p> <%# end %>-->
+<!--    <%# if ref.created_at.present? %><p>created_at: <%#= ref.created_at %></p> <%# end %>-->
+<!--    <%# if ref.modified_date.present? %><p>modified_date: <%#= ref.modified_date %></p> <%# end %>-->
+<!--    <%# if ref.modified_by.present? %><p>modified_by: <%#= ref.modified_by %></p> <%# end %>-->
+
+

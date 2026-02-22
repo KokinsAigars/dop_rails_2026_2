@@ -1,21 +1,38 @@
-<%# app/views/dictionary/dic/entries/_egs.html.erb %>
-<% if egs.any? %>
-  <div class="egs-section mt-4">
-    <h6 class="text-uppercase small fw-bold text-muted">Usage Examples</h6>
-    <% egs.each do |eg| %>
-      <div class="eg-item border-start border-4 border-info ps-3 mb-3">
-        <p class="pali-text mb-1 fst-italic">
-          <%= eg.eg_text %>
-        </p>
-        <% if eg.eg_translation.present? %>
-          <p class="translation-text text-secondary small">
-            <%= eg.eg_translation %>
-          </p>
-        <% end %>
-        <% if eg.citation.present? %>
-          <small class="text-muted d-block text-end">— <%= eg.citation %></small>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+
+  <div class="vertical-space"> </div>
+  <h4>Usage Examples</h4>
+
+   <% if eg.id.present? %> <p>id: <%= eg.id %></p><% end %>
+   <% if eg.fk_index_id.present? %> <p>fk_index_id: <%= eg.fk_index_id %></p><% end %>
+   <% if eg.fk_entry_id.present? %> <p>fk_entry_id: <%= eg.fk_entry_id %></p><% end %>
+   <% if eg.eg_no.present? %> <p>eg_no: <%= eg.eg_no %></p><% end %>
+   <% if eg.eg_note.present? %> <p>eg_note: <%= eg.eg_note %></p><% end %>
+   <% if eg.eg_name.present? %> <p>eg_name: <%= eg.eg_name %></p><% end %>
+   <% if eg.eg_etymology.present? %> <p>eg_etymology: <%= eg.eg_etymology %></p><% end %>
+   <% if eg.eg_compare.present? %> <p>eg_compare: <%= eg.eg_compare %></p><% end %>
+   <% if eg.eg_compare_sanskrit.present? %> <p>eg_compare_sanskrit: <%= eg.eg_compare_sanskrit %></p><% end %>
+   <% if eg.eg_opposite.present? %> <p>eg_opposite: <%= eg.eg_opposite %></p><% end %>
+   <% if eg.eg_xref.present? %> <p>eg_xref: <%= eg.eg_xref %></p><% end %>
+   <% if eg.bibliography_uuid.present? %> <p>bibliography_uuid: <%= eg.bibliography_uuid %></p><% end %>
+   <% if eg.citation_ref_src.present? %> <p>citation_ref_src: <%= eg.citation_ref_src %></p><% end %>
+   <% if eg.citation_abbrev.present? %> <p>citation_abbrev: <%= eg.citation_abbrev %></p><% end %>
+   <% if eg.citation_vol.present? %> <p>citation_vol: <%= eg.citation_vol %></p><% end %>
+   <% if eg.citation_part.present? %> <p>citation_part: <%= eg.citation_part %></p><% end %>
+   <% if eg.citation_p.present? %> <p>citation_p: <%= eg.citation_p %> </p><% end %>
+   <% if eg.citation_pp.present? %> <p>citation_pp: <%= eg.citation_pp %></p><% end %>
+   <% if eg.citation_para.present? %> <p>citation_para: <%= eg.citation_para %></p><% end %>
+   <% if eg.citation_line.present? %> <p>citation_line: <%= eg.citation_line %></p><% end %>
+   <% if eg.citation_verse.present? %> <p>citation_verse: <%= eg.citation_verse %></p><% end %>
+   <% if eg.citation_char.present? %> <p>citation_char: <%= eg.citation_char %> </p><% end %>
+   <% if eg.revision.present? %> <p>revision: <%= eg.revision %> </p><% end %>
+   <% if eg.revision_comment.present? %> <p>revision_comment: <%= eg.revision_comment %></p><% end %>
+   <% if eg.root_id.present? %> <p>root_id: <%= eg.root_id %></p><% end %>
+   <% if eg.version.present? %> <p>version: <%= eg.version %></p><% end %>
+   <% if eg.is_current.present? %> <p>is_current: <%= eg.is_current %> </p><% end %>
+   <% if eg.superseded_at.present? %> <p>superseded_at: <%= eg.superseded_at %> </p><% end %>
+   <% if eg.superseded_by.present? %> <p>superseded_by: <%= eg.superseded_by %></p><% end %>
+   <% if eg.created_at.present? %> <p>created_at: <%= eg.created_at %></p><% end %>
+   <% if eg.modified_date.present? %> <p>modified_date: <%= eg.modified_date %></p><% end %>
+   <% if eg.modified_by.present? %> <p>modified_by: <%= eg.modified_by %></p><% end %>
+
+

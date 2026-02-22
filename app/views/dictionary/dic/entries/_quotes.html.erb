@@ -1,15 +1,36 @@
-<% if quotes.any? %>
-  <section class="entry-quotes">
-    <h4>Quotes & Citations</h4>
-    <ul>
-      <% quotes.each do |quote| %>
-        <li>
-          <blockquote class="pali-quote">
-            <%= quote.quote_text %>
-          </blockquote>
-          <cite>— <%= quote.citation %></cite>
-        </li>
-      <% end %>
-    </ul>
-  </section>
-<% end %>
+
+  <div class="vertical-space"> </div>
+  <h4>Quotes</h4>
+
+    <% if quote.id.present? %> <p>id: <%= quote.id %></p><% end %>
+    <% if quote.fk_index_id.present? %> <p>fk_index_id: <%= quote.fk_index_id %></p><% end %>
+    <% if quote.fk_entry_id.present? %> <p>fk_entry_id: <%= quote.fk_entry_id %></p><% end %>
+    <% if quote.quote_no.present? %> <p>quote_no: <%= quote.quote_no %></p><% end %>
+    <% if quote.quote_note.present? %> <p>quote_note: <%= quote.quote_note %></p><% end %>
+    <% if quote.quote_name.present? %> <p>quote_name: <%= quote.quote_name %></p><% end %>
+    <% if quote.quote_etymology.present? %> <p>quote_etymology: <%= quote.quote_etymology %></p><% end %>
+    <% if quote.quote_compare.present? %> <p>quote_compare: <%= quote.quote_compare %></p><% end %>
+    <% if quote.quote_compare_sanskrit.present? %> <p>quote_compare_sanskrit: <%= quote.quote_compare_sanskrit %></p><% end %>
+    <% if quote.quote_opposite.present? %> <p>quote_opposite: <%= quote.quote_opposite %></p><% end %>
+    <% if quote.quote_xref.present? %> <p>quote_xref: <%= quote.quote_xref %></p><% end %>
+    <% if quote.bibliography_uuid.present? %> <p>bibliography_uuid: <%= quote.bibliography_uuid %></p><% end %>
+    <% if quote.citation_ref_src.present? %> <p>citation_ref_src: <%= quote.citation_ref_src %></p><% end %>
+    <% if quote.citation_abbrev.present? %> <p>citation_abbrev: <%= quote.citation_abbrev %></p><% end %>
+    <% if quote.citation_vol.present? %> <p>citation_vol: <%= quote.citation_vol %></p><% end %>
+    <% if quote.citation_part.present? %> <p>citation_part: <%= quote.citation_part %></p><% end %>
+    <% if quote.citation_p.present? %> <p>citation_p: <%= quote.citation_p %></p><% end %>
+    <% if quote.citation_pp.present? %> <p>citation_pp: <%= quote.citation_pp %></p><% end %>
+    <% if quote.citation_para.present? %> <p>citation_para: <%= quote.citation_para %></p><% end %>
+    <% if quote.citation_line.present? %> <p>citation_line: <%= quote.citation_line %></p><% end %>
+    <% if quote.citation_verse.present? %> <p>citation_verse: <%= quote.citation_verse %></p><% end %>
+    <% if quote.citation_char.present? %> <p>citation_char: <%= quote.citation_char %></p><% end %>
+    <% if quote.revision.present? %> <p>revision: <%= quote.revision %></p><% end %>
+    <% if quote.revision_comment.present? %> <p>revision_comment: <%= quote.revision_comment %></p><% end %>
+    <% if quote.root_id.present? %> <p>root_id: <%= quote.root_id %></p><% end %>
+    <% if quote.version.present? %> <p>version: <%= quote.version %></p><% end %>
+    <% if quote.is_current.present? %> <p>is_current: <%= quote.is_current %></p><% end %>
+    <% if quote.superseded_at.present? %> <p>superseded_at: <%= quote.superseded_at %></p><% end %>
+    <% if quote.superseded_by.present? %> <p>superseded_by: <%= quote.superseded_by %></p><% end %>
+    <% if quote.created_at.present? %> <p>created_at: <%= quote.created_at %></p><% end %>
+    <% if quote.modified_date.present? %> <p>modified_date: <%= quote.modified_date %></p><% end %>
+    <% if quote.modified_by.present? %> <p>modified_by: <%= quote.modified_by %></p><% end %>

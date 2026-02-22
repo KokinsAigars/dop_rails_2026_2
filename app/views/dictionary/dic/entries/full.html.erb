@@ -3,13 +3,13 @@
 
     <%= render 'dictionary/shared/dic_home_links' %>
 
-        <div class="title-article-h1">
-          <h1><%= @pali_entry&.name %></h1>
-        </div>
+    <div class="title-article-h1">
+      <h1><%= @pali_entry&.name %></h1>
+    </div>
 
-        <div class="sub-title-article-h1">
-          <h6>Last modified: <%= @index.modified_date.to_date %></h6>
-        </div>
+    <div class="sub-title-article-h1">
+      <h6>Last modified: <%= @index.modified_date.to_date %></h6>
+    </div>
 
     <%# UPPER SECTION %>
     <div class="upper-entry-view"
